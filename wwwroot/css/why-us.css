@@ -1,0 +1,144 @@
+/* =================================================================== */
+/* WHY US SECTION STYLES (EKRAN GÖRÜNTÜSÜ ŞEMASI)                  */
+/* =================================================================== */
+
+.why-us-section {
+    padding: 0px 20px;
+    background-color: #E9E8E6;
+}
+
+/* --- MOBİL GÖRÜNÜM (VARSAYILAN) --- */
+/* Mobil için önce başlık ve metin, sonra kartlar alt alta gelecek */
+.why-us-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.why-us-text-content {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.why-us-heading {
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.why-us-heading span {
+    color: #045129;
+    display: block;
+}
+
+.why-us-text-content p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+}
+/* --- MOBİL (varsayılan) çift kolon --- */
+.why-us-grid {
+    display: grid;
+    /* eskiden: grid-template-columns: 1fr; */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.why-us-card {
+    background: white; /* Kartların görünümü aynı kalıyor */
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid transparent;
+}
+
+
+
+.why-us-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-top-color: #045129;
+}
+
+/* Kart içi ikon alanı */
+.card-icon {
+  color: #045129;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.card-icon i {
+  font-size: 36px; /* ikon boyutu */
+  line-height: 1;
+}
+@media (max-width: 320px) {
+  .card-title {
+    font-size: 19px !important;
+  }
+}
+.card-title {
+    font-size: 1.3rem; /* Kart başlıkları biraz daha küçük */
+    font-weight: 600;
+    color: #045129;
+    min-height: 40px; /* Başlıklar için sabit yükseklik */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- MASAÜSTÜ GÖRÜNÜMÜ (992px ve üzeri) --- */
+@media (min-width: 992px) {
+    .why-us-section {
+        padding: 60px 20px;
+    }
+    
+.card-icon i { font-size: 28px; }
+    .why-us-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+    /* Masaüstünde 3 kolon kalsın */
+  .why-us-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    order: 1;
+  }
+    
+    .why-us-text-content {
+    order: 2;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+    .mobile-only-card {
+        display: none; /* Show the hidden cards on desktop */
+    }
+    
+    .why-us-card {
+        padding: 20px; /* Kartların iç boşluğunu biraz azaltıyoruz */
+    }
+
+    .why-us-heading {
+        font-size: 3rem;
+    }
+    
+    .why-us-text-content p {
+        margin: 0;
+        max-width: none;
+    }
+}
+
+

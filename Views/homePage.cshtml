@@ -1,0 +1,46 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.Blocks;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomePage>
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Name;
+
+    var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+}
+
+@await Html.PartialAsync("HeroSlider")
+@await Html.PartialAsync("ProjectCards")
+@await Html.PartialAsync("WhyUs")
+@await Html.PartialAsync("CustomerTestimonials")
+@await Html.PartialAsync("BlogSection")
+
+
+
+<div id="quickContactPopup" class="popup-overlay" style="display:none;">
+  <div class="popup-content">
+    @await Html.PartialAsync("ContactQuickForm", new btlast.Models.ContactFormViewModel())
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        document.getElementById("quickContactPopup").style.display = "flex";
+    }, 8000);
+
+    document.getElementById("closeQuickPopup").addEventListener("click", function() {
+        document.getElementById("quickContactPopup").style.display = "none";
+    });
+
+    document.getElementById("quickContactPopup").addEventListener("click", function(e) {
+        if (e.target.id === "quickContactPopup") {
+            this.style.display = "none";
+        }
+    });
+});
+</script>
+
+<script src="/Scripts/contact-quick-form.js"></script>
+
+@await Html.PartialAsync("schemaScript")

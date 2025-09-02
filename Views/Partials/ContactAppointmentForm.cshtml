@@ -1,0 +1,148 @@
+﻿@* ContactAppointmentForm.cshtml - Updated Design *@
+@model btlast.Models.ContactFormViewModel
+
+<link rel="stylesheet" href="/css/contact-appointment-form.css">
+
+<div id="contactFormContainer" class="contact-form-container">
+    
+    @* Header Section - Green Background *@
+    <div class="form-header">
+        <div class="header-content" id="contact-section-desktop">
+            <h3 class="header-title">Satış Ofisimiz ile İletişime Geçin</h3>
+            <p class="header-subtitle">Fırsatları Kaçırmayın! Tüm projelerimiz hakkında detaylı bilgi sahibi olmak için formu doldurun.</p>
+        </div>
+    </div>
+
+    @* Form Container *@
+    <div class="form-container">
+        @using (Html.BeginUmbracoForm("SubmitContactForm", "Contact", FormMethod.Post, new { @id = "contactAppointmentForm", @class = "contact-form", @autocomplete = "off", @novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="FormType" id="formType" value="appointment" />
+
+            <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+                <div class="loading-spinner"></div>
+                <p>Gönderiliyor...</p>
+            </div>
+            
+            <div class="tab-content active" id="appointmentTab">
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptName">Ad Soyad *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-user form-icon"></i>
+                            <input type="text" class="form-control" id="apptName" name="Name" required placeholder="Adınızı ve soyadınızı giriniz" />
+                        </div>
+                    </div>
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptEmail">Email</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope form-icon"></i>
+                            <input type="email" class="form-control" id="apptEmail" name="Email" placeholder="ornek@email.com" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptPhone">Telefon *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-phone form-icon"></i>
+                            <input type="tel" class="form-control" id="apptPhone" name="Phone" required placeholder="0555 123 45 67" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">İletişim Türü *</label>
+                        <div class="appointment-types">
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Telefon Görüşmesi" required checked />
+                                <span class="option-content">
+                                     <i>📞</i>
+                                    <span>Telefon</span>
+                                </span>
+                            </label>
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Whatsapp" required />
+                                <span class="option-content">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                    <span>Whatsapp</span>
+                                </span>
+                            </label>
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Online Görüşme" required />
+                                <span class="option-content">
+                                    <i>💻</i>
+                                    <span>Online Görüşme Talebi</span>
+                                </span>
+                            </label>
+                            <label class="appointment-option">
+                                <input type="radio" name="AppointmentType" value="Yüz Yüze Görüşme" required />
+                                <span class="option-content">
+                                    <i>👤</i>
+                                    <span>Yüz Yüze Görüşme Talebi</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row" id="appointment-date-time-wrapper" style="display: none;">
+                    <div class="form-group with-icon">
+                        <label class="form-label" for="apptDate">Randevu Tarihi *</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-calendar-days form-icon"></i>
+                            <input type="text" class="form-control datepicker" id="apptDate" name="AppointmentDate" readonly placeholder="Tarih seçmek için tıklayın" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="apptTime">Randevu Saati *</label>
+                        <select class="form-control" id="apptTime" name="AppointmentTime">
+                            <option value="">Saat seçiniz</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="apptNote">Ek Bilgiler</label>
+                        <textarea class="form-control" id="apptNote" name="Message" rows="4" placeholder="Ek bilgilerinizi buraya yazabilirsiniz..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="kvkkConsent" name="KvkkConsent" value="true" class="form-checkbox" required />
+                    <span class="checkmark"></span>
+                    <span class="checkbox-text">
+                        Sitenizde yer alan <a href="/kvkk-aydinlatma-metni/" target="_blank" rel="noopener noreferrer" class="kvkk-link">Aydınlatma Metni'ni</a> okudum ve kabul ediyorum. *
+                    </span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="marketing" name="marketing" class="form-checkbox" />
+                    <span class="checkmark"></span>
+                    <span class="checkbox-text">
+                        Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.
+                    </span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-submit">
+                <span class="button-text">FORMU HEMEN GÖNDER</span>
+                <span class="button-spinner"></span>
+            </button>
+        }
+    </div>
+</div>
+
+<script src="/Scripts/contact-appointment-form.js"></script>

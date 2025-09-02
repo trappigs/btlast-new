@@ -1,0 +1,397 @@
+/* project-cards.css - CSS Çakışmaları Çözülmüş Versiyon */
+
+/* ==========================================
+   PROJE KARTLARI (ANA SAYFA) - SCOPED STYLES
+   ========================================== */
+
+.projects-section {
+    padding: 80px 0;
+    background-color: #E9E8E6;
+}
+
+.projects-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/latoregular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.projects-section .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.projects-section .section-title {
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+}
+
+.projects-section .title-main {
+    color: #045129;
+    padding: 12px 30px;
+    border-radius: 28px;
+    display: inline-block;
+}
+
+.projects-section .title-highlight { 
+    color: #045129; 
+    margin-left: 0.5rem; 
+}
+
+.projects-section .section-subtitle { 
+    font-size: 1.1rem; 
+    color: #666; 
+    margin: 0; 
+    font-weight: 400; 
+}
+
+.projects-section .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+
+/* ==========================================
+   ANA SAYFA PROJE KARTLARI
+   ========================================== */
+
+.projects-section .project-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    position: relative;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projects-section .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Üst Başlık Alanı */
+.projects-section .card-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.35));
+    z-index: 10;
+}
+
+.projects-section .card-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.5rem !important;
+    font-weight: 600;
+    color: #045129 !important;
+    margin: 0;
+    letter-spacing: 1.2px;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
+    position: relative;
+    z-index: 11;
+}
+
+.projects-section .project-card:hover .card-title {
+    color: white !important;
+}
+
+/* Görsel Alanı */
+.projects-section .card-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.projects-section .card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.projects-section .project-card:hover .card-image-container img {
+    transform: scale(1.05);
+    filter: brightness(0.7);
+}
+
+/* Açıklama Overlay'i */
+.projects-section .card-description-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 2;
+}
+
+.projects-section .project-card:hover .card-description-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.projects-section .card-description-overlay p {
+    margin: 0;
+    font-weight: 300;
+}
+
+/* KONUT Badge */
+.projects-section .konut-badge {
+    position: absolute;
+    top: 19px;
+    right: 10px;
+    background: #045129;
+    color: white;
+    padding: 1em 1em;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.60rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    z-index: 12;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.projects-section .konut-badge i {
+    color: #FFD700;
+    font-size: 0.9rem;
+}
+
+.projects-section .konut-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Alt Footer Alanı */
+.projects-section .card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+/* Konum Badge - Yeni Pozisyon */
+.projects-section .location-info {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    z-index: 12;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.projects-section .location-info i {
+    color: white;
+    font-size: 0.8rem;
+}
+
+.projects-section .location-info:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Buton Alanı - Tek Satır Garantili */
+.projects-section .card-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.projects-section .btn {
+    padding: 0.8em 1.8em;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1.5px solid;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    z-index: 11;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.projects-section .btn-primary {
+    background-color: #045129;
+    border-color: #045129;
+    color: white;
+}
+
+.projects-section .btn-primary:hover {
+    background-color: white;
+    color: #045129;
+    border-color: #045129;
+}
+
+.projects-section .btn-secondary {
+    background-color: white;
+    border-color: #045129;
+    color: #045129;
+}
+
+.projects-section .btn-secondary:hover {
+    background-color: #045129;
+    color: white;
+}
+
+/* "Tüm Projeleri Göster" Butonu */
+.projects-section .view-all-btn-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.projects-section .view-all-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background-color: #045129;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border: 2px solid #045129;
+}
+
+.projects-section .view-all-btn:hover {
+    background-color: white;
+    color: #045129;
+}
+
+/* ==========================================
+   RESPONSIVE TASARIM - ANA SAYFA
+   ========================================== */
+
+@media (max-width: 768px) {
+    .projects-section .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .projects-section .project-card {
+        height: 350px;
+    }
+    
+    .projects-section .card-title {
+        font-size: 1.3rem !important;
+    }
+    
+    .projects-section .card-description-overlay {
+        padding: 20px;
+        padding-top: 70px;
+        padding-bottom: 80px;
+        font-size: 0.9rem;
+    }
+    
+    .projects-section .card-footer {
+        padding: 12px;
+        gap: 6px;
+    }
+    
+    .projects-section .location-info {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+    
+    .projects-section .btn {
+        font-size: 0.7rem;
+        padding: 0.7em 1.4em;
+    }
+    
+    .projects-section .card-actions {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 425px) {
+    .projects-section .btn {
+        padding: 0.6em 1.2em;
+        font-size: 0.65rem;
+    }
+    
+    .projects-section .card-footer {
+        padding: 10px;
+    }
+    
+    .projects-section .location-info {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 375px) {
+    .projects-section .btn {
+        padding: 0.5em 1em;
+        font-size: 0.6rem;
+    }
+    
+    .projects-section .card-actions {
+        gap: 4px;
+    }
+}
+
+@media (max-width: 320px) {
+    .projects-section .btn {
+        padding: 0.4em 0.8em;
+        font-size: 0.55rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .projects-section .location-info {
+        left: 28px;
+    }
+}

@@ -1,0 +1,395 @@
+/* Reset ve Temel Stiller */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Lato', system-ui, -apple-system, sans-serif;
+            background: #f5f5f5;
+            padding: 20px 0;
+        }
+
+        /* Values Zigzag Component */
+        .vz {
+            --green: #0b5e3f;
+            --track: #d4d4d4;
+            --box-bg: #fff;
+            --box-border: #e0e0e0;
+            --text: #2b2f2c;
+            --muted: #666;
+            --shadow: 0 4px 12px rgba(0,0,0,.08);
+            
+        }
+        
+        .vz__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        /* BaÅŸlÄ±k */
+        .vz__title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .vz__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+ z-index: 1;
+ z-index: 0;   /* Ã§izgi arkada */
+}
+.vz__item,
+.vz__knot {
+  position: relative;
+  z-index: 1;  /* kutular Ã§izginin Ã¼stÃ¼nde */
+}
+
+        /* MOBÄ°L (Dikey Zigzag) DÃ¼zen - Mobile First */
+        .vz__list {
+            list-style: none;
+            counter-reset: vzstep;
+            position: relative;
+            padding: 0px;
+            margin: 0;
+        }
+        
+        .vz__item {
+            position: relative;
+            padding: 7px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .vz__item.vz--in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobil Zigzag DÃ¼zeni */
+        .vz__item-inner {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+        }
+        
+        /* Tek sayÄ±lÄ±lar sola, Ã§ift sayÄ±lÄ±lar saÄŸa */
+        .vz__item:nth-child(odd) .vz__item-inner {
+            flex-direction: row;
+        }
+        
+        .vz__item:nth-child(even) .vz__item-inner {
+            flex-direction: row-reverse;
+        }
+        
+        /* Numara Kutusu */
+        .vz__knot {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background: var(--box-bg);
+            border: 3px solid var(--box-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+        
+        .vz__num::before {
+            counter-increment: vzstep;
+            content: counter(vzstep, decimal-leading-zero);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .vz__connector { 
+  display: none !important; 
+}
+        
+        /* Tek sayÄ±lÄ±lar iÃ§in L ÅŸekli (soldan baÅŸlar) */
+        .vz__item:nth-child(odd) .vz__connector {
+            width: 50%;
+            height: 4px;
+            top: 40px;
+            left: 0;
+            right: auto;
+        }
+        
+        .vz__item:nth-child(odd) .vz__connector::after {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 60px;
+            background: var(--track);
+            right: 0;
+            top: 0;
+        }
+        
+        /* Ã‡ift sayÄ±lÄ±lar iÃ§in L ÅŸekli (saÄŸdan baÅŸlar) */
+        .vz__item:nth-child(even) .vz__connector {
+            width: 50%;
+            height: 4px;
+            top: 40px;
+            right: 0;
+            left: auto;
+        }
+        
+        .vz__item:nth-child(even) .vz__connector::after {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 60px;
+            background: var(--track);
+            left: 0;
+            top: 0;
+        }
+        
+        /* YeÅŸil aktif Ã§izgiler */
+        .vz__item:nth-child(2) .vz__connector,
+        .vz__item:nth-child(2) .vz__connector::after,
+        .vz__item:nth-child(5) .vz__connector,
+        .vz__item:nth-child(5) .vz__connector::after {
+            background: var(--green);
+        }
+        
+        /* Ä°lk item'da connector yok */
+        .vz__item:first-child .vz__connector {
+            display: none;
+        }
+        
+        /* Ä°Ã§erik */
+        .vz__content {
+            flex: 1;
+            padding: 10px 20px;
+        }
+        
+        .vz__item:nth-child(odd) .vz__content {
+            text-align: left;
+        }
+        
+        .vz__item:nth-child(even) .vz__content {
+            text-align: right;
+        }
+        
+        .vz__content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a3f27;
+            margin-bottom: 6px;
+        }
+        
+        .vz__content p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--muted);
+        }
+        
+        /* TABLET (768px+) */
+        @media (min-width: 768px) {
+            .vz__item {
+                padding: 30px 0;
+            }
+            
+            .vz__knot {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .vz__num::before {
+                font-size: 42px;
+            }
+            
+            .vz__content h3 {
+                font-size: 20px;
+            }
+            
+            .vz__content p {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+        }
+        
+        /* DESKTOP (992px+) - Yatay DÃ¼zen */
+        @media (min-width: 992px) {
+            
+            .margin-5{
+                margin-top: 49px !important;
+            }
+            .margin-6{
+                margin-top: 27px !important;
+            }
+            .vz__list {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 420px;
+                position: relative;
+            }
+            
+            /* Ana yatay Ã§izgi */
+            .vz__list::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: var(--track);
+                transform: translateY(-50%);
+                z-index: 0;
+                display: none !important;
+            }
+            
+            .vz__item {
+                flex: 1;
+                padding: 0 10px;
+                position: relative;
+                transform: none;
+                opacity: 1;
+            }
+            
+            .vz__item-inner {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            /* Tek sayÄ±lÄ±lar (1,3,5) - altta konumlandÄ±r */
+            .vz__item:nth-child(odd) .vz__item-inner {
+                flex-direction: column;
+                padding-top: 60px;
+            }
+            
+            /* Ã‡ift sayÄ±lÄ±lar (2,4,6) - Ã¼stte konumlandÄ±r */
+            .vz__item:nth-child(even) .vz__item-inner {
+                flex-direction: column;
+                padding-bottom: 60px;
+            }
+            
+            /* Desktop'ta mobil connector'larÄ± gizle */
+            .vz__connector {
+                display: none;
+            }
+            
+            /* Desktop connector'larÄ± kaldÄ±rÄ±ldÄ± */
+            .vz__desktop-connector {
+                display: none;
+            }
+            
+            .vz__content {
+                text-align: center !important;
+                padding: 20px 10px;
+                max-width: 240px;
+            }
+            
+            .vz__knot {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .vz__num::before {
+                font-size: 38px;
+            }
+        }
+        
+        /* Ã‡ok geniÅŸ ekranlar iÃ§in */
+        @media (min-width: 1400px) {
+            .vz__inner {
+                max-width: 1400px;
+            }
+            
+            .vz__content {
+                max-width: 280px;
+            }
+        }
+        
+        /* Animasyon kÄ±sÄ±tlamasÄ± */
+        @media (prefers-reduced-motion: reduce) {
+            .vz__item {
+                transition: none;
+            }
+        }
+
+
+
+
+
+        /* === Desktop baÄŸlayÄ±cÄ± Ã§izgi (SVG overlay) === */
+.vz__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1; /* Ã§izgi, knotlarÄ±n ALTINDA kalmasÄ±n diye 1; knotlarÄ± 2 yapÄ±yoruz */
+}
+
+/* arka plan ray (gri) ve animasyon Ã§izgisi (yeÅŸil) */
+.vz__line--track {
+  stroke: var(--track);
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.vz__line--anim {
+  stroke: var(--green);
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+  /* animasyon iÃ§in dash kullanÄ±lacak */
+}
+
+/* mobilde SVGâ€™yi gizle */
+@media (max-width: 991.98px) {
+  .vz__svg { display: none; }
+}
+
+/* knotlar Ã§izginin Ã¼stÃ¼nde kalsÄ±n */
+@media (min-width: 992px) {
+  .vz__knot { z-index: 2; position: relative; }
+}
+
+.margin-1{
+    margin-top: 10px;
+}
+.margin-2{
+    margin-top: 6px;
+}
+.margin-3{
+    margin-top: 10px;
+}
+.margin-4{
+    margin-top: 5px;
+}
+.margin-5{
+    margin-top: 10px;
+}
+.margin-6{
+    margin-top: 7px;
+}
+
+/* Ã§izimi tetikleyince akÄ±ÅŸkan animasyon */
+.vz--draw .vz__line--anim {
+  transition: stroke-dashoffset 1600ms cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vz--draw .vz__line--anim { transition: none; }
+}
+
+/* (Opsiyonel) kesik Ã§izgi istersen:
+.vz__line--track { stroke-dasharray: 6 10; }
+*/

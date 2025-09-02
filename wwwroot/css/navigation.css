@@ -1,0 +1,890 @@
+/* wwwroot/css/navigation.css - Mevcut tasarıma dropdown eklendi */
+
+/* --- GENEL NAVİGASYON STİLLERİ (MEVCUT) --- */
+.modern-nav {
+    background-color: #045129;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+    transform: translateY(0);
+    transition: background-color 0.3s ease;
+}
+
+.modern-nav.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 65px;
+}
+
+.nav-logo .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.logo-image {
+    height: 45px;
+    width: auto;
+}
+
+.nav-logo .logo-link:hover {
+    color: #ccc;
+}
+
+/* --- MASAÜSTÜ MENÜ STİLLERİ (MEVCUT + DROPDOWN) --- */
+.nav-menu {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Dropdown wrapper için yeni stil */
+.nav-item-wrapper {
+    position: relative;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    padding: 8px 0;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* Dropdown arrow */
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    width: 12px;
+    height: 12px;
+}
+
+.nav-item-wrapper:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #ccc;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+    width: 100%;
+}
+
+/* --- YENİ DROPDOWN MENÜ STİLLERİ --- */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    padding: 8px 0;
+    margin-top: 0;
+    top: calc(100% + 15px);
+    z-index: 1001;
+}
+
+/* Sürdürülebilirlik dropdown için daha geniş */
+.nav-item-wrapper:nth-child(3) .dropdown-menu {
+    min-width: 280px;
+}
+
+.nav-item-wrapper:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #045129;
+    padding-left: 25px;
+}
+
+.dropdown-item.active {
+    background-color: #f0f8f4;
+    color: #045129;
+    font-weight: 600;
+}
+
+/* --- TELEFON NUMARASI STİLLERİ (MEVCUT) --- */
+.nav-phone {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.phone-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+}
+
+.phone-link:hover {
+    color: white;
+    text-decoration: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.phone-link i {
+    font-size: 14px;
+    animation: ring 2s ease-in-out infinite;
+}
+@font-face {
+  font-family: 'Lato'; /* Fontunuza bir isim verin */
+  src: url('/fonts/latoregular.ttf') format('truetype'); /* Dosyanın yolunu belirtin */
+  font-weight: normal;
+  font-style: normal;
+  /* KRİTİK PERFORMANS EKLEMESİ */
+  font-display: swap;
+}
+.phone-number {
+    letter-spacing: 0.5px;
+    font-family: 'Lato', 'Menlo', monospace;
+}
+
+@keyframes ring {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+    20%, 40%, 60%, 80% { transform: rotate(10deg); }
+}
+
+/* --- MOBİL İÇİN HAMBURGER BUTONU (MEVCUT) --- */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 8px;
+    z-index: 1002;
+    margin-left: 20px;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* --- MOBİL MENÜ STİLLERİ (MEVCUT + DROPDOWN) --- */
+@media (max-width: 768px) {
+    .nav-container {
+        min-height: 75px;
+    }
+
+    .logo-image {
+        height: 54px;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        right: -100%;
+        width: 280px;
+        background-color: white;
+        /* flex ile ilgili tüm kurallar kaldırıldı */
+        padding: 20px;
+        box-shadow: none;
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        overflow-y: auto;
+    }
+
+    .nav-menu.active {
+    right: 0;
+    top: 75px; /* Ortalama header yüksekliği, JS bunu ezecek */
+    bottom: 0;
+}
+
+    /* Mobilde dropdown wrapper'lar block olacak */
+    .nav-item-wrapper {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-item {
+        font-size: 1rem;
+        width: 100%;
+        color: var(--primary-green);
+        padding: 15px 10px;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 100 !important;
+        justify-content: space-between;
+    }
+
+    /* Mobilde dropdown menüler */
+    .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        background: #f8f9fa;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    /* Bu kuralın diğer stiller tarafından ezilmediğinden emin olalım */
+.dropdown-menu {
+    display: block; /* 'display: none' olmadığından emin ol */
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: #f8f9fa;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out; /* geçişi biraz daha yumuşattık */
+}
+
+/* !important ekleyerek bu kuralın önceliğini zorla artırıyoruz. */
+.dropdown-menu.mobile-active {
+    max-height: 500px;
+}
+
+    .dropdown-item {
+        padding: 12px 10px 12px 30px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .dropdown-item:hover {
+        background-color: white;
+        padding-left: 35px;
+    }
+
+    /* Dropdown arrow mobilde */
+    .has-dropdown .dropdown-arrow {
+        margin-left: auto;
+    }
+
+    .has-dropdown.active .dropdown-arrow {
+        transform: rotate(180deg);
+    }
+    
+    .nav-item:hover {
+        background-color: #f8f9fa;
+        color: var(--light-green);
+    }
+
+    .nav-item::after {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .modern-nav {
+        padding: 6px 0;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+    }
+
+    .mobile-menu-btn {
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .mobile-menu-btn span {
+        width: 28px;
+        height: 3px;
+    }
+
+    .nav-phone {
+        display: none;
+    }
+}
+
+/* Hamburger menü X animasyonu */
+.mobile-menu-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Menü açıldığında arkaplanı karartan overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- RESPONSİVE AYARLAR (MEVCUT) --- */
+@media (max-width: 992px) {
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .nav-menu {
+        gap: 25px;
+    }
+    
+    .nav-item {
+        font-size: 15px;
+    }
+    
+    .phone-link {
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+    
+    .phone-number {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .nav-menu {
+        gap: 10px;
+    }
+    
+    .phone-link {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    .phone-number {
+        display: none;
+    }
+    
+    .phone-link {
+        padding: 12px;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+    }
+    
+    .phone-link i {
+        font-size: 16px;
+    }
+}
+
+/* --- SIDE PANEL STİLLERİ (MEVCUT) --- */
+.side-panel-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.side-panel-toggle svg {
+    width: 34px;
+    height: 34px;
+    fill: white;
+}
+
+.side-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-panel-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-panel-container {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 350px;
+    max-width: 90%;
+    height: 100%;
+    background: white;
+    z-index: 1002;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow-y: auto;
+}
+
+.side-panel-container.active {
+    right: 0;
+}
+
+.side-panel-content {
+    padding: 2rem;
+}
+
+.side-panel-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.pxl-logo {
+    margin-bottom: 2rem;
+}
+
+.pxl-logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+.side-panel-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.side-panel-address a {
+    color: #555;
+    text-decoration: none;
+    line-height: 1.6;
+}
+
+.side-panel-spacer {
+    height: 1px;
+    background-color: #eee;
+    margin: 2rem 0;
+}
+
+.side-panel-icon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.side-panel-icon-list li a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    color: #555;
+    text-decoration: none;
+}
+
+.side-panel-icon-list i {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+}
+
+.side-panel-social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 2rem;
+}
+
+.side-panel-social-icons a {
+    color: #fff;
+    background-color: var(--primary-green);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.side-panel-social-icons a:hover {
+    background-color: var(--light-green);
+}
+
+/* --- RESPONSIVE KONTROL --- */
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none;
+    }
+    .side-panel-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-panel-toggle {
+        display: none;
+    }
+}
+
+/* --- SCROLL NAVBAR EFEKTİ (MEVCUT) --- */
+@media (min-width: 769px) {
+    .modern-nav {
+        background: #045129;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    background-color 0.4s ease;
+    }
+    
+    body {
+        padding-top: 0 !important;
+    }
+
+    .modern-nav.scrolled {
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        transform: translateX(0);
+    }
+
+    .modern-nav.nav-hidden {
+        transform: translateY(-120%);
+    }
+
+    .modern-nav.scrolled.nav-hidden {
+        transform: translateY(-120%) translateX(0);
+    }
+}
+
+/* --- MOBİL MENÜ İLETİŞİM BİLGİLERİ (MEVCUT) --- */
+.mobile-menu-contact-info {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .nav-menu.active .mobile-menu-contact-info {
+        display: block;
+        padding-top: 20px;
+        width: 100%;
+    }
+
+    .nav-menu.active {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .mobile-menu-spacer {
+        height: 1px;
+        background-color: #eee;
+        margin: 1rem 0;
+    }
+
+    .mobile-menu-contact-info .side-panel-icon-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .mobile-menu-contact-info .side-panel-icon-list a {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 0;
+        color: #555;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .mobile-menu-contact-info .side-panel-icon-list i {
+        font-size: 1.1rem;
+        color: var(--primary-green);
+    }
+
+    .mobile-menu-contact-info .side-panel-social-icons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        padding-bottom: 20px;
+    }
+
+    .mobile-menu-contact-info .side-panel-social-icons a {
+        color: #fff;
+        background-color: var(--primary-green);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+}
+
+/* --- OVAL NAVBAR (MEVCUT) --- */
+@media (min-width: 769px) {
+    .modern-nav {
+        background: #045129;
+        top: 20px;
+        left: 275px;
+        right: 275px;
+        width: auto;
+        transform: none;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        position: fixed;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    body {
+        padding-top: 0 !important;
+    }
+
+    .modern-nav.scrolled {
+        background: #045129;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        transform: none;
+    }
+
+    .modern-nav.nav-hidden {
+        transform: translateY(-120%);
+    }
+
+    .modern-nav.nav-visible {
+        transform: translateY(0);
+    }
+
+    body.scrolled-nav {
+        padding-top: 95px;
+    }
+}
+
+/* --- OVAL NAV BAR LOGO HİZALAMA (MEVCUT) --- */
+@media (min-width: 769px) {
+    .modern-nav:not(.scrolled) .nav-container {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 25px;
+    }
+}
+
+/* --- 16" VE ALTI LAPTOPLAR İÇİN (GÜNCELLENDİ) --- */
+@media (min-width: 769px) and (max-width: 1600px) {
+    .modern-nav {
+        padding: 20px 0;
+    }
+
+    .nav-container {
+        min-height: 75px;
+    }
+
+    .logo-image {
+        height: 50px;
+    }
+
+    .nav-menu {
+        /* DEĞİŞİKLİK: Menü öğeleri arasındaki boşluk azaltıldı (40px -> 25px) */
+        gap: 15px; 
+    }
+
+    .nav-item {
+        font-size: 15px;
+        padding: 10px 10px;
+    }
+
+    .phone-link {
+        font-size: 17px;
+        padding: 14px 22px;
+    }
+    
+    /* GÜNCELLENEN BÖLÜM */
+    .modern-nav:not(.scrolled) {
+        top: 15px;
+        /* DEĞİŞİKLİK: Kenar boşlukları azaltılarak navbar genişletildi (200px -> 80px) */
+        left: 80px;
+        right: 80px;
+    }
+
+    .fixed-call-btn {
+        top: 90px;
+        font-size: 1.1rem;
+        padding: 20px 28px;
+    }
+
+    body.scrolled-nav {
+        padding-top: 105px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1600px) {
+    .modern-nav:not(.scrolled) {
+        top: 15px;
+        left: 75px;
+        right: 75px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1600px) {
+    .fixed-call-btn {
+        top: 200px;
+        font-size: 1.1rem;
+        padding: 20px 28px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1600px) {
+    body.scrolled-nav {
+        padding-top: 105px;
+    }
+}
+
+/* --- CSS DEĞİŞKENLERİ --- */
+:root {
+    --primary-green: #045129;
+    --light-green: #056838;
+}
+
+/* --- HOVER EFEKTLERİ İÇİN ÖZEL DURUMLAR --- */
+@media (hover: hover) {
+    .phone-link:hover {
+        transform: translateY(-2px) scale(1.05);
+    }
+    
+    .phone-link:hover i {
+        animation-duration: 0.5s;
+    }
+}
+
+/* --- ACCESSIBILITY --- */
+.phone-link:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+    .phone-link {
+        border-color: white;
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+@media print {
+    .phone-link {
+        color: #045129 !important;
+        background: none !important;
+        border: 1px solid #045129 !important;
+    }
+    
+    .phone-link::after {
+        content: " (Telefon)";
+        font-size: 12px;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+  /* Menü açıldığında hamburger butonunun konumunu ve rengini ayarlar */
+  .mobile-menu-btn.open {
+    position: fixed; /* Butonu ekrana göre sabitler */
+    top: 28px;       /* Ekranın üstünden boşluk */
+    right: 20px;      /* Ekranın sağından boşluk */
+  }
+
+  /* Menü açıldığında (X olduğunda) buton çizgilerinin rengini, beyaz menü üzerinde görünecek şekilde koyu yapar */
+  .mobile-menu-btn.open span {
+    background-color: white; /* Koyu renk */
+  }
+}

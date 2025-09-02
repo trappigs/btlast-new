@@ -1,0 +1,59 @@
+﻿@model btlast.Models.ContactFormViewModel
+
+<div id="quickContactFormContainer" class="contact-form-container">
+    <div class="form-header">
+      <button id="closeQuickPopup" class="popup-close" type="button" aria-label="Kapat">✕</button>
+      <div class="header-content">
+        <h2 class="header-title">Hızlı İletişim</h2>
+        <p class="header-subtitle">Adınızı ve telefonunuzu bırakın, sizi hemen arayalım.</p>
+      </div>
+    </div>
+
+
+    <div class="form-container">
+        <form asp-action="SubmitQuickForm" asp-controller="Contact" method="post" id="quickContactForm" class="contact-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="FormType" value="quick" />
+
+            <!-- Ad Soyad -->
+            <div class="form-row">
+                <div class="form-group with-icon">
+                    <i class="fa fa-user form-icon"></i>
+                    <input type="text" name="Name" class="form-control" placeholder="Ad Soyad *" required />
+                </div>
+            </div>
+
+            <!-- Telefon -->
+            <div class="form-row">
+                <div class="form-group with-icon">
+                    <i class="fa fa-phone form-icon"></i>
+                    <input type="tel" name="Phone" class="form-control" placeholder="Telefon *" required />
+                </div>
+            </div>
+
+            <!-- KVKK -->
+            <label class="checkbox-label">
+                <input type="checkbox" name="KvkkConsent" value="true" class="form-checkbox" required />
+                <span class="checkmark"></span>
+                <span class="checkbox-text">
+                    <a href="/kvkk" class="kvkk-link" target="_blank">Aydınlatma Metni</a>'ni okudum ve kabul ediyorum. *
+                </span>
+            </label>
+
+            <!-- Kampanya İzni -->
+            <label class="checkbox-label">
+                <input type="checkbox" name="AllowCampaigns" class="form-checkbox" />
+                <span class="checkmark"></span>
+                <span class="checkbox-text">
+                    Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.
+                </span>
+            </label>
+
+            <!-- Gönder Butonu -->
+            <button type="submit" class="btn-submit">
+                <span class="button-text">FORMU HEMEN GÖNDER</span>
+                <span class="button-spinner"></span>
+            </button>
+        </form>
+    </div>
+</div>

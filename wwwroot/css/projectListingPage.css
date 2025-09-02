@@ -1,0 +1,277 @@
+/* Projects Header */
+.projects-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 100px 0 80px;
+}
+
+/* Projects Section */
+.projects-section {
+    padding: 0 0 80px;
+    background-color: #f5f4f0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(280px, 1fr)); /* 5 sütun, minimum 280px genişlik */
+    gap: 25px;
+    margin-top: -50px; /* Header ile iç içe geçme efekti */
+    max-width: 1600px; /* Daha geniş maksimum genişlik */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    justify-content: center; /* Kartları ortala */
+    justify-items: center; /* Her kartı kendi alanında ortala */
+}
+
+/* Project Cards */
+.project-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px; /* Minimum yükseklik */
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.project-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
+
+.project-image {
+    margin-bottom: 18px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-info {
+    margin-bottom: 12px;
+}
+
+.project-location {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.project-price {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.project-description {
+    flex-grow: 1;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.project-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Buton Stilleri */
+.btn-project,
+.btn-form {
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid;
+    background: transparent;
+    cursor: pointer;
+}
+
+.btn-project {
+    background: #045129;
+    color: white;
+    border-color: #045129;
+}
+
+.btn-project:hover {
+    background: #067833;
+    border-color: #067833;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(4, 81, 41, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-form { 
+    color: #333; 
+    border-color: #333; 
+}
+
+.card-dark .btn-form { 
+    color: white; 
+    border-color: white; 
+}
+
+.btn-form:hover { 
+    background: #333; 
+    color: white; 
+    transform: translateY(-2px);
+}
+
+.card-dark .btn-form:hover { 
+    background: white; 
+    color: #333; 
+    transform: translateY(-2px);
+}
+
+/* Renkler */
+.card-beige { 
+    background: linear-gradient(135deg, #d4c4a8 0%, #c9b896 100%);
+    color: #333; 
+}
+
+.card-light { 
+    background: linear-gradient(135deg, #f0f0f0 0%, #e5e5e5 100%);
+    color: #333; 
+}
+
+.card-dark { 
+    background: linear-gradient(135deg, #8b7355 0%, #7a6448 100%);
+    color: white; 
+}
+
+.card-green { 
+    background: linear-gradient(135deg, #c8d4d0 0%, #b8c4c0 100%);
+    color: #333; 
+}
+
+.card-olive { 
+    background: linear-gradient(135deg, #b8c4a8 0%, #a8b498 100%);
+    color: #333; 
+}
+
+/* Responsive Design */
+
+/* Büyük Ekranlar (1400px+) - 5 sütun */
+@media (min-width: 1400px) {
+    .projects-grid {
+        grid-template-columns: repeat(5, minmax(280px, 1fr));
+        gap: 25px;
+        justify-content: center;
+    }
+}
+
+/* Orta-Büyük Ekranlar (1100px - 1399px) - 4 sütun */
+@media (min-width: 1100px) and (max-width: 1399px) {
+    .projects-grid {
+        grid-template-columns: repeat(4, minmax(280px, 1fr));
+        gap: 20px;
+        justify-content: center;
+    }
+}
+
+/* Orta Ekranlar (850px - 1099px) - 3 sütun */
+@media (min-width: 850px) and (max-width: 1099px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, minmax(280px, 1fr));
+        gap: 20px;
+        justify-content: center;
+    }
+}
+
+/* Tablet (600px - 849px) - 2 sütun */
+@media (min-width: 600px) and (max-width: 849px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: -40px;
+        justify-content: center;
+    }
+}
+
+/* Mobil (599px ve altı) - 1 sütun */
+@media (max-width: 599px) {
+    .projects-header {
+        padding: 80px 0 60px;
+    }
+    
+    .projects-section {
+        padding: 0 0 60px;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: -20px;
+        padding: 0 15px;
+        justify-content: center;
+        justify-items: center;
+    }
+    
+    .project-card {
+        min-height: auto;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+/* Hover efektleri mobilde devre dışı */
+@media (hover: none) {
+    .project-card:hover {
+        transform: none;
+    }
+    
+    .project-card:hover .project-image img {
+        transform: none;
+    }
+    
+    .btn-project:hover,
+    .btn-form:hover {
+        transform: none;
+    }
+}
+
+/* Container genişliği için ek ayarlar */
+@media (min-width: 1600px) {
+    .projects-grid {
+        max-width: 1800px;
+    }
+}

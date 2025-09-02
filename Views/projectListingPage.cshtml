@@ -1,0 +1,101 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Web
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = "Projelerimiz";
+
+    // --- YAPI_LANDIRILMIŞ VERİ İÇİN HAZIRLIK (GÜNCELLENMİŞ) ---
+    var projects = Model.Children().Where(x => x.IsVisible()).ToList();
+
+    var itemListElements = new List<string>();
+    var position = 1;
+
+    // LÜTFEN BU SATIRI KENDİ LOGO URL'İNİZ İLE GÜNCELLEYİN
+    var logoUrl = "https://bereketlitopraklar.com.tr/media/ihljr0ls/logo-light.svg"; // Örnek URL, kendinizinkiyle değiştirin
+
+    foreach (var project in projects)
+    {
+        var projectUrl = project.Url(mode: UrlMode.Absolute);
+        var projectName = project.Name.Replace("\"", "\\\"");
+        var projectDescription = project.Value<string>("metaDescription")?.Replace("\"", "\\\"");
+        var projectImage = project.Value<IPublishedContent>("projectImage");
+        var projectImageUrl = projectImage?.Url(mode: UrlMode.Absolute) ?? "";
+
+        // Article için zorunlu olan tarihleri Umbraco'dan otomatik çekiyoruz
+        var datePublished = project.CreateDate.ToString("o"); // ISO 8601 formatında
+        var dateModified = project.UpdateDate.ToString("o"); // ISO 8601 formatında
+
+        // Her bir proje (artık makale) için JSON metnini oluştur
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@context"": ""https://schema.org"",
+                ""@type"": ""Article"",
+                ""@id"": ""{projectUrl}"",
+                ""headline"": ""{projectName}"",
+                ""url"": ""{projectUrl}"",
+                ""description"": ""{projectDescription}"",
+                ""image"": {{
+                    ""@type"": ""ImageObject"",
+                    ""url"": ""{projectImageUrl}""
+                }},
+                ""author"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""url"": ""bereketlitopraklar.com.tr""
+                }},
+                ""publisher"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""logo"": {{
+                        ""@type"": ""ImageObject"",
+                        ""url"": ""{logoUrl}""
+                    }}
+                }},
+                ""datePublished"": ""{datePublished}"",
+                ""dateModified"": ""{dateModified}""
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
+}
+
+
+
+@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) --- *@
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "CollectionPage",
+    "name": "Projelerimiz | Bereketli Topraklar",
+    "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+    "url": "@Model.Url(mode: UrlMode.Absolute)",
+    "mainEntity": {
+        "@@type": "ItemList",
+        "numberOfItems": @projects.Count(),
+        "itemListElement": [
+            @Html.Raw(string.Join(",", itemListElements))
+        ]
+    }
+}
+</script>
+
+@* ProjectCards partial'ını çağırırken "IsProjectListPage" parametresini true olarak gönderiyoruz *@
+@await Html.PartialAsync("ProjectCards", Model, new ViewDataDictionary(ViewData) { { "IsProjectListPage", true } })
+
+
+<style>
+    /* .projects-section, ProjectCards.cshtml partial'ının ana taşıyıcısıdır.
+    */
+    /* !important kullanarak harici CSS dosyasındaki kuralı ezdiğimizden emin oluyoruz.
+    */
+    .projects-section {
+        padding-top: 140px !important; 
+    }
+</style>
+

@@ -1,0 +1,164 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = "Hakkımızda";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+}
+
+<link rel="stylesheet" href="/css/about.css">
+
+
+@await Html.PartialAsync("schemaScript")
+
+
+<!-- Hero Section - We Build For People -->
+<section class="about-hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- <span class="hero-subtitle">HAKKIMIZDA</span> -->
+                <h1 class="hero-title">Biz Kimiz?</h1>
+                
+                <div class="hero-description">
+                    <p>
+                        Biz, Bereketli Topraklar olarak, Türkiye'nin zengin ve
+                        bereketli topraklarında değerli arsa yatırım fırsatları sunan
+                        bir gayrimenkul şirketiyiz. Toprağın bereketine ve yatırımın
+                        geleceğine derin bir inançla hareket ediyoruz. Amacımız,
+                        arsa yatırımının uzun vadeli faydalarını geniş kitlelere
+                        erişilebilir kılmaktır. Kuruluşumuzdan bu yana şeffaflık,
+                        güvenilirlik ve müşteri memnuniyetini iş yapış şeklimizin
+                        temeli olarak benimsemiş durumdayız.
+                    </p>
+                    
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="/media/hrkjlnda/bereketli-topraklar-logo-2-pdf.svg" alt="İnşaat çalışması" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about-hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- <span class="hero-subtitle">HAKKIMIZDA</span> -->
+                <h1 class="hero-title">Misyonumuz</h1>
+                
+                <div class="hero-description">
+                    <p>
+                        Misyonumuz, müşterilerimize sadece toprak parçaları sunmakla
+                        kalmayıp, aynı zamanda hayallerini gerçekleştirme potansiyeline
+                        sahip fırsatlar sağlamaktır. Arsa yatırımı konusunda derinlemesine
+                        uzmanlık ve rehberlik ederek müşterilerimizin finansal güvenliğine
+                        ve geleceklerinin şekillendirilmesine katkıda bulunmayı
+                        hedefliyoruz. Her müşterinin ihtiyacını önceliklendirerek şeffaf,
+                        etik ve kişiselleştirilmiş hizmetler sunmak bizim için temel bir
+                        amaçtır.
+                    </p>
+                    
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="/media/hrkjlnda/bereketli-topraklar-logo-2-pdf.svg" alt="İnşaat çalışması" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="about-hero" style="padding-bottom: 100px;">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- <span class="hero-subtitle">HAKKIMIZDA</span> -->
+                <h1 class="hero-title">Vizyonumuz</h1>
+                
+                <div class="hero-description">
+                    <p>
+                        Bereketli Topraklar olarak vizyonumuz, Türkiye'de gayrimenkul
+                        sektörünün öncü ve en güvenilir markası olmak, sürdürülebilir ve
+                        yenilikçi yatırım çözümleri ile müşterilerimizin hayatına değer
+                        katmaktır. Topluma ve çevreye saygılı, etik değerlere bağlı bir
+                        yaklaşımla, arsa yatırımını herkes için ulaşılabilir ve kazançlı bir
+                        seçenek haline getirmeyi hedefliyoruz.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="/media/hrkjlnda/bereketli-topraklar-logo-2-pdf.svg" alt="İnşaat çalışması" />
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("NelerYapiyoruzSection-Hakkimizda")
+
+
+@await Html.PartialAsync("_ValuesTimeline")
+
+@await Html.PartialAsync("GenisPortfoyumuzSection-AboutUs")
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="testimonials-container">
+        <span class="testimonials-subtitle">MÜŞTERİ YORUMLARI</span>
+        <h2 class="testimonials-title">Müşteri Başarı Hikayeleri: Müşterilerimizin Söylediklerini Dinleyin</h2>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">
+                    <span>★ ★ ★ ★ ★</span>
+                </div>
+                <p class="testimonial-text">
+                    Sıradan emlakçı şişirmelerini yapmadan, abartmadan ve azaltmadan sattıkları ürünü olduğu gibi anlatıp yerinde gösteriyorlar. Piyasaya göre makul fiyatlarda herkesin bütçesine göre muhtelif arsalar var. Ben hiç sorun yaşamadan Yenişehir'de arsa sahibi oldum. Semih ve Bilal beye ilgi ve sabırlar ı için teşekkür ediyorum.
+                </p>
+                <div class="testimonial-author">
+                    <strong>MURAT ÇELİK</strong>
+                    <span>İstanbul, Türkiye</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="stars">
+                    <span>★ ★ ★ ★ ★</span>
+                </div>
+                <p class="testimonial-text">
+                    Merhabalar. Yaklaşık bir yıldan bu yana sahil kasabalarının köylerinde bir arsa arayış içerisindeydim. Bu arada Bereketi Topraklar firması ile tanıştım tam hayal ettiğim arsayı onların vesilesiyle aldım. Bütçemi biraz aşmasına rağmen firma sahibi Bilal Aktaş Bey ödemelerde kolaylık sağladı, kendisine çok teşekkür ederim. Tüm işlemler sırasında merak ettiğim bütün konuları en açık bir şekilde ve dürüstçe aydınlattığı için, özellikle çalışanlardan Semih Aygün kardeşimize Çok teşekkür ederim. Bu tür yatırım yapmak isteyen herkese önce Bereketli Topraklar'a danışmasını tavsiye ederim
+                </p>
+                <div class="testimonial-author">
+                    <strong>NURİ İMAMOĞLU</strong>
+                    <span>Ankara, Türkiye</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="stars">
+                    <span>★ ★ ★ ★ ★</span>
+                </div>
+                <p class="testimonial-text">
+                    Babamla birlikte Bereketli Topraklar sayesinde Susurluk Söve’den arsa sahibi olduk. Bizlerle ilgilenen  Hakan Bey ve Hayati Bey’e emeklerinden dolayı, Bilal Bey’e de misafirperverliğinden dolayı çok teşekkür ederiz. Başarılar ve kolaylıklar diliyorum. Bereketi bol olsun.
+                </p>
+                <div class="testimonial-author">
+                    <strong>Ebru Öztürk</strong>
+                    <span>İzmir, Türkiye</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+.about-hero{
+    padding-top: 170px !important;
+}
+@@media(max-width: 768px)
+{
+    .about-hero{
+    padding-top: 90px !important;
+    }
+}
+</style>

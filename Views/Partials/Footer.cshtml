@@ -1,0 +1,122 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<footer class="mt-5 " style="background-color: #045129; color: white;">
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- İletişim Bilgileri -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="fw-bold mb-3" style="letter-spacing: 1px;">İLETİŞİM</h5>
+                <div class="small">
+                    <p class="mb-1">Nilüferköy Mah. Değirmen Sokak</p>
+                    <p class="mb-1">Prime Bademli İş Merkezi No: 12</p>
+                    <p class="mb-1">İç Kapı No: A3</p>
+                    <p class="mb-3">Osmangazi, Bursa 16130</p>
+                    <p class="mb-1">
+                        <a href="mailto:info@bereketlitopraklar.com" class="text-light text-decoration-none">
+                            info@bereketlitopraklar.com
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="tel:+902244567890" class="text-light text-decoration-none">
+                            +90 224 432 49 59
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Hızlı Linkler -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="fw-bold mb-3" style="letter-spacing: 1px;">HIZLI LİNKLER</h5>
+                <div class="small">
+                    <p class="mb-1">
+                        <a href="/" class="text-light text-decoration-none">ANA SAYFA</a>
+                    </p>
+                    <p class="mb-1">
+                        <a href="/projeler/" class="text-light text-decoration-none">PROJELER</a>
+                    </p>
+                    <p class="mb-1">
+                        <a href="/hakkimizda/" class="text-light text-decoration-none">HAKKIMIZDA</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="/ekibimiz/" class="text-light text-decoration-none">EKİBİMİZ</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="/iletisim/" class="text-light text-decoration-none">İLETİŞİM</a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Sosyal Medya -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="fw-bold mb-3" style="letter-spacing: 1px;">SOSYAL MEDYA</h5>
+                <div class="small">
+                    <p class="mb-1">
+                        <a href="#" target="_blank" class="text-light text-decoration-none">INSTAGRAM</a>
+                    </p>
+                    <p class="mb-1">
+                        <a href="#" target="_blank" class="text-light text-decoration-none">FACEBOOK</a>
+                    </p>
+                    <p class="mb-1">
+                        <a href="#" target="_blank" class="text-light text-decoration-none">TWITTER</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="#" target="_blank" class="text-light text-decoration-none">LINKEDIN</a>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="fw-bold mb-3" style="letter-spacing: 1px;">HABERLER</h5>
+                <p class="small mb-3">Yeni projelerden haberdar olmak için e-posta adresinizi bırakın.</p>
+                
+                <form class="mb-3">
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control form-control-sm" placeholder="E-posta adresiniz" required>
+                        <button class="btn btn-sm text-white" style="background-color: #067833;" type="submit">
+                            ABONE OL
+                        </button>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="newsletter-consent" required>
+                        <label class="form-check-label small" for="newsletter-consent">
+                            E-bülten almayı kabul ediyorum.
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alt Kısım -->
+    <div class="border-top border-light border-opacity-25">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="nav-logo">
+            <a href="/" class="logo-link">
+                @* Hatalı SVG kodunu siliyoruz ve yerine bu <img> etiketini ekliyoruz *@
+                <img src="/media/ihljr0ls/logo-light.svg" alt="Bereketli Topraklar Logo" class="logo-image" width="180" height="45" />
+            </a>
+        </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="small mb-2 text-light opacity-75">© 2025 Bereketli Topraklar - Tüm hakları saklıdır</p>
+                    <div class="d-flex flex-wrap justify-content-md-end gap-3">
+                        <a href="/gizlilik-politikasi/" class="small text-light text-decoration-none opacity-75">Gizlilik Politikası</a>
+                        <a href="/kullanim-kosullari/" class="small text-light text-decoration-none opacity-75">Kullanım Koşulları</a>
+                        <a href="/cerez-politikasi/" class="small text-light text-decoration-none opacity-75">Çerez Politikası</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        opacity: 0.8 !important;
+        transition: opacity 0.3s ease;
+    }
+</style>

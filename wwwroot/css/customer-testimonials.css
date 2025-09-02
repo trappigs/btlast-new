@@ -1,0 +1,130 @@
+/* =================================================================== */
+/* MÜŞTERİ YORUMLARI BÖLÜMÜ STİLLERİ                                  */
+/* =================================================================== */
+
+.testimonials-section {
+    padding: 80px 0;
+    background-color: #f4f7f6; /* Hafif gri arka plan */
+}
+
+.testimonials-section .section-title {
+    color: #045129; /* Ana yeşil renk */
+    font-weight: 600;
+}
+
+.testimonials-section .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 1rem auto 0;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.testimonial-card {
+    background-color: white;
+    padding: 35px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid #045129; /* Üstte vurgu çizgisi */
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-stars {
+    color: #FFC107; /* Yıldız rengi */
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.card-text {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-style: italic;
+    flex-grow: 1; /* Metnin kartı doldurmasını sağlar */
+}
+
+.card-author {
+    margin-top: auto; /* Yazarı en alta iter */
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    text-align: left;
+}
+
+.card-author strong {
+    display: block;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.card-author span {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 992px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr; /* Tablet ve mobilde tek sütun */
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 60px 0;
+    }
+    .testimonial-card {
+        padding: 30px 25px;
+    }
+}
+
+
+/* =================================================================== */
+/* "TÜM YORUMLARI GÖR" BUTONU STİLLERİ                                */
+/* =================================================================== */
+
+.view-all-testimonials-container {
+    text-align: center;
+    margin-top: 50px; /* Yorum kartları ile arasında boşluk bırakır */
+}
+
+.view-all-testimonials-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #045129; /* Ana yeşil renk */
+    color: white;
+    padding: 14px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.view-all-testimonials-btn:hover {
+    background-color: white;
+    color: #045129;
+    border-color: #045129;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.view-all-testimonials-btn .fa-google {
+    font-size: 1.2rem;
+}

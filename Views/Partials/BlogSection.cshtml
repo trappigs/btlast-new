@@ -1,0 +1,60 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    var blogPage = Model.Root().Children().FirstOrDefault(x => x.ContentType.Alias == "blogListingPage");
+    if (blogPage == null) { return; }
+
+    var latestPosts = blogPage.Children()
+                              .Where(x => x.IsVisible())
+                              .OrderByDescending(x => x.Value<DateTime>("postDate"))
+                              .Take(3);
+}
+
+<section class="blog-section-home">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Blog'dan Son Yazılar</h2>
+            <p class="section-subtitle">Yatırım dünyasındaki son gelişmeler, ipuçları ve projelerimizden haberler.</p>
+        </div>
+
+        <div class="blog-grid-home">
+            @foreach (var post in latestPosts)
+            {
+                var featuredImage = post.Value<IPublishedContent>("featuredImage");
+                var excerpt = post.Value<string>("excerpt");
+
+                // *** YENİ VE DAHA SAĞLAM TARİH KODU ***
+                var postDate = post.Value<DateTime>("postDate");
+                if (postDate == default(DateTime)) {
+                    postDate = post.CreateDate;
+                }
+                var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+
+                <div class="blog-card">
+                    @if (featuredImage != null)
+                    {
+                        <div class="blog-card-image">
+                            <a href="@post.Url()">
+                                <img src="@featuredImage.Url()" alt="@post.Name">
+                            </a>
+                        </div>
+                    }
+                    <div class="blog-card-content">
+                        <div class="blog-card-date">@formattedDate</div>
+                        <a href="@post.Url()" class="blog-card-title">@post.Name</a>
+                        @if (!string.IsNullOrWhiteSpace(excerpt))
+                        {
+                            @Html.Raw(excerpt)
+                        }
+                        <div class="blog-card-author">
+                            Yazar: @(post.HasValue("author") ? post.Value("author") : "Bereketli Topraklar")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="view-all-btn-container">
+            <a  id="contact-section-mobile" href="@blogPage.Url()" class="view-all-btn">Tüm Yazıları Oku</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,144 @@
+﻿@* Portfolio Cards with Modal Form *@
+@* Views/Partials/PortfolioCards.cshtml *@
+
+<!-- Çalışmalarımız Section -->
+<link rel="stylesheet" href="/css/portfolioCards.css">
+
+<div class="my-work-wrapper scroll-section" data-section="cards">
+    <div class="my-work-header">
+        <h2>İmarlı Arsa Projelerimiz</h2>
+    </div>
+    
+    <div class="portfolio-container">
+        <div class="portfolio-card card-beige">
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">İBİLLER KÖYÜ</h3>
+                <div class="portfolio-image">
+                    <img src="/media/ly5dg0sn/7.jpg" alt="İbiller İmarlı Arsa">
+                </div>
+                <p class="portfolio-description">
+                    İbiller bölgesindeki imarlı arsalarımız, altyapısı tamamlanmış, şehir merkezine ve ana yollara kolay erişim sağlayan lokasyonuyla yatırımınıza değer katıyor. Uygun taksit seçenekleri ve doğayla iç içe yaşam fırsatı sunuyor.
+                </p>
+                <div class="card-buttons">
+                    <a href="/projeler/ibiller-koyu/" class="btn-project">Projeyi İncele</a>
+                    <button class="btn-form" data-project="İbiller Köyü" onclick="openContactModal(this)">Formu Doldurun</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portfolio-card card-light">
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">İBİLLER ÇAYIRI</h3>
+                <div class="portfolio-image">
+                    <img src="/media/ewqfs4d4/3.jpg" alt="İbiller Çayırı İmarlı Arsa">
+                </div>
+                <p class="portfolio-description">
+                    İbiller Çayırı'ndaki projelerimiz; geniş parselleri, modern altyapısı ve yeşil alan avantajıyla hem rekreasyon hem de yatırım amaçlı kullanım için ideal. Aylık taksitlerle kolay ödeme imkânı sunuyoruz.
+                </p>
+                <div class="card-buttons">
+                    <a href="/projeler/ibiller-cayiri/" class="btn-project">Projeyi İncele</a>
+                    <button class="btn-form" data-project="İbiller Çayırı" onclick="openContactModal(this)">Formu Doldurun</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portfolio-card card-dark">
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">REŞADİYE</h3>
+                <div class="portfolio-image">
+                    <img src="/media/widhwltq/18.jpg" alt="Reşadiye İmarlı Arsa">
+                </div>
+                <p class="portfolio-description">
+                    Reşadiye bölgesinde yer alan imarlı arsalarımız, şehir merkezine yakınlığı ve gelişen altyapısıyla uzun vadeli kazanç sunuyor. Bölge okul, hastane ve alışveriş merkezlerine yürüme mesafesinde.
+                </p>
+                <div class="card-buttons">
+                    <a href="/projeler/resadiye/" class="btn-project">Projeyi İncele</a>
+                    <button class="btn-form" data-project="Reşadiye" onclick="openContactModal(this)">Formu Doldurun</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portfolio-card card-green">
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">ILICABOĞAZI</h3>
+                <div class="portfolio-image">
+                    <img src="/media/py3lzk01/dji_0819.jpg" alt="Ilıcabğazi İmarlı Arsa">
+                </div>
+                <p class="portfolio-description">
+                    Ilıcaboğazı'ndaki imarlı arsalarımız; termal kaynaklara, doğal parklara ve ana yollara yakın konumuyla hem tatil hem yatırım amaçlı ideal. Esnek ödeme planlarıyla avantajlı alım fırsatı sunuyoruz.
+                </p>
+                <div class="card-buttons">
+                    <a href="/projeler/ilicabogazi/" class="btn-project">Projeyi İncele</a>
+                    <button class="btn-form" data-project="Ilıcaboğazı" onclick="openContactModal(this)">Formu Doldurun</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portfolio-card card-olive">
+            <div class="portfolio-content">
+                <h3 class="portfolio-title">ARMUTLU</h3>
+                <div class="portfolio-image">
+                    <img src="/media/wmjlu2fo/dji_0478.jpg" alt="Armutlu İmarlı Arsa">
+                </div>
+                <p class="portfolio-description">
+                    Armutlu bölgesindeki imarlı arsalarımız, deniz manzarası, modern altyapı ve sosyal donatı alanlarıyla yatırımcıya yüksek getiri vaat ediyor. 24 aya varan taksit seçenekleriyle bütçenize uygun planlar sunuyoruz.
+                </p>
+                <div class="card-buttons">
+                    <a href="/projeler/armutlu/" class="btn-project">Projeyi İncele</a>
+                    <button class="btn-form" data-project="Armutlu" onclick="openContactModal(this)">Formu Doldurun</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="contact-modal-overlay" id="contactModal">
+    <div class="contact-modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">İletişim Formu</h3>
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <form id="contactForm" class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactName">Ad Soyad *</label>
+                        <input type="text" id="contactName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Telefon *</label>
+                        <input type="tel" id="contactPhone" name="phone" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactEmail">E-posta *</label>
+                    <input type="email" id="contactEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactMessage">Mesajınız</label>
+                    <textarea id="contactMessage" name="message" rows="4" placeholder="Projeyle ilgili sorularınızı yazabilirsiniz..."></textarea>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="contactConsent" required>
+                        <span class="checkmark"></span>
+                        Kişisel verilerimin işlenmesini kabul ediyorum.
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeContactModal()">İptal</button>
+                    <button type="submit" class="btn-submit">Gönder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="/Scripts/portfolioCards.js"></script>

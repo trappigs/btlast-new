@@ -1,0 +1,404 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<link rel="stylesheet" href="/css/navigation.css">
+
+<nav class="modern-nav">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="/" class="logo-link">
+                <img src="/media/ihljr0ls/logo-light.svg" alt="Bereketli Topraklar Logo" class="logo-image" width="180" height="45" />
+            </a>
+        </div>
+
+        <div class="nav-menu">
+            @* --- DROPDOWN'LI YENİ MENÜ YAPISI --- *@
+            
+            @* Kurumsal Dropdown *@
+            <div class="nav-item-wrapper">
+                <a href="#" class="nav-item has-dropdown @(Model.Url().StartsWith("/hakkimizda") || Model.Url().StartsWith("/ekibimiz") ? "active" : "")">
+                    Kurumsal
+                    <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/hakkimizda/" class="dropdown-item @(Model.Url().StartsWith("/hakkimizda") ? "active" : "")">Hakkımızda</a>
+                    <a href="/ekibimiz/" class="dropdown-item @(Model.Url().StartsWith("/ekibimiz") ? "active" : "")">Ekibimiz</a>
+                </div>
+            </div>
+
+            <a href="/projeler/" class="nav-item @(Model.Url().StartsWith("/projeler") ? "active" : "")">
+                Projeler
+            </a>
+
+            @* Sürdürülebilirlik Dropdown *@
+            <div class="nav-item-wrapper">
+                <a href="#" class="nav-item has-dropdown @(Model.Url().StartsWith("/surdurulebilirlik") ? "active" : "")">
+                    Sürdürülebilirlik
+                    <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/dogaya-deger-katiyoruz/" class="dropdown-item">Doğaya Değer Katıyoruz</a>
+                    <a href="/spora-deger-katiyoruz/" class="dropdown-item">Spora Değer Katıyoruz</a>
+                    <a href="/egitime-deger-katiyoruz/" class="dropdown-item">Eğitime Değer Katıyoruz</a>
+                    <a href="/sponsorluklar/" class="dropdown-item">Sponsorluklar</a>
+                    <a href="/sosyal-sorumluluk-projelerimiz/" class="dropdown-item">Sosyal Sorumluluk Projelerimiz</a>
+                </div>
+            </div>
+
+            @* Basın Merkezi Dropdown *@
+            <div class="nav-item-wrapper">
+                <a href="#" class="nav-item has-dropdown @(Model.Url().StartsWith("/blog") || Model.Url().StartsWith("/haberler") || Model.Url().StartsWith("/basin-bulteni") ? "active" : "")">
+                    Basın Merkezi
+                    <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/blog/" class="dropdown-item @(Model.Url().StartsWith("/blog") ? "active" : "")">Blog</a>
+                    <a href="/basin-bultenleri/" class="dropdown-item @(Model.Url().StartsWith("/basin-bultenleri") ? "active" : "")">Basın Bültenleri</a>
+                </div>
+            </div>
+
+            @* İletişim - Tek Link *@
+            <a href="/iletisim/" class="nav-item @(Model.Url().StartsWith("/iletisim") ? "active" : "")">
+                İletişim
+            </a>
+            
+            @* Mobil menüde görünecek iletişim bilgileri *@
+            <div class="mobile-menu-contact-info">
+                <ul class="side-panel-icon-list">
+                    <li>
+                        <a href="mailto:info@bereketlitopraklar.com.tr">
+                            <i aria-hidden="true" class="far fa-envelope"></i>
+                            <span>info@bereketlitopraklar.com.tr</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:02244324959">
+                            <i aria-hidden="true" class="fas fa-phone-volume"></i>
+                            <span>+90 224 432 49 59</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="side-panel-social-icons">
+                    <a href="https://www.facebook.com/bereketliemlak" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/bereketli_topraklar/" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/bereketlitopraklar/?originalSubdomain=tr" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
+                    <a href="https://t.me/bereketlitopraklar" target="_blank"><i aria-hidden="true" class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-phone">
+            <a href="tel:02244324959" class="phone-link">
+                <i class="fas fa-phone-alt"></i>
+                <span class="phone-number">+90 224 432 49 59</span>
+            </a>
+        </div>
+        <button class="side-panel-toggle" aria-label="İletişim panelini aç">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><g id="List"><path d="m21 7h-18c-1.3 0-1.3-2 0-2h18c1.3 0 1.3 2 0 2z"></path><path d="m18 13h-15c-1.3 0-1.3-2 0-2h15c1.3 0 1.3 2 0 2z"></path><path d="m12 19h-9c-1.3 0-1.3-2 0-2h9c1.3 0 1.3 2 0 2z"></path></g></svg>
+        </button>
+
+        <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-menu-overlay"></div>
+
+<div class="side-panel-overlay"></div>
+<div class="side-panel-container">
+    <button class="side-panel-close" aria-label="İletişim panelini kapat">×</button>
+    <div class="side-panel-content">
+        <div class="nav-logo">
+            <a href="/">
+                <img width="200" src="/media/lq2jzklk/download-1.svg" alt="Logo">
+            </a>
+        </div>
+        
+        <h3 class="side-panel-heading">Bademli Ofis</h3>
+        <div class="side-panel-address">
+            <a href="https://maps.app.goo.gl/QTo3AfionUNsoSBh9" target="_blank">
+                <span>Nilüferköy Mahallesi, Değirmen Sokak, Prime Bademli İş Merkezi, No:12, İç Kapı No:A3<br> Osmangazi/Bursa</span>
+            </a>
+        </div>
+
+        <div class="side-panel-spacer"></div>
+        <ul class="side-panel-icon-list">
+            <li>
+                <a href="mailto:info@bereketlitopraklar.com.tr">
+                    <i aria-hidden="true" class="far fa-envelope"></i>
+                    <span>info@bereketlitopraklar.com.tr</span>
+                </a>
+            </li>
+            <li>
+                <a href="tel:02244324959">
+                    <i aria-hidden="true" class="fas fa-phone-volume"></i>
+                    <span>+90 224 432 49 59</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="side-panel-social-icons">
+            <a href="https://www.facebook.com/bereketliemlak" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/bereketli_topraklar/" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/bereketlitopraklar/?originalSubdomain=tr" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/902244324959" target="_blank"><i aria-hidden="true" class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+// navigation.js - Modern Dropdown Navigation JavaScript
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ========================================
+    // ELEMENT SELECTIONS
+    // ========================================
+    const navbar = document.querySelector('.modern-nav');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.nav-menu'); // '.mobile-menu' yerine '.nav-menu' kullanıldı.
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const body = document.body;
+    
+    // Side Panel Elements
+    const sidePanelToggle = document.querySelector('.side-panel-toggle');
+    const sidePanelContainer = document.querySelector('.side-panel-container');
+    const sidePanelOverlay = document.querySelector('.side-panel-overlay');
+    const sidePanelClose = document.querySelector('.side-panel-close');
+    
+    // Mobil menüdeki dropdown linkleri
+    const mobileSubmenuButtons = document.querySelectorAll('.nav-item.has-dropdown');
+    
+    
+// MOBILE MENU FUNCTIONS (YENİ VE GÜNCELLENMİŞ)
+// ========================================
+function openMobileMenu() {
+    // Navigasyon yüksekliğini HER AÇILIŞTA yeniden hesapla.
+    // Bu, resimlerin yüklenmesinden kaynaklanan zamanlama hatalarını önler.
+    const navHeight = navbar.offsetHeight; 
+    
+    // Menünün pozisyonunu ve yüksekliğini dinamik olarak ayarla
+    mobileMenu.style.top = `${navHeight}px`; 
+    mobileMenu.style.height = `calc(100vh - ${navHeight}px)`;
+
+    mobileMenu.classList.add('active');
+    mobileMenuOverlay.classList.add('active');
+    mobileMenuBtn.classList.add('open');
+    body.style.overflow = 'hidden'; 
+}
+
+function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    mobileMenuOverlay.classList.remove('active');
+    mobileMenuBtn.classList.remove('open');
+    body.style.overflow = 'auto'; 
+
+    // Mobil menü kapanırken tüm alt menüleri de kapat
+    document.querySelectorAll('.dropdown-menu.mobile-active').forEach(submenu => {
+        submenu.classList.remove('mobile-active');
+        // Parent linkin active class'ını da temizle
+        const parentLink = submenu.closest('.nav-item-wrapper').querySelector('.nav-item.has-dropdown');
+        if (parentLink) {
+            parentLink.classList.remove('active');
+        }
+    });
+
+    // Zıplama sorununu önlemek için stil temizliğini animasyon bittikten sonra yap
+    // CSS'deki transition süresi 0.4s olduğu için 400ms bekliyoruz.
+    setTimeout(() => {
+        // İhtiyaç kalmadığı için bu satırları tamamen kaldırmak daha güvenli olabilir
+        // çünkü openMobileMenu artık her seferinde doğru değeri hesaplıyor.
+        // Ama temizlik için kalabilirler.
+        if (!mobileMenu.classList.contains('active')) {
+             mobileMenu.style.top = '';
+             mobileMenu.style.height = '';
+        }
+    }, 400); 
+}
+    
+    // Mobile Menu Event Listeners
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+    
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+    }
+    
+    // Mobil menüdeki X butonu için (HTML'de varsa)
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+    }
+    
+    // ========================================
+    // MOBILE SUBMENU HANDLING
+    // ========================================
+    // ========================================
+// MOBILE SUBMENU HANDLING (YENİ VE SAĞLAMLAŞTIRILMIŞ)
+// ========================================
+// ========================================
+// MOBILE SUBMENU HANDLING (NİHAİ VERSİYON)
+// ========================================
+mobileSubmenuButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        if (window.innerWidth > 768) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const parentWrapper = this.closest('.nav-item-wrapper');
+        const currentSubmenu = parentWrapper.querySelector('.dropdown-menu');
+        const isAlreadyActive = currentSubmenu.classList.contains('mobile-active');
+
+        document.querySelectorAll('.dropdown-menu.mobile-active').forEach(openSubmenu => {
+            openSubmenu.classList.remove('mobile-active');
+        });
+        document.querySelectorAll('.nav-item.has-dropdown.active').forEach(activeLink => {
+            activeLink.classList.remove('active');
+        });
+
+        if (!isAlreadyActive) {
+            // =========================================================================
+            // SİHİRLİ SATIR BURADA
+            // =========================================================================
+            // BROWSER REFLOW HİLESİ: Bu satır, class'ı ekleyip animasyonu başlatmadan hemen önce
+            // tarayıcıyı düzeni yeniden hesaplamaya zorlar. Bu, render hatalarını önler.
+            void currentSubmenu.offsetHeight; 
+            // =========================================================================
+            
+            currentSubmenu.classList.add('mobile-active');
+            this.classList.add('active');
+        }
+    });
+});
+
+    // ========================================
+    // SIDE PANEL FUNCTIONS
+    // ========================================
+    function openSidePanel() {
+        sidePanelContainer.classList.add('active');
+        sidePanelOverlay.classList.add('active');
+        body.classList.add('no-scroll');
+    }
+    
+    function closeSidePanel() {
+        sidePanelContainer.classList.remove('active');
+        sidePanelOverlay.classList.remove('active');
+        body.classList.remove('no-scroll');
+    }
+    
+    // Side Panel Event Listeners
+    if (sidePanelToggle) {
+        sidePanelToggle.addEventListener('click', openSidePanel);
+    }
+    
+    if (sidePanelOverlay) {
+        sidePanelOverlay.addEventListener('click', closeSidePanel);
+    }
+    
+    if (sidePanelClose) {
+        sidePanelClose.addEventListener('click', closeSidePanel);
+    }
+    
+    // ========================================
+    // SCROLL BEHAVIOR
+    // ========================================
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScrollTop > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        if (window.innerWidth > 768) { // Oval menü scroll davranışını sadece masaüstünde uygula
+             if (currentScrollTop > lastScrollTop && currentScrollTop > navbar.offsetHeight) {
+                navbar.classList.add('nav-hidden');
+             } else {
+                navbar.classList.remove('nav-hidden');
+             }
+        }
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+    }, false);
+
+
+    // DESKTOP DROPDOWN HANDLING (HOVER)
+    // ========================================
+    const dropdownWrappers = document.querySelectorAll('.nav-item-wrapper');
+
+    function isTouchDevice() {
+        return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    }
+
+    if (!isTouchDevice()) {
+        dropdownWrappers.forEach(wrapper => {
+            let timeoutId;
+            const dropdown = wrapper.querySelector('.dropdown-menu');
+
+            wrapper.addEventListener('mouseenter', function() {
+                // SADECE 768px'DEN BÜYÜK EKRANLARDA ÇALIŞMASINI SAĞLA
+                if (window.innerWidth > 768 && dropdown) {
+                    clearTimeout(timeoutId);
+                    dropdown.style.display = 'block';
+                    setTimeout(() => {
+                        dropdown.style.opacity = '1';
+                        dropdown.style.visibility = 'visible';
+                        dropdown.style.transform = 'translateX(-50%) translateY(0)';
+                    }, 10);
+                }
+            });
+
+            wrapper.addEventListener('mouseleave', function() {
+                // SADECE 768px'DEN BÜYÜK EKRANLARDA ÇALIŞMASINI SAĞLA
+                if (window.innerWidth > 768 && dropdown) {
+                    dropdown.style.opacity = '0';
+                    dropdown.style.visibility = 'hidden';
+                    dropdown.style.transform = 'translateX(-50%) translateY(-10px)';
+                    timeoutId = setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    }
+
+    // ========================================
+    // KEYBOARD NAVIGATION & RESIZE
+    // ========================================
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (mobileMenu.classList.contains('active')) closeMobileMenu();
+            if (sidePanelContainer.classList.contains('active')) closeSidePanel();
+        }
+    });
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+
+});
+</script>

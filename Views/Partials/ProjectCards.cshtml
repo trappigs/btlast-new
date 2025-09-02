@@ -1,0 +1,160 @@
+﻿@using System.Text
+@using System.Globalization
+@using System.Text.RegularExpressions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    // --- SLUG FONKSİYONU ---
+    Func<string, string> GenerateSlug = (phrase) => 
+    {
+        if (string.IsNullOrEmpty(phrase)) return "";
+        string str = phrase.ToLower(new CultureInfo("tr-TR"));
+        str = str.Replace("ı", "i").Replace("ğ", "g").Replace("ü", "u").Replace("ş", "s").Replace("ö", "o").Replace("ç", "c");
+        str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+        str = Regex.Replace(str, @"\s+", "-").Trim();
+        str = Regex.Replace(str, @"-+", "-");
+        str = str.Trim('-'); 
+        return str;
+    };
+}
+
+<link rel="stylesheet" href="/css/project-cards.css">
+<!-- Font Awesome için CDN linki (eğer halihazırda sitenizde yoksa) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="projects-section" id="projectsSection">
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">
+                <span class="title-main">PROJELER</span>
+            </h1>
+        </div>
+
+        <div class="projects-grid">
+            @{
+                var projects = new[]
+                {
+                    new { Name = "Dikili", Link = "aqua-dikili", Image = "/media/fe3me5xz/aqua-dikili-deniz-kenti-projesi-tanitim-karti.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili" },
+                    new { Name = "BT Çinikent", Link = "bt-cinikent", Image = "/media/zmcojp54/kutahya-inkoy-proje-tanitim-afis-gorseli.webp", Description = "Geleceğin kazancı ve şehrin konforu bir arada. Kütahya'nın gelişim aksında, sanayinin yanı başında stratejik bir yatırım ve modern bir yaşam.", IsKonut = true, Location = "Kütahya, Merkez" },
+                    new { Name = "Yenişehir", Link = "port-yenisehir", Image = "/media/4rgpzbnc/port-yenisehir-yht-ve-osb-yakini-yatirimlik-imarli-arsa-projesi-tanitim-gorseli.webp", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir" },
+                    new { Name = "İbiller", Link = "verda-ibiller", Image = "/media/v4lbfdhg/verda-ibiller-termal-tatil-bolgesi-yatirimlik-arsalar-proje-tanitim-gorseli.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı" },
+                    new { Name = "Ilıcaboğazı", Link = "panora-ilicabogazi", Image = "/media/dx5lbeaw/panora-ilicabogazi-bolge-tanitim-fotografi.webp", Description = "Gelişen kaplıca bölgesinde, sağlık ve yatırım potansiyeli bir arada. Yeni otel projeleriyle değeri artan lokasyon.", IsKonut = false, Location = "Balıkesir, Susurluk" },
+                    new { Name = "Reşadiye", Link = "teras-resadiye", Image = "/media/05qpdiyd/teras-resadiye-yatirima-ve-yasam-alanina-uygun-proje-tanitim-gorseli.webp", Description = "Doğanın huzuru ve modern konforun mükemmel dengesi. Şehirlere yakın, olanakları tam ideal bir köy hayatı.", IsKonut = false, Location = "Balıkesir, Susurluk" }
+                };
+
+                foreach (var project in projects)
+                {
+                    var projectSlug = GenerateSlug(project.Name);
+                    <div class="project-card" data-location="@project.Name">
+                        
+                        @if (project.IsKonut)
+                        {
+                            <div class="konut-badge">
+                                <i class="fas fa-star"></i>
+                                <span>KONUT</span>
+                            </div>
+                        }
+                        
+                        <div class="card-header">
+                            <h3 class="card-title">@project.Name</h3>
+                        </div>
+                        
+                        <!-- YENİ YAPI (DOĞRU): -->
+                        <div class="card-image-container">
+                            <img src="@project.Image" alt="@project.Name">
+                            <div class="card-description-overlay">
+                                <p>@project.Description</p>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>@project.Location</span>
+                            </div>
+                            <div class="card-actions">
+                                <a href="/@project.Link" class="btn btn-primary">PROJEYİ İNCELE</a>
+                                <a href="#" class="call-me-detail btn btn-secondary">FORM DOLDURUN</a>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                // *** DÜZELTİLMİŞ VE PERFORMANSLI KONTROL BLOĞU ***
+                if (ViewData["IsProjectListPage"] as bool? == true)
+                {
+                    var newProjects = new[]
+                    {
+                        new { Name = "Park Kuvayi Milliye", Link = "park-kuvayi-milliye", Image = "/media/ttdihtes/park-kuvayi-milliye-proje-tanitim-gorseli.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi" },
+                        new { Name = "Aydın", Link = "olivra-aydin", Image = "/media/15ugejyd/olivra-aydin-camikebir-yatirimlik-altyapilari-hazir-kusadasina-yakin-proje-tanitim-gorseli.webp", Description = "Şehir konforu ve Ege'nin tatil ruhu bir arada. Germencik merkezde, Kuşadası'na yarım saat mesafede dört mevsim yaşam.", IsKonut = false, Location = "Aydın, Germencik" },
+                        new { Name = "Delice", Link = "delice-zirve", Image = "/media/2wmkmhoc/delice-zirve-proje-tanitim-gorseli.webp", Description = "Aradığınız her şeye sahip, kendi kendine yeten gelişmiş bir köy. Hem üretken bir yaşam hem de güvenli bir yatırım.", IsKonut = false, Location = "Balıkesir, Dursunbey" },
+                        new { Name = "Güneyce", Link = "aria-guneyce", Image = "/media/xauf1otr/aria-guneyce-proje-tanitim-gorseli.webp", Description = "Başkent'in stresine sağlıklı bir mola. Ankara'ya yakın, termal zenginlikleriyle ünlü, huzur dolu bir kaçış noktası.", IsKonut = false, Location = "Ankara, Güdül" },
+                        new { Name = "Kalaycılar", Link = "prestij-kalaycilar", Image = "/media/wuelkrtl/prestij-kalaycilar-proje-tanitim-gorseli.webp", Description = "Geleceğin lüks yaşam merkezi bugünden şekilleniyor. Değeri kanıtlanmış, seçkin bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Karesi" },
+                        new { Name = "Armutlu", Link = "vista-armutlu", Image = "/media/n2flxn3d/vista-armutlu-bolge-tanitim-fotografi.webp", Description = "Fıstık çamı ormanları arasında, şehrin gürültüsünden uzakta gerçek bir huzur sığınağı. Sakinlik ve doğa arayanlar için.", IsKonut = false, Location = "Balıkesir, Sındırgı" },
+                        new { Name = "Biga", Link = "troya-biga", Image = "/media/ax2lb41v/troya-biga-proje-tanitim-gorseli.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Çanakkale, Biga" },
+                        new { Name = "Seyitler", Link = "montiva-seyitler", Image = "/media/1gclgbya/montiva-seyitler-yeni-proje-tanitim-gorseli.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Kütahya, Merkez" }
+                    };
+
+                    foreach (var project in newProjects)
+                    {
+                        var projectSlug = GenerateSlug(project.Name);
+
+                        <div class="project-card" data-location="@project.Name">
+                            
+                            @if (project.IsKonut)
+                            {
+                                <div class="konut-badge">
+                                    <i class="fas fa-star"></i>
+                                    <span>KONUT</span>
+                                </div>
+                            }
+                            
+                            <div class="card-header">
+                                <h3 class="card-title">@project.Name</h3>
+                            </div>
+                            
+                            <!-- YENİ YAPI (DOĞRU): -->
+                            <div class="card-image-container">
+                                <img src="@project.Image" alt="@project.Name">
+                                <div class="card-description-overlay">
+                                    <p>@project.Description</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer">
+                                <div class="location-info">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>@project.Location</span>
+                                </div>
+                                <div class="card-actions">
+                                    <a href="/@project.Link" class="btn btn-primary">PROJEYİ İNCELE</a>
+                                    <a href="#" class="call-me-detail btn btn-secondary">FORM DOLDURUN</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+        @* --- YENİ EKLENEN BÖLÜM --- *@
+        @if (ViewData["IsProjectListPage"] as bool? != true)
+        {
+            <div class="view-all-btn-container" style="text-align: center; margin-top: 50px;">
+                <a href="/projeler/" class="view-all-btn">Tüm Projeleri Göster</a>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="/Scripts/project-cards.js"></script>
+
+<style>
+@@media(min-width: 769px){
+    .location-info{
+        left:28px;
+    }
+}
+
+</style>

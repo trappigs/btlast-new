@@ -1,0 +1,771 @@
+
+/* Modern Navigation Styles */
+:root {
+    --nav-primary: #2d5e3e;
+    --nav-secondary: #4a7c59;
+    --nav-accent: #6fa07e;
+    --nav-text: #ffffff;
+    --nav-hover: rgba(255, 255, 255, 0.1);
+    --nav-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Navigation */
+.modern-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--nav-primary) 0%, var(--nav-secondary) 100%);
+    box-shadow: var(--nav-shadow);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+}
+
+/* Logo Section */
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+    transition: transform 0.3s ease;
+}
+
+.logo-link:hover {
+    transform: translateY(-2px);
+}
+
+.logo-circle {
+    width: 45px;
+    height: 45px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-initials {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--nav-primary);
+    letter-spacing: 1px;
+}
+
+.logo-text {
+    color: var(--nav-text);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+/* Navigation Menu */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.nav-item {
+    color: var(--nav-text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-item:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--nav-text);
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+/* Dropdown */
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-icon {
+    transition: transform 0.3s ease;
+}
+
+.nav-dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    background: white;
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 40px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    transform: rotate(45deg);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: #f8f9fa;
+    color: var(--nav-primary);
+    padding-left: 25px;
+}
+
+/* Right Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.lang-item {
+    color: var(--nav-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.lang-item:hover {
+    opacity: 0.8;
+}
+
+.lang-item.active {
+    opacity: 1;
+}
+
+.lang-divider {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Phone Button */
+.phone-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--nav-text);
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.phone-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.phone-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.phone-text {
+    letter-spacing: 0.5px;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.mobile-menu-btn span {
+    width: 24px;
+    height: 2px;
+    background: var(--nav-text);
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 998;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh;
+    background: white;
+    transition: right 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-menu-header {
+    background: linear-gradient(135deg, var(--nav-primary) 0%, var(--nav-secondary) 100%);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-logo .logo-circle {
+    width: 35px;
+    height: 35px;
+}
+
+.mobile-logo .logo-initials {
+    font-size: 14px;
+}
+
+.mobile-logo .logo-text {
+    font-size: 16px;
+}
+
+.mobile-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+}
+
+/* Scroll Effect */
+.modern-nav.scrolled {
+    background: linear-gradient(135deg, rgba(45, 94, 62, 0.98) 0%, rgba(74, 124, 89, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .nav-container {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+    }
+    
+    .nav-item {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        height: 70px;
+    }
+    
+    .nav-menu,
+    .language-switcher {
+        display: none;
+    }
+    
+    .phone-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .phone-text {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .logo-text {
+        font-size: 16px;
+    }
+    
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-item,
+.dropdown-item {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/* Loading States */
+.nav-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Focus States for Accessibility */
+.nav-item:focus,
+.dropdown-item:focus,
+.phone-btn:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+
+
+
+/* Mobile Menu Styles */
+.mobile-menu-content {
+    padding: 1.5rem;
+}
+
+.mobile-nav-item {
+    display: block;
+    padding: 15px 0;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-item:hover {
+    color: var(--nav-primary);
+    padding-left: 10px;
+}
+
+.mobile-nav-item.sub-item {
+    padding-left: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.mobile-dropdown {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 0;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+}
+
+.mobile-dropdown-toggle .dropdown-icon {
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown.active .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-content {
+    max-height: 500px;
+}
+
+/* Mobile Actions */
+.mobile-actions {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #f0f0f0;
+}
+
+.mobile-language {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.mobile-lang-item {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.mobile-lang-item.active {
+    color: var(--nav-primary);
+    font-weight: 600;
+}
+
+.mobile-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--nav-primary);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.mobile-phone:hover {
+    background: var(--nav-secondary);
+    transform: translateY(-2px);
+}
+
+/* Hamburger Animation */
+.mobile-menu-btn span {
+    display: block;
+    transform-origin: center;
+    transition: all 0.3s ease;
+}
+
+/* Additional Responsive Adjustments */
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .logo-text {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+    
+    .logo-circle {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .logo-initials {
+        font-size: 14px;
+    }
+    
+    .mobile-menu {
+        width: 280px;
+    }
+}
+
+/* Dark Mode Support (optional) */
+@media (prefers-color-scheme: dark) {
+    .dropdown-menu {
+        background: #2a2a2a;
+        color: white;
+    }
+    
+    .dropdown-item {
+        color: #ddd;
+        border-bottom-color: #444;
+    }
+    
+    .dropdown-item:hover {
+        background: #333;
+        color: var(--nav-accent);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .modern-nav {
+        position: static;
+        box-shadow: none;
+    }
+    
+    .mobile-menu-btn,
+    .mobile-menu,
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+}
+
+/* --- Navigasyon Barı Telefon Butonu Animasyonu --- */
+
+/* Butonun genel yapısı */
+.phone-btn.btn-nina {
+    overflow: hidden; /* Taşmaları gizle */
+    position: relative;
+    transition: background-color 0.4s ease;
+}
+
+/* Metin için konteyner */
+.phone-btn .pxl--btn-text {
+    display: inline-block;
+    position: relative;
+}
+
+/* Metnin her bir harfi/rakamı */
+.phone-btn .pxl--btn-text span {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Boşluklar için özel stil */
+.phone-btn .pxl--btn-text span.spacer {
+    width: 0.25em; /* Boşluğun genişliği */
+}
+
+/* -- Hover Efekti -- */
+
+/* Hover durumunda alttan gelecek olan kopya metin */
+.phone-btn.btn-nina::before {
+    content: attr(data-text); /* data-text attribute'undan metni al */
+    position: absolute;
+    top: 100%; /* Başlangıçta butonun altında gizli */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
+    font-size: 13px; /* Orijinal metinle aynı font boyutu */
+    font-weight: 600;
+    padding-left: 32px; /* İkonun genişliğini dengelemek için */
+}
+
+/* Hover'da alttaki metni yukarı kaydır */
+.phone-btn.btn-nina:hover::before {
+    transform: translateY(-100%);
+}
+
+/* Hover'da orijinal metnin harflerini aşağı kaydırarak gizle */
+.phone-btn.btn-nina:hover .pxl--btn-text span {
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+/* Her harf için animasyon gecikmesi */
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(1) { transition-delay: 0.045s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(2) { transition-delay: 0.09s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(3) { transition-delay: 0.135s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(4) { transition-delay: 0.18s; } /* Boşluk */
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(5) { transition-delay: 0.225s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(6) { transition-delay: 0.27s; } /* Boşluk */
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(7) { transition-delay: 0.315s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(8) { transition-delay: 0.36s; }
+.phone-btn.btn-nina:hover .pxl--btn-text span:nth-child(9) { transition-delay: 0.405s; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Navigation Fixed Position Düzeltmesi - Bu kodu site.css'e ekleyin */
+
+/* Ana body için padding-top ayarla */
+body {
+    padding-top: 80px; /* Navigation yüksekliği kadar boşluk */
+}
+
+/* Modern navigation için düzeltme */
+.modern-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 80px; /* Sabit yükseklik */
+}
+
+/* Main content için margin düzeltmesi */
+.main-content {
+    margin-top: 0; /* Ekstra margin kaldır */
+    padding-top: 0; /* Ekstra padding kaldır */
+}
+
+/* Hero bölümü için özel düzeltme */
+.hero-slider,
+.hero-video-container,
+.projects-section {
+    margin-top: 0; /* Yukarı margin kaldır */
+}
+
+/* Responsive navigation yükseklikleri */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Mobilde daha küçük navigation */
+    }
+    
+    .modern-nav {
+        height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px; /* Küçük mobilde daha da küçük */
+    }
+    
+    .modern-nav {
+        height: 60px;
+    }
+}
+
+/* Sayfa başlıkları için ek boşluk (isteğe bağlı) */
+.page-header,
+.section-header {
+    margin-top: 2rem; /* Üst kısımda biraz boşluk */
+}
+
+/* FAQ, Project Cards gibi bölümler için */
+.faq-section,
+.projects-section,
+.team-section,
+.about-hero {
+    padding-top: 2rem; /* Üst padding ekle */
+}
+
+/* Contact page için özel düzeltme */
+.contact-page {
+    padding-top: 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

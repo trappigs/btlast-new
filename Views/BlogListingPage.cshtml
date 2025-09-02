@@ -1,0 +1,155 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Value("pageTitle");
+    var posts = Model.Children()
+                     .Where(x => x.IsVisible())
+                     .OrderByDescending(x => x.Value<DateTime>("postDate"));
+
+
+    // --- YAPI_LANDIRILMIŞ VERİ İÇİN HAZIRLIK (GÜNCELLENMİŞ MANTIK) ---
+    var itemListElements = new List<string>();
+    var position = 1;
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+
+    foreach (var post in posts)
+    {
+        string postAuthor, postHeadline, postImageURL;
+        IPublishedContent postImage;
+        postImage = post.Value<IPublishedContent>("ogImage");
+        var authorValue = post.Value<string>("author");
+        postAuthor = string.IsNullOrWhiteSpace(authorValue) ? "bereketlitopraklar" : authorValue;
+        postImageURL = postImage?.Url() ?? string.Empty;
+
+        string postUrl; // Nihai URL'i tutacak değişken
+
+        // 1. Öncelik: Yazının kendi içindeki özel canonical link alanını kontrol et.
+        var customCanonical = post.Value<string>("canonicalLink");
+        if (!string.IsNullOrWhiteSpace(customCanonical))
+        {
+            // Eğer özel canonical link varsa onu kullan.
+            // Not: Bu alanın tam URL (https://...) içerdiği varsayılır.
+            postUrl = siteUrl+"/"+customCanonical;
+        }
+        else
+        {
+            // 2. Öncelik: Özel canonical yoksa, Umbraco'nun varsayılan mutlak URL'ini kullan.
+            postUrl = post.Url(mode: UrlMode.Absolute);
+        }
+
+        var postTitle = post.Name.Replace("\"", "\\\"");
+        postHeadline = postTitle;
+
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@type"": ""BlogPosting"",
+                ""@id"": ""{postUrl}"",
+                ""name"": ""{postTitle}"",
+                ""headline"": ""{postHeadline}"",
+                ""author"": {{
+                    ""@type"": ""Organization"",
+                    ""name"" : ""{postAuthor}"",
+                    ""url"":""bereketlitopraklar.com.tr""
+                }},
+                ""url"": ""{postUrl}"",
+                ""image"": {{
+                ""@type"": ""ImageObject"",
+                ""url"": ""{postImageURL}""
+                }}
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
+}
+
+@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) --- *@
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "CollectionPage",
+    "name": "@Html.Raw(Model.Value<string>("pageTitle")?.Replace("\"", "\\\""))",
+    "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+    "url": "@Model.Url(mode: UrlMode.Absolute)",
+    "mainEntity": {
+        "@@type": "ItemList",
+        "numberOfItems": @posts.Count(),
+        "itemListElement": [
+            @Html.Raw(string.Join(",", itemListElements))
+        ]
+    }
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/contact-page.css">
+<section class="contact-hero"> @* Sınıfı contact-hero olarak değiştirdik *@
+    <div class="container text-center">
+        <span class="contact-hero-subtitle">@Model.Value("altBaslik")</span> @* Yeni alt başlık eklendi *@
+        <h1 class="contact-hero-title">@Model.Value("pageTitle")</h1> @* Sınıf contact-hero-title olarak değiştirildi *@
+        <p class="contact-hero-text">@Model.Value("pageDescription")</p> @* Sınıf contact-hero-text olarak değiştirildi *@
+    </div>
+</section>
+
+<div class="blog-listing-container">
+    <div class="container">
+        <div class="blog-grid-listing"> @* <-- Sınıfı "blog-grid-listing" olarak değiştirin *@
+             @foreach (var post in posts)
+            {
+                var featuredImage = post.Value<IPublishedContent>("featuredImage");
+                var excerpt = post.Value<string>("excerpt");
+
+                string postUrl;
+                var customCanonical = post.Value<string>("canonicalLink");
+                postUrl = siteUrl + "/" + customCanonical;
+
+                // *** YENİ VE DAHA SAĞLAM TARİH KODU ***
+                var postDate = post.Value<DateTime>("postDate");
+                if (postDate == default(DateTime)) {
+                    postDate = post.CreateDate;
+                }
+                var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+                <div class="blog-card">
+                    @if (featuredImage != null)
+                    {
+                        <div class="blog-card-image">
+                            <a href="@postUrl">
+                                <img src="@featuredImage.Url()" alt="@post.Name">
+                            </a>
+                        </div>
+                    }
+                    <div class="blog-card-content">
+                        <div class="blog-card-date">@formattedDate</div>
+                        <a href="@postUrl" class="blog-card-title">@post.Name</a>
+                        
+                        @if (!string.IsNullOrWhiteSpace(excerpt))
+                        {
+                            @Html.Raw(excerpt)
+                        }
+                      
+                        <div class="blog-card-author">
+                           Yazar: @(post.HasValue("articleAuthor") ? post.Value("articleAuthor") : "Bereketli Topraklar")
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

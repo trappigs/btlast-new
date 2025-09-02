@@ -1,0 +1,449 @@
+/* =================================================================== */
+/* BLOG STYLES                                                       */
+/* =================================================================== */
+
+/* --- Anasayfa Blog Bölümü --- */
+.blog-section-home {
+    padding: 80px 0;
+    background-color: #E9E8E6;
+}
+
+.blog-section-home .section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.blog-section-home .section-title {
+    font-size: 2.5rem;
+    color: #045129;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.blog-section-home .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.blog-grid-home {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.blog-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card-image {
+  height: 300px; /* Kart resim alanının yüksekliği sabit */
+  width: 100%;
+  overflow: hidden; /* Taşan kısımları gizle */
+  position: relative; /* Hover animasyonu için */
+  display: block;
+}
+
+.blog-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Bu satır en önemli kısımdır */
+  object-position: center; /* Resmin merkezini odak alır */
+  transition: transform 0.4s ease; /* Hover efekti için yumuşak geçiş */
+}
+
+/* Opsiyonel: Kartın üzerine gelindiğinde resmi büyütme efekti */
+.blog-card:hover .blog-card-image img {
+  transform: scale(1.05);
+}
+
+.blog-card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-card-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.blog-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    text-decoration: none;
+    flex-grow: 1;
+}
+
+.blog-card-title:hover {
+    color: #045129;
+}
+
+.blog-card-excerpt {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.blog-card-author {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.blog-section-home .view-all-btn-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.view-all-btn {
+    background: #045129;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+    background: #067833;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(4, 81, 41, 0.3);
+}
+
+/* --- Blog Listeleme Sayfası --- */
+.blog-listing-header {
+    
+    padding: 170px 0 60px;
+    background: linear-gradient(135deg, rgba(4, 81, 41, 0.9), rgba(6, 120, 51, 0.8)), url('/media/if4nn2ca/ai-generated-1.png');
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+.blog-listing-title {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.blog-listing-description {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 1rem auto 0;
+    opacity: 0.9;
+}
+
+.blog-listing-container {
+    padding: 60px 0;
+}
+
+/* --- Tekil Blog Yazısı Sayfası --- */
+.blog-post-container {
+    padding-top: 120px;
+    padding-bottom: 60px;
+}
+
+.blog-post-header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 25px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blog-post-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.blog-post-meta {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.blog-post-featured-image {
+  /* max-height yerine sabit bir height veriyoruz */
+  height: auto; /* Bu değeri isteğinize göre değiştirebilirsiniz */
+  max-width: auto; /* Genişlik zaten %100, bu satırı eklemek uyumluluğu artırabilir */
+  margin-bottom: 40px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+@media(min-width:769px){
+    .blog-post-featured-image {
+  max-width: 65%;
+ margin: 0 auto 40px;        /* ortala */
+}
+}
+.blog-post-featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Resmin oranını koruyarak alanı kaplamasını sağlar */
+  object-position: center; /* Kırpma işlemi sırasında resmin merkezini odaklar */
+}
+
+.blog-post-content {
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.blog-post-content h2, .blog-post-content h3 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #045129;
+    font-weight: 600;
+}
+
+.blog-post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.blog-post-content a {
+    color: #067833;
+    text-decoration: underline;
+}
+
+.blog-post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+
+/* --- Blog Yazısı Sonu - Diğer Yazılar Bölümü --- */
+.other-posts-section {
+    padding: 60px 0;
+    background-color: #E9E8E6;
+    border-top: 1px solid #e9ecef;
+}
+
+.other-posts-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #045129;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+
+/* --- Blog Yazısı Sonu - Diğer Yazılar Slider Bölümü --- */
+.other-posts-section {
+    padding: 60px 0;
+    background-color: #E9E8E6;
+    border-top: 1px solid #e9ecef;
+}
+
+.other-posts-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #045129;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+/* Swiper Slider Stilleri */
+.other-posts-slider {
+    position: relative;
+    max-width: 1200px; /* Slider'ın maksimum genişliği */
+    margin: 0 auto;
+    padding: 0 40px; /* Oklar için yanlarda boşluk */
+}
+
+.swiper-container {
+    padding-bottom: 40px; /* Paginasyon için altta boşluk */
+}
+
+/* Slider Okları */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #045129;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: #045129;
+    color: white;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Paginasyon Noktaları */
+.swiper-pagination-bullet {
+    background: #cccccc;
+    width: 10px;
+    height: 10px;
+    opacity: 0.8;
+}
+
+.swiper-pagination-bullet-active {
+    background: #045129;
+    transform: scale(1.2);
+}
+
+
+
+/* --- Blog Listeleme Sayfası Grid Düzeltmesi --- */
+.blog-grid-listing {
+    display: grid;
+    /* Masaüstünde 3 sütunlu bir grid oluştur */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Tablet Görünümü */
+@media (max-width: 992px) {
+    .blog-grid-listing {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobil Görünüm */
+@media (max-width: 768px) {
+    .container{
+        margin-top: 50px;
+    }
+    .blog-grid-listing {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* --- Blog Yazısı Sonu - Diğer Yazılar Slider TAŞMA SORUNU DÜZELTMESİ --- */
+.other-posts-slider .swiper-container {
+    overflow: hidden; /* Taşarak yanlara yayılan ekstra slaytları gizler */
+    padding: 5px; /* Kartların gölgelerinin kesilmemesi için küçük bir boşluk */
+}
+
+
+/* =================================================================== */
+/* KESİN ÇÖZÜM: BLOG POST SWIPER BUTON STİLLERİ                  */
+/* =================================================================== */
+
+/* Butonların genel taşıyıcısını referans alarak stilleri daha baskın hale getiriyoruz */
+.other-posts-slider .swiper-button-next,
+.other-posts-slider .swiper-button-prev {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    color: #045129; /* İkon rengi */
+}
+
+/* Üzerine gelince (hover) efekti */
+.other-posts-slider .swiper-button-next:hover,
+.other-posts-slider .swiper-button-prev:hover {
+    background-color: #045129;
+    color: white;
+    transform: scale(1.1); /* Hafif büyüme efekti */
+}
+
+/* Ok ikonlarının boyutu ve kalınlığı */
+.other-posts-slider .swiper-button-next:after,
+.other-posts-slider .swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: 900; /* Daha kalın oklar */
+}
+
+/* Butonların dikey pozisyonunu ayarlama */
+.other-posts-slider .swiper-button-prev {
+    left: 10px; /* Kenara biraz daha yakın */
+}
+
+.other-posts-slider .swiper-button-next {
+    right: 10px; /* Kenara biraz daha yakın */
+}
+
+
+/* =================================================================== */
+/* MASAÜSTÜ İÇİN BÜYÜTÜLMÜŞ SWIPER BUTONLARI                        */
+/* =================================================================== */
+
+/* Sadece 992px ve daha geniş ekranlarda geçerli olacak */
+@media (min-width: 992px) {
+    .other-posts-slider .swiper-button-next,
+    .other-posts-slider .swiper-button-prev {
+        /* Boyutu 1.6 kat artırıyoruz (50px -> 80px) */
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Ok ikonlarının boyutunu da orantılı olarak büyütüyoruz */
+    .other-posts-slider .swiper-button-next:after,
+    .other-posts-slider .swiper-button-prev:after {
+        font-size: 32px;
+    }
+
+    /* Butonları kartlardan uzaklaştırıyoruz */
+    .other-posts-slider .swiper-button-prev {
+        left: -15px; /* Slider alanının dışına taşıyoruz */
+    }
+
+    .other-posts-slider .swiper-button-next {
+        right: -15px; /* Slider alanının dışına taşıyoruz */
+    }
+}
+
+
+
+/* =================================================================== */
+/* SWIPER PAGINATION YENİ KONUMU                                     */
+/* =================================================================== */
+
+.other-posts-slider .swiper-pagination {
+    position: absolute;
+    bottom: 5px; /* Slider'ın altından boşluk */
+    left: auto; /* Soldan otomatik konumlandırmayı iptal et */
+    right: 0; /* Sağa hizala */
+    width: auto; /* Genişliği içeriğe göre ayarla */
+    padding: 5px 10px;
+}
+
+/* Kartların altına yeterli boşluk bırakmak için */
+.other-posts-slider .swiper-container {
+    padding-bottom: 50px; 
+}

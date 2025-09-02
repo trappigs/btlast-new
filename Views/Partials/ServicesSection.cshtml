@@ -1,0 +1,203 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var backgroundUrl = "/media/uovnokyo/orman.jpg";
+}
+
+<section class="services-section" style="background-image: url('@backgroundUrl');">
+    <div class="services-container">
+        @{
+            var services = Model.Value("servicesItems") as IEnumerable<IPublishedElement>;
+        }
+        
+        @if (services != null && services.Any())
+        {
+            @foreach (var service in services)
+            {
+                <div class="service-item">
+                    <div class="service-icon">
+                        @if (!string.IsNullOrEmpty(service.Value("serviceIcon")?.ToString()))
+                        {
+                            @Html.Raw(service.Value("serviceIcon"))
+                        }
+                        else
+                        {
+                            <!-- Default icon -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        }
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">@service.Value("serviceTitle")</h3>
+                        <p class="service-description">@service.Value("serviceDescription")</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Fallback static content -->
+            <div class="service-item">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Değerli Arsa Seçenekleri Sunma:</h3>
+                    <p class="service-description">
+                        Türkiye'nin çeşitli bölgelerinden yatırım potansiyeli yüksek arsaları titizlikle seçiyoruz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4"/>
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Uzman Danışmanlık Hizmeti:</h3>
+                    <p class="service-description">
+                        Arsa yatırımı konusunda uzmanlık ve derin bilgi birikimimizle müşterilerimize rehberlik ediyoruz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Kişiselleştirilmiş Çözümler:</h3>
+                    <p class="service-description">
+                        Her müşterinin bireysel ihtiyaç ve hedeflerine uygun, özelleştirilmiş hizmetler sunuyoruz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-item">
+                <div class="service-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Güven ve Şeffaflık:</h3>
+                    <p class="service-description">
+                        İşlem süreçlerimizde tam şeffaflık ve yüksek etik standartlarını benimsiyoruz.
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .services-section {
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .services-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+    .services-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 50px;
+        max-width: 800px;
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 30px;
+        flex-shrink: 0;
+    }
+
+    .service-item:nth-child(even) .service-icon {
+        background-color: rgba(45, 90, 61, 0.9);
+        color: white;
+    }
+
+    .service-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .service-content {
+        color: white;
+    }
+
+    .service-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    .service-description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        opacity: 0.95;
+    }
+
+    @media (max-width: 768px) {
+        .services-section {
+            padding: 60px 0;
+            background-attachment: scroll;
+        }
+
+        .service-item {
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .service-icon {
+            margin: 0 auto 20px auto;
+        }
+
+        .service-title {
+            font-size: 1.4rem;
+        }
+
+        .service-description {
+            font-size: 1rem;
+        }
+    }
+</style>

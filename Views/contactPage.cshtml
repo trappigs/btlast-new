@@ -1,0 +1,69 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = "İletişim";
+}
+
+<link rel="stylesheet" href="/css/contact-page.css">
+<div class="contact-page-wrapper">
+    <section class="contact-hero">
+        <div class="container text-center">
+            <span class="contact-hero-subtitle">BİZE ULAŞIN</span>
+            <h1 class="contact-hero-title">Yatırımınıza Giden Yolda <br> Size Yardımcı Olalım</h1>
+            <p class="contact-hero-text">Aklınızdaki sorular, proje detayları veya randevu talepleriniz için bize her zaman ulaşabilirsiniz.</p>
+        </div>
+    </section>
+
+    <section class="contact-info-section">
+        <div class="container">
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="card-title">Merkez Ofis</h3>
+                    <p class="card-text">
+                        Nilüferköy Mah. Değirmen Sokak, Prime Bademli İş Merkezi, No:12, İç Kapı No:A3<br>
+                        Osmangazi/Bursa
+                    </p>
+                    <a href="https://maps.google.com/?q=Nilüferköy+Mahallesi,+Değirmen+Sokak,+Prime+Bademli+İş+Merkezi,+No:12,+İç+Kapı+No:A3+Osmangazi/Bursa" target="_blank" class="card-link">Haritada Gör</a>
+                </div>
+
+                <div class="contact-info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="card-title">Telefon</h3>
+                    <p class="card-text">
+                        Satış ofisimizle doğrudan iletişime geçerek projelerimiz hakkında detaylı bilgi alabilirsiniz.
+                    </p>
+                    <a href="tel:02244324959" class="card-link">0224 432 49 59</a>
+                </div>
+
+                <div class="contact-info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="card-title">E-Posta</h3>
+                    <p class="card-text">
+                        Tüm soru, görüş ve önerileriniz için bize e-posta yoluyla ulaşabilirsiniz.
+                    </p>
+                    <a href="mailto:info@bereketlitopraklar.com.tr" class="card-link">info@bereketlitopraklar.com.tr</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-map-section">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12174.46543559847!2d28.9336131!3d40.2842716!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ca15cce65823f3%3A0x3492c85f62c76287!2sBereketli%20Topraklar!5e0!3m2!1str!2str!4v1704892358836!5m2!1str!2str"
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
+</div>

@@ -1,0 +1,59 @@
+﻿@{
+  var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+  var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+}
+
+<!-- 1) Site geneli: Organization + WebSite -->
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@graph": [
+    {
+      "@@type": "Organization",
+      "@@id": "https://bereketlitopraklar.com.tr/#organization",
+      "name": "Bereketli Topraklar",
+      "url": "https://bereketlitopraklar.com.tr/",
+      "logo": {
+        "@@type": "ImageObject",
+        "url": "https://bereketlitopraklar.com.tr/media/lq2jzklk/download-1.svg",
+        "width": 180,
+        "height": 45
+      },
+      "description": "Türkiye'nin en değerli lokasyonlarında villa ve arsa projeleri. İmarlı, altyapısı tamamlanmış, güvenli yatırım fırsatları.",
+      "contactPoint": {
+        "@@type": "ContactPoint",
+        "telephone": "+90-224-432-49-59",
+        "contactType": "customer service",
+        "availableLanguage": ["tr-TR"],
+        "areaServed": "TR"
+      },
+      "address": {
+        "@@type": "PostalAddress",
+        "streetAddress": "Nilüferköy Mahallesi, Değirmen Sokak, Prime Bademli İş Merkezi, No:12, İç Kapı No:A3",
+        "addressLocality": "Osmangazi",
+        "addressRegion": "Bursa",
+        "postalCode": "16265",
+        "addressCountry": "TR"
+      },
+      "sameAs": [
+        "https://www.facebook.com/bereketliemlak",
+        "https://www.instagram.com/bereketli_topraklar/",
+        "https://www.linkedin.com/company/bereketlitopraklar/",
+        "https://x.com/bereketilarsa"
+      ],
+      "founder": "Bereketli Topraklar",
+      "foundingDate": "2020",
+      "industry": "Real Estate",
+      "knowsAbout": ["Arsa Yatırımı", "Villa Projeleri", "İmarlı Arsa", "Gayrimenkul Yatırımı"]
+    },
+    {
+      "@@type": "WebSite",
+      "@@id": "https://bereketlitopraklar.com.tr/#website",
+      "url": "https://bereketlitopraklar.com.tr/",
+      "name": "Bereketli Topraklar",
+      "publisher": { "@@id": "https://bereketlitopraklar.com.tr/#organization" },
+      "inLanguage": "tr-TR"
+    }
+  ]
+}
+</script>

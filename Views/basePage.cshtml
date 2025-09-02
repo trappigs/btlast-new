@@ -1,0 +1,18 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Name;
+}
+
+<div class="container-fluid">
+    
+    
+    <!-- Page Content -->
+    @if(Model.HasValue("pageContent"))
+    {
+        <div class="page-content">
+            @Html.Raw(Model.Value("pageContent"))
+        </div>
+    }
+</div>
