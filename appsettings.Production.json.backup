@@ -1,0 +1,81 @@
+{
+  "$schema": "appsettings-schema.json",
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Warning",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "System": "Warning",
+        "Umbraco": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "Logs/log-.txt",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 30
+        }
+      }
+    ]
+  },
+  "Umbraco": {
+    "CMS": {
+      "Global": {
+        "Id": "48f68bad-4d77-48b7-a10c-6afdcbc1a061",
+        "SanitizeTinyMce": true,
+        "MaxRequestLength": 4294967295,
+        "Smtp": {
+          "To": "info@bereketlitopraklar.com.tr",
+          "From": "bereketliform@gmail.com",
+          "Host": "smtp.gmail.com",
+          "Port": 587,
+          "Username": "bereketliform@gmail.com",
+          "Password": "mkml mxwo rshn xmpi",
+          "SecureSocketOptions": "StartTls"
+        }
+      },
+      "Content": {
+        "AllowEditInvariantFromNonDefault": true,
+        "ContentVersionCleanupPolicy": {
+          "EnableCleanup": true
+        },
+        "UrlReplacingCharacters": {
+          "\u00fc": "u",
+          "\u00f6": "o",
+          "\u00e7": "c",
+          "\u015f": "s",
+          "\u0131": "i",
+          "\u0130": "I",
+          "\u011f": "g"
+        }
+      },
+      "Unattended": {
+        "UpgradeUnattended": true
+      },
+      "Security": {
+        "AllowConcurrentLogins": false
+      },
+      "WebRouting": {
+        "ContentError404": "umb://document/e84505ff-dd83-44d1-a239-7e35f9148208"
+      },
+      "Hosting": {
+        "Debug": false,
+        "LocalTempStorageLocation": "Default"
+      },
+      "ModelsBuilder": {
+        "ModelsMode": "SourceCodeManual"
+      },
+      "RuntimeMinification": {
+        "UseInMemoryCache": true,
+        "CacheBuster": "Timestamp"
+      }
+    }
+  },
+  "ConnectionStrings": {
+    "umbracoDbDSN": "Data Source=bereketlitopraklar-sqlserver.database.windows.net;Initial Catalog=bt;User ID=btadmin1;Password=Merensak2151+;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;",
+    "umbracoDbDSN_ProviderName": "Microsoft.Data.SqlClient"
+  }
+}
