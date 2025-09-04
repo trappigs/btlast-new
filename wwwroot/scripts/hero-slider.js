@@ -30,16 +30,16 @@
     let prevPreview = null;
     let nextPreview = null;
     
-    // *** YENİ: Kaydırma ve fare durumu için değişkenler ***
+    // Kaydırma ve fare durumu için değişkenler
     let isScrolling = false;
     let scrollTimeout = null;
-
 
     // Touch/Swipe variables
     let touchStartX = 0;
     let touchEndX = 0;
     let touchStartY = 0;
     let touchEndY = 0;
+    let touchMoved = false; // YENİ: Dokunmatik hareket algılaması
 
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
@@ -100,20 +100,16 @@
         window.addEventListener('scroll', () => {
             isScrolling = true;
             clearTimeout(scrollTimeout);
-            // Kaydırma durduktan 150ms sonra 'isScrolling' bayrağını false yap
             scrollTimeout = setTimeout(() => {
                 isScrolling = false;
             }, 150); 
         }, { passive: true });
     }
 
-
     function setupSlides() {
         console.log('Setting up slides');
 
         slides.forEach((slide, index) => {
-            // YENİLİK: Sadece aktif olmayan slaytların resmini JS ile yükle.
-            // İlk slaytın resmi zaten HTML'de inline olarak mevcut.
             if (!slide.classList.contains('active')) {
                 const bgImage = slide.getAttribute('data-bg');
                 if (bgImage) {
@@ -133,7 +129,6 @@
     
     function setupSlideAnimations(slide, index) {
         const elements = slide.querySelectorAll('.slide-title, .badge-row, .slide-actions, .location-pin, .floating-card');
-
 
         elements.forEach((element, i) => {
             element.style.animationDelay = `${0.3 + (i * 0.3)}s`;
@@ -177,7 +172,7 @@
 
         document.addEventListener('keydown', handleKeyboard);
         slider.addEventListener('touchstart', handleTouchStart, { passive: true });
-        slider.addEventListener('touchmove', handleTouchMove, { passive: true });
+        slider.addEventListener('touchmove', handleTouchMove, { passive: false }); // passive: false yapıyoruz
         slider.addEventListener('touchend', handleTouchEnd);
         slider.addEventListener('mousedown', handleMouseDown);
         slider.addEventListener('mousemove', handleMouseMove);
@@ -185,9 +180,7 @@
         slider.addEventListener('mouseleave', handleMouseUp);
 
         if (config.pauseOnHover) {
-            // *** GÜNCELLENMİŞ MOUSEENTER VE MOUSELEAVE OLAYLARI ***
             slider.addEventListener('mouseenter', () => {
-                // Sadece sayfa kaydırılmıyorsa duraklat
                 if (!isScrolling) {
                     pauseAutoPlay();
                 }
@@ -202,16 +195,17 @@
     function nextSlide() {
         if (isTransitioning) return;
         const nextIndex = (currentSlide + 1) % totalSlides;
-        goToSlide(nextIndex);
+        goToSlide(nextIndex, true); // YENİ: shouldResetAnimations parametresi
     }
 
     function previousSlide() {
         if (isTransitioning) return;
         const prevIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-        goToSlide(prevIndex);
+        goToSlide(prevIndex, true); // YENİ: shouldResetAnimations parametresi
     }
 
-    function goToSlide(index) {
+    // YENİ: shouldResetAnimations parametresi eklendi
+    function goToSlide(index, shouldResetAnimations = false) {
         if (isTransitioning || index === currentSlide || index < 0 || index >= totalSlides) {
             return;
         }
@@ -224,7 +218,12 @@
 
         setTimeout(() => {
             slides[currentSlide].classList.add('active');
-            resetSlideAnimations(slides[currentSlide]);
+            
+            // Sadece gerçek slide değişikliğinde animasyonları resetle
+            if (shouldResetAnimations) {
+                resetSlideAnimations(slides[currentSlide]);
+            }
+            
             setTimeout(() => {
                 isTransitioning = false;
             }, config.transitionDuration);
@@ -348,38 +347,57 @@
         }
     }
 
+    // YENİ: Geliştirilmiş touch event handling
     function handleTouchStart(e) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
+        touchMoved = false; // YENİ: Hareket bayrağını resetle
         pauseAutoPlay();
     }
 
     function handleTouchMove(e) {
         if (!touchStartX || !touchStartY) return;
+        
         touchEndX = e.touches[0].clientX;
         touchEndY = e.touches[0].clientY;
+        
+        const deltaX = Math.abs(touchEndX - touchStartX);
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        // YENİ: Yatay kaydırma algılandıysa dikey kaydırmayı engelle
+        if (deltaX > deltaY && deltaX > 10) {
+            touchMoved = true;
+            e.preventDefault(); // Dikey scroll'u engelle
+        }
     }
 
     function handleTouchEnd(e) {
-        if (!touchStartX || !touchEndX) return;
+        if (!touchStartX || !touchEndX) {
+            resumeAutoPlay();
+            return;
+        }
+
         const deltaX = touchEndX - touchStartX;
         const deltaY = touchEndY - touchStartY;
         const absDeltaX = Math.abs(deltaX);
         const absDeltaY = Math.abs(deltaY);
-        let swiped = false;
+        let slideChanged = false;
 
-        if (absDeltaX > absDeltaY && absDeltaX > config.swipeThreshold) {
+        // YENİ: Sadece yeterli yatay hareket varsa ve dikey hareket çok fazla değilse slide değiştir
+        if (absDeltaX > config.swipeThreshold && absDeltaX > absDeltaY) {
             if (deltaX > 0) {
                 previousSlide();
             } else {
                 nextSlide();
             }
-            swiped = true;
+            slideChanged = true;
         }
 
+        // Değişkenleri resetle
         touchStartX = touchEndX = touchStartY = touchEndY = 0;
+        touchMoved = false;
 
-        if (swiped) {
+        if (slideChanged) {
             resetAutoPlay();
         } else {
             resumeAutoPlay();
@@ -452,7 +470,8 @@
         clearTimeout(window.resizeTimer);
         window.resizeTimer = setTimeout(() => {
             console.log('Window resized, updating slider');
-            resetSlideAnimations(slides[currentSlide]);
+            // YENİ: Resize'da animasyon resetlemeyi kaldırdık
+            // resetSlideAnimations(slides[currentSlide]);
         }, 250);
     }
 

@@ -123,9 +123,6 @@
     margin-bottom: 4rem;
 }
 
-.image-section {
-    position: relative;
-}
 
 .main-project-media {
     width: 100%;
@@ -1522,7 +1519,7 @@
     }
 
     .gallery-item::before {
-        content: '';
+        /* content: ''; */
         position: absolute;
         top: 0;
         left: 0;

@@ -167,6 +167,15 @@
     overflow: hidden;
 }
 
+
+.btn-primary:hover {
+    background: white !important; /* Hover durumunu da garantile */
+    color: #045129;
+    border-color: #045129;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(4, 81, 41, 0.3);
+}
+
 .btn::before {
     content: '';
     position: absolute;
