@@ -23,23 +23,29 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* PERFORMANS: `background-attachment: fixed` mobil cihazlarda performansı düşürebilir. 
-       Eğer paralaks etkisi kritik değilse `scroll` veya kaldırmak daha iyidir. */
-    background-attachment: scroll; 
-    /* PERFORMANS: Tarayıcıya hangi özelliklerin değişeceğini söyleyerek optimizasyon yapmasını sağlarız. */
+    /* PERFORMANS: TarayÄ±cÄ±ya hangi Ã¶zelliklerin deÄŸiÅŸeceÄŸini sÃ¶yleyerek optimizasyon yapmasÄ±nÄ± saÄŸlarÄ±z. */
     will-change: opacity;
-    /* PERFORMANS: Görünmeyen slaytların render yükünü azaltır. */
+    /* PERFORMANS: GÃ¶rÃ¼nmeyen slaytlarÄ±n render yÃ¼kÃ¼nÃ¼ azaltÄ±r. */
     content-visibility: hidden;
 }
 
 .slide.active {
     opacity: 1;
     visibility: visible;
-    /* PERFORMANS: Aktif slaytın içeriği her zaman görünür olmalı. */
+    /* PERFORMANS: Aktif slaytÄ±n iÃ§eriÄŸi her zaman gÃ¶rÃ¼nÃ¼r olmalÄ±. */
     content-visibility: visible;
+}
+
+/* Slide Background Image */
+.slide-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
 }
 
 .slide::before {
@@ -59,7 +65,6 @@
 }
 
 /* Slide Content */
-/* Slide Content */
 .slide-content {
     position: relative;
     width: 100%;
@@ -68,7 +73,6 @@
     align-items: center;
     z-index: 2;
     padding: 0 5%;
-    /* transform: translateY(-15%); <-- BU SATIRI SİLDİK */
 }
 
 .content-wrapper {
@@ -79,7 +83,7 @@
 }
 
 /* Typography */
-/* FOUC (Stilsiz İçerik Pırıltısı) Önleyici Kural */
+/* FOUC (Stilsiz Ä°Ã§erik PÄ±rÄ±ltÄ±sÄ±) Ã–nleyici Kural */
 .slide-title span.slide-title-line span {
     transform: translateY(110%);
     display: block;
@@ -88,26 +92,26 @@
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 400;
     line-height: 1.3;
-    color: #F8F9FA; /* Ana başlık için Kırık Beyaz */
+    color: #F8F9FA; /* Ana baÅŸlÄ±k iÃ§in KÄ±rÄ±k Beyaz */
     margin-bottom: 2rem;
-    /* Okunabilirliği garantilemek için gölgeyi biraz daha belirgin hale getiriyoruz */
+    /* OkunabilirliÄŸi garantilemek iÃ§in gÃ¶lgeyi biraz daha belirgin hale getiriyoruz */
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
 }
 
-/* YENİ: Başlık satırları için sarmalayıcı */
+/* YENÄ°: BaÅŸlÄ±k satÄ±rlarÄ± iÃ§in sarmalayÄ±cÄ± */
 .slide-title span.slide-title-line {
-    display: block; /* Her satırın alt alta gelmesini sağlar */
-    overflow: hidden; /* Animasyon için taşmaları gizler */
+    display: block; /* Her satÄ±rÄ±n alt alta gelmesini saÄŸlar */
+    overflow: hidden; /* Animasyon iÃ§in taÅŸmalarÄ± gizler */
 }
 
-/* YENİ: Her satırın içindeki asıl metin */
+/* YENÄ°: Her satÄ±rÄ±n iÃ§indeki asÄ±l metin */
 .slide.active .slide-title span.slide-title-line span {
     display: block;
     transform: translateY(110%);
     animation: reveal 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* YENİ: Animasyon gecikmeleri */
+/* YENÄ°: Animasyon gecikmeleri */
 .slide.active .slide-title span.slide-title-line:nth-child(2) span {
     animation-delay: 0.15s;
 }
@@ -117,7 +121,7 @@
 
 
 .slide-title .highlight {
-    color: #B4D8C8; /* Vurgulanan metin için Yumuşak Yeşil */
+    color: #B4D8C8; /* Vurgulanan metin iÃ§in YumuÅŸak YeÅŸil */
     position: relative;
 }
 
@@ -135,8 +139,8 @@
 .slide-title .subtitle {
     font-size: 0.7em;
     font-weight: 600;
-    /* Alt başlığı da ana başlıkla uyumlu hale getiriyoruz */
-    color: rgba(248, 249, 250, 0.9); /* Hafif transparan Kırık Beyaz */
+    /* Alt baÅŸlÄ±ÄŸÄ± da ana baÅŸlÄ±kla uyumlu hale getiriyoruz */
+    color: rgba(248, 249, 250, 0.9); /* Hafif transparan KÄ±rÄ±k Beyaz */
     opacity: 1; 
 }
 
@@ -146,7 +150,7 @@
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
-    /* Animasyon gecikmesi artırıldı */
+    /* Animasyon gecikmesi artÄ±rÄ±ldÄ± */
     animation: slideInUp 1s ease-out 0.8s both;
 }
 
@@ -203,7 +207,7 @@
 }
 
 .btn-secondary {
-    background: #ffffff !important; /* Arkaplanı tam beyaz yap ve diğer kuralları ez! */
+    background: #ffffff !important; /* ArkaplanÄ± tam beyaz yap ve diÄŸer kurallarÄ± ez! */
     color: #045129;
     border: 2px solid #045129;
 }
@@ -216,16 +220,10 @@
     box-shadow: 0 6px 20px rgba(4, 81, 41, 0.3);
 }
 
-/* Location Pin - REMOVED */
-/* All location pin styles removed as requested */
-
-/* Floating Elements - REMOVED */
-/* .floating-elements styles removed as requested */
-
 /* Navigation */
 .slider-navigation {
     position: absolute;
-    bottom: 85px; /* Değeri 50px'e düşürdük */
+    bottom: 85px; /* DeÄŸeri 50px'e dÃ¼ÅŸÃ¼rdÃ¼k */
     right: 350px;
     display: flex;
     gap: 1rem;
@@ -381,7 +379,7 @@
 /* Pagination */
 .slider-pagination {
     position: absolute;
-    bottom: 30px; /* Değeri 30px'e düşürdük */
+    bottom: 30px; /* DeÄŸeri 30px'e dÃ¼ÅŸÃ¼rdÃ¼k */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -410,9 +408,9 @@
 }
 
 .scroll-indicator {
-    position: absolute; /* Konumlandırmayı 'absolute' yerine 'fixed' yapıyoruz */
-    bottom: 25px;    /* Telefon butonu ile aynı dikey hizaya getiriyoruz */
-    right: 100px;    /* Telefon butonunun solunda konumlandırıyoruz (60px buton + 25px sağ boşluk + 15px ara) */
+    position: absolute; /* KonumlandÄ±rmayÄ± 'absolute' yerine 'fixed' yapÄ±yoruz */
+    bottom: 25px;    /* Telefon butonu ile aynÄ± dikey hizaya getiriyoruz */
+    right: 100px;    /* Telefon butonunun solunda konumlandÄ±rÄ±yoruz (60px buton + 25px saÄŸ boÅŸluk + 15px ara) */
     z-index: 999;
     display: flex;
     flex-direction: column;
@@ -420,7 +418,7 @@
     gap: 8px;
     color: white; /* Metin rengi beyaz kalacak */
     animation: fadeIn 1s ease-out 1.5s both; /* Animasyonlar kalacak */
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.5); /* Okunabilirliği artırmak için gölge */
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5); /* OkunabilirliÄŸi artÄ±rmak iÃ§in gÃ¶lge */
 }
 
 .scroll-text {
@@ -602,7 +600,7 @@
 /* High DPI Displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .slide {
-        background-attachment: scroll;
+        /* background-attachment: scroll removed for img-based backgrounds */
     }
 }
 
@@ -612,12 +610,10 @@
     .btn,
     .nav-btn,
     .pagination-dot,
-    .floating-card img {
+    .slide-bg-image {
         transition: none;
     }
     
-    .location-pin,
-    .floating-card,
     .scroll-arrow {
         animation: none;
     }
@@ -643,6 +639,11 @@
         visibility: visible;
         height: auto;
         padding: 2rem;
+    }
+    
+    .slide-bg-image {
+        position: static;
+        height: 300px;
     }
     
     .slide-title {
@@ -701,10 +702,6 @@
 }
 
 
-
-
-
-
 /* Scroll Indicator Link Stilleri */
 .scroll-indicator {
     cursor: pointer;
@@ -743,4 +740,3 @@
         max-width: none; /* max-width'i kaldır */
     }
 }
-

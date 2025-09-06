@@ -110,10 +110,13 @@
         console.log('Setting up slides');
 
         slides.forEach((slide, index) => {
-            if (!slide.classList.contains('active')) {
-                const bgImage = slide.getAttribute('data-bg');
-                if (bgImage) {
-                    slide.style.backgroundImage = `url(${bgImage})`;
+            // Background image'ları artık img etiketi olarak yüklüyoruz
+            const bgImage = slide.querySelector('.slide-bg-image');
+            if (bgImage) {
+                // Görsel lazy loading için önce src'yi data-src'den alalım (eğer varsa)
+                const dataBg = slide.getAttribute('data-bg');
+                if (dataBg && !bgImage.src) {
+                    bgImage.src = dataBg;
                 }
             }
 
@@ -215,6 +218,16 @@
         const previousSlide = currentSlide;
         currentSlide = index;
         slides[previousSlide].classList.remove('active');
+
+        // Yeni slide'ın background image'ını lazy load edelim
+        const newSlide = slides[currentSlide];
+        const bgImage = newSlide.querySelector('.slide-bg-image');
+        if (bgImage) {
+            const dataBg = newSlide.getAttribute('data-bg');
+            if (dataBg && !bgImage.complete) {
+                bgImage.src = dataBg;
+            }
+        }
 
         setTimeout(() => {
             slides[currentSlide].classList.add('active');

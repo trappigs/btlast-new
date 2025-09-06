@@ -4,7 +4,7 @@
 .modern-nav {
     background-color: #045129;
     padding: 15px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -18,7 +18,10 @@
 .modern-nav.nav-hidden {
     transform: translateY(-100%);
 }
-
+/* Sayfa tamamen yüklendikten sonra zenginleştir */
+:root.enhanced-effects .modern-nav {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -179,10 +182,19 @@
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 25px;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
     white-space: nowrap;
 }
+/* Yükten sonra tekrar eklemek isterseniz: */
+:root.enhanced-effects .phone-link {
+  backdrop-filter: blur(10px);
+}
 
+/* Mobilde tamamen kapalı tutmak isterseniz: */
+@media (max-width: 768px) {
+  :root.enhanced-effects .phone-link {
+    backdrop-filter: none;
+  }
+}
 .phone-link:hover {
     color: white;
     text-decoration: none;
