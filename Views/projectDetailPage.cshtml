@@ -43,7 +43,7 @@
     var projects = new[]
     {
         new { Name = "DİKİLİ", Link = "aqua-dikili", Image = "/media/fe3me5xz/aqua-dikili-deniz-kenti-projesi-tanitim-karti.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili" },
-        new { Name = "BT ÇİNİKENT", Link = "bt-cinikent", Image = "/media/zmcojp54/kutahya-inkoy-proje-tanitim-afis-gorseli.webp", Description = "Geleceğin kazancı ve şehrin konforu bir arada. Kütahya'nın gelişim aksında, sanayinin yanı başında stratejik bir yatırım ve modern bir yaşam.", IsKonut = true, Location = "Kütahya, Merkez" },
+        new { Name = "ÇİNİKENT", Link = "cinikent", Image = "/media/zmcojp54/kutahya-inkoy-proje-tanitim-afis-gorseli.webp", Description = "Geleceğin kazancı ve şehrin konforu bir arada. Kütahya'nın gelişim aksında, sanayinin yanı başında stratejik bir yatırım ve modern bir yaşam.", IsKonut = true, Location = "Kütahya, Merkez" },
         new { Name = "YENİŞEHİR", Link = "port-yenisehir", Image = "/media/4rgpzbnc/port-yenisehir-yht-ve-osb-yakini-yatirimlik-imarli-arsa-projesi-tanitim-gorseli.webp", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir" },
         new { Name = "İBİLLER", Link = "verda-ibiller", Image = "/media/v4lbfdhg/verda-ibiller-termal-tatil-bolgesi-yatirimlik-arsalar-proje-tanitim-gorseli.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı" },
         new { Name = "ILICABOĞAZI", Link = "panora-ilicabogazi", Image = "/media/dx5lbeaw/panora-ilicabogazi-bolge-tanitim-fotografi.webp", Description = "Gelişen kaplıca bölgesinde, sağlık ve yatırım potansiyeli bir arada. Yeni otel projeleriyle değeri artan lokasyon.", IsKonut = false, Location = "Balıkesir, Susurluk" },
@@ -514,12 +514,17 @@
                     var projectSlug = GenerateSlug(project.Name);
                     <div class="project-card" data-location="@project.Name">
                         @if (project.IsKonut)
-                            {
-                                <div class="konut-badge">
-                                    <i class="fas fa-star"></i>
-                                    <span>KONUT</span>
-                                </div>
-                            }
+                        {
+                            <div class="konut-badge" style="height:34px; width:70px;">
+                                <i class="fas fa-star"></i>
+                                <span style="font-size: 0.50rem">KONUT</span>
+                            </div>
+                        }
+                        else {
+                            <div class="konut-badge arsa-beyaz">
+                                <i class="fas fa-star" style="color:#045129"></i>
+                                <span style="color: #045129">ARSA</span>
+                            </div>
                         }
                         <div class="card-header">
                             <h3 class="card-title">@project.Name</h3>

@@ -14,7 +14,9 @@
     margin: 0 auto;
     padding: 0 2rem;
 }
-
+.arsa-beyaz{
+    background: #ffffff !important;
+}
 @font-face {
   font-family: 'Lato';
   src: url('/fonts/latoregular.ttf') format('truetype');
