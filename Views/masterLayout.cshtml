@@ -20,13 +20,18 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-LXVCMJ7EH2');
-    </script><!-- Google Tag Manager -->
-    <script type="0e66c71b493a1451f08528b9-text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    </script>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5KNH9BDM');</script>
-    <!-- End Google Tag Manager --><!-- Meta Pixel Code -->
+    <!-- End Google Tag Manager -->
+    
+    
+    <!-- Meta Pixel Code -->
     <script type="0e66c71b493a1451f08528b9-text/javascript">
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -306,21 +311,20 @@
     
 </head>
 <body class="bg-beige">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KNH9BDM"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
-@await Html.PartialAsync("social-items")
-
-@await Html.PartialAsync("_CookieConsent")
+    @await Html.PartialAsync("social-items")
+    @await Html.PartialAsync("_CookieConsent")
     <!-- Main Content -->
     <main class="main-content">
         @RenderBody()
     </main>
-@await Html.PartialAsync("Navigation")
-
-@await Html.PartialAsync("ContactAppointmentForm", new btlast.Models.ContactFormViewModel())
-@await Html.PartialAsync("FAQ")
-
-    <!-- Footer -->
-
+    @await Html.PartialAsync("Navigation")
+    @await Html.PartialAsync("ContactAppointmentForm", new btlast.Models.ContactFormViewModel())
+    @await Html.PartialAsync("FAQ")
     @await Html.PartialAsync("ModernFooter")
     
         <a href="#" class="call-me-detail fixed-call-btn">
