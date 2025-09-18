@@ -42,29 +42,33 @@
     // Proje listeleri (ProjectCards.cshtml'den kopyalandı)
     var projects = new[]
     {
-        new { Name = "BALIKLIDERE", Link = "baliklidere", Image = "/media/sq3mnqcv/baliklidere-tarihce-cerkez-mimari.webp", Description = "Balıklıdere'de, tarihî dere yatağına nazır – sessiz doğada huzurlu bir yatırım fırsatı sizi bekliyor.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true },
+        new { Name = "BALIKLIDERE", Link = "baliklidere", Image = "/media/uaweyjxt/balıklıdere-projesi-imarli-arsa-yatirimi-kapak-fotografi.webp", Description = "Balıklıdere'de, sessiz doğada huzurlu bir yatırım fırsatı sizi bekliyor.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true },
         new { Name = "ÇİNİKENT", Link = "cinikent", Image = "/media/kmgdwvz0/cinikent-3.jpg", Description = "Geleceğin kazancı ve şehrin konforu bir arada. Kütahya'nın gelişim aksında, sanayinin yanı başında stratejik bir yatırım ve modern bir yaşam.", IsKonut = true, Location = "Kütahya, Merkez", IsNew = true },
-        new { Name = "DİKİLİ", Link = "aqua-dikili", Image = "/media/0ikp2ink/dikili-izmir-villa-deniz-manzara.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili", IsNew = false },
-        new { Name = "YENİŞEHİR", Link = "port-yenisehir", Image = "/media/srbncqio/yenisehir-bursa-stratejik-yatirim.webp", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir", IsNew = false },
-        new { Name = "REŞADİYE", Link = "teras-resadiye", Image = "/media/vohjj0w2/resadiye-susurluk-koy-yasam.webp", Description = "Doğanın huzuru ve modern konforun mükemmel dengesi. Şehirlere yakın, olanakları tam ideal bir köy hayatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false },
-        new { Name = "BİGA", Link = "troya-biga", Image = "/media/zzxprvsk/biga-canakkale-deniz-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Çanakkale, Biga", IsNew = false }
+        new { Name = "DİKİLİ", Link = "dikili", Image = "/media/0ikp2ink/dikili-izmir-villa-deniz-manzara.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili", IsNew = false },
+        new { Name = "YENİŞEHİR", Link = "yenisehir", Image = "/media/srbncqio/yenisehir-bursa-stratejik-yatirim.webp", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir", IsNew = false },
+        new { Name = "REŞADİYE", Link = "resadiye", Image = "/media/vohjj0w2/resadiye-susurluk-koy-yasam.webp", Description = "Doğanın huzuru ve modern konforun mükemmel dengesi. Şehirlere yakın, olanakları tam ideal bir köy hayatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false },
+        new { Name = "BİGA", Link = "biga", Image = "/media/zzxprvsk/biga-canakkale-deniz-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Çanakkale, Biga", IsNew = false }
     };
     var newProjects = new[]
     {
-        new { Name = "KUVAYİ MİLLİYE", Link = "park-kuvayi-milliye", Image = "/media/rqfpfzr2/kuvayi-milliye-balikersir-prestij-yatirimwebp.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false},
-        new { Name = "AYDIN", Link = "olivra-aydin", Image = "/media/2eeji2vu/aydin-germencik-ege-yasam-arsa.webp", Description = "Şehir konforu ve Ege'nin tatil ruhu bir arada. Germencik merkezde, Kuşadası'na yarım saat mesafede dört mevsim yaşam.", IsKonut = false, Location = "Aydın, Germencik", IsNew = false },
-        new { Name = "DELİCE", Link = "delice-zirve", Image = "/media/pkvmixmc/delice-dursunbey-uretim-koy-yatirimi.webp", Description = "Aradığınız her şeye sahip, kendi kendine yeten gelişmiş bir köy. Hem üretken bir yaşam hem de güvenli bir yatırım.", IsKonut = false, Location = "Balıkesir, Dursunbey", IsNew = false },
-        new { Name = "GÜNEYCE", Link = "aria-guneyce", Image = "/media/uxhne2pk/guneyce-ankara-termal-huzur.webp", Description = "Başkent'in stresine sağlıklı bir mola. Ankara'ya yakın, termal zenginlikleriyle ünlü, huzur dolu bir kaçış noktası.", IsKonut = false, Location = "Ankara, Güdül", IsNew = false },
-        new { Name = "KALAYCILAR", Link = "prestij-kalaycilar", Image = "/media/bj2liz5u/kalaycilar-balikersir-luks-yasam.webp", Description = "Geleceğin lüks yaşam merkezi bugünden şekilleniyor. Değeri kanıtlanmış, seçkin bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false },
-        new { Name = "ARMUTLU", Link = "vista-armutlu", Image = "/media/hpkdt3qv/armutlu-sindirgı-doga-huzur.webp", Description = "Fıstık çamı ormanları arasında, şehrin gürültüsünden uzakta gerçek bir huzur sığınağı. Sakinlik ve doğa arayanlar için.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false },
-        new { Name = "SEYİTLER", Link = "montiva-seyitler", Image = "/media/5caopel2/seyitler-kutahya-stratejik-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Kütahya, Merkez", IsNew = false },
-        new { Name = "İBİLLER", Link = "verda-ibiller", Image = "/media/dceh34j3/ibiller-sindirgı-termal-doga-yatirimi.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false },
-        new { Name = "ILICABOĞAZI", Link = "panora-ilicabogazi", Image = "/media/0dojwmyn/ilicabogazi-susurluk-kaplica-yatirim.webp", Description = "Gelişen kaplıca bölgesinde, sağlık ve yatırım potansiyeli bir arada. Yeni otel projeleriyle değeri artan lokasyon.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false }
+        new { Name = "KUVAYİ MİLLİYE", Link = "kuvayi-milliye", Image = "/media/rqfpfzr2/kuvayi-milliye-balikersir-prestij-yatirimwebp.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false},
+        new { Name = "AYDIN", Link = "aydin", Image = "/media/2eeji2vu/aydin-germencik-ege-yasam-arsa.webp", Description = "Şehir konforu ve Ege'nin tatil ruhu bir arada. Germencik merkezde, Kuşadası'na yarım saat mesafede dört mevsim yaşam.", IsKonut = false, Location = "Aydın, Germencik", IsNew = false },
+        new { Name = "DELİCE", Link = "delice", Image = "/media/pkvmixmc/delice-dursunbey-uretim-koy-yatirimi.webp", Description = "Aradığınız her şeye sahip, kendi kendine yeten gelişmiş bir köy. Hem üretken bir yaşam hem de güvenli bir yatırım.", IsKonut = false, Location = "Balıkesir, Dursunbey", IsNew = false },
+        new { Name = "GÜNEYCE", Link = "guneyce", Image = "/media/uxhne2pk/guneyce-ankara-termal-huzur.webp", Description = "Başkent'in stresine sağlıklı bir mola. Ankara'ya yakın, termal zenginlikleriyle ünlü, huzur dolu bir kaçış noktası.", IsKonut = false, Location = "Ankara, Güdül", IsNew = false },
+        new { Name = "KALAYCILAR", Link = "kalaycilar", Image = "/media/bj2liz5u/kalaycilar-balikersir-luks-yasam.webp", Description = "Geleceğin lüks yaşam merkezi bugünden şekilleniyor. Değeri kanıtlanmış, seçkin bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false },
+        new { Name = "ARMUTLU", Link = "armutlu", Image = "/media/hpkdt3qv/armutlu-sindirgı-doga-huzur.webp", Description = "Fıstık çamı ormanları arasında, şehrin gürültüsünden uzakta gerçek bir huzur sığınağı. Sakinlik ve doğa arayanlar için.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false },
+        new { Name = "SEYİTLER", Link = "seyitler", Image = "/media/5caopel2/seyitler-kutahya-stratejik-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Kütahya, Merkez", IsNew = true },
+        new { Name = "İBİLLER", Link = "ibiller", Image = "/media/dceh34j3/ibiller-sindirgı-termal-doga-yatirimi.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false },
+        new { Name = "ILICABOĞAZI", Link = "ilicabogazi", Image = "/media/0dojwmyn/ilicabogazi-susurluk-kaplica-yatirim.webp", Description = "Gelişen kaplıca bölgesinde, sağlık ve yatırım potansiyeli bir arada. Yeni otel projeleriyle değeri artan lokasyon.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false }
     };
     var allProjects = projects.Concat(newProjects);
     var currentProjectName = Model.Value<string>("projectName");
     var otherProjects = allProjects.Where(p => p.Name != currentProjectName).OrderBy(x => Guid.NewGuid()).Take(6);
     
+    var Is360 = Model.Value<bool>("Is360");
+
+
+    ViewData["CustomData"] = currentProjectName;
 
     // === YAPILANDIRILMIŞ VERİ İÇİN GÜNCELLENMİŞ DEĞİŞKENLER ===
     var headline = Model.Value<string>("projectName");
@@ -410,6 +414,12 @@
                         Sizi Arayalım
                     </a>
 
+                    @if(Is360){          
+                        <a href="#" class="btn btn-outline-success btn-lg px-5 py-3 call-us-pulse is-360">
+                            Sanal Tur
+                        </a>
+                    }
+
                     @* --- YENİ EKLENEN PAYLAŞ BUTONU --- *@
                     <button id="shareProjectBtn" class="btn btn-outline-success btn-lg px-5 py-3 call-us-pulse">
                         <i class="fas fa-share-alt"></i> Paylaş
@@ -489,7 +499,8 @@
 @if(Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath")))
 {
     <section class="virtual-tour-section">
-        <h2 class="section-title text-center mb-4">Projeyi 360° Gezin</h2>
+        <h2 class="section-title text-center mb-4" id="container-360">Projeyi 360° Gezin</h2>
+
         <div id="pano-preview" class="pano-preview-container">
             <div id="pano" style="width:100%;height:100%;"></div>
             <div class="pano-overlay">
@@ -732,3 +743,33 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="/Scripts/tour.js"></script>
 <script src="/Scripts/projectDetail.js"></script>
 <script src="/Scripts/project-cards.js"></script>
+
+
+
+
+<script>
+    const formButtons2 = document.querySelectorAll(".is-360");
+
+formButtons2.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const isMobile = window.innerWidth <= 768;
+        const targetElement = document.getElementById('container-360');
+
+        if (targetElement) {
+            if (isMobile) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 150,
+                    behavior: 'smooth'
+                });
+            } else {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+    });
+});
+</script>

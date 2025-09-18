@@ -354,464 +354,426 @@
 
 
 
+
+
 /* ==========================================
-  SÜRDÜRÜLEBİLİRLİK BÖLÜMÜ - MASAÜSTÜ + MOBİL OVERLAY
-  ========================================== */
+   SÜRDÜRÜLEBİLİRLİK BÖLÜMÜ - MASAÜSTÜ + MOBİL OVERLAY
+   ========================================== */
 
 .sustainability-section {
-   background-color: #E9E8E6;
-   padding: 60px 0;
+    background-color: #E9E8E6;
+    padding: 100px 0;
 }
 
 .sustainability-container {
-   max-width: 1200px;
-   margin: 0 auto;
-   padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .sustainability-grid {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   min-height: 400px;
-   border-radius: 12px;
-   overflow: hidden;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
+.sustainability-image-1 {
+    background-image: url('/media/vohmkgbk/hakkımızda-sustain-gorsel-for-mobile-1.png');
+}
+.sustainability-image-2 {
+    background-image: url('/media/gdiewiwy/hakkımızda-sustain-gorsel-for-mobile-2.png');
+}
+
 
 .sustainability-image {
-   background-image: url('/media/your-sustainability-image.jpg'); /* Kendi görselinizi buraya ekleyin */
-   background-size: cover;
-   background-position: center;
-   position: relative;
-   min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 
+/* Görsel üzerine hafif overlay ekleyelim */
 .sustainability-image::before {
-   content: '';
-   position: absolute;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background: linear-gradient(
-       135deg,
-       rgba(4, 81, 41, 0.1) 0%,
-       rgba(46, 125, 50, 0.2) 100%
-   );
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(4, 81, 41, 0.1) 0%,
+        rgba(46, 125, 50, 0.2) 100%
+    );
 }
 
 .sustainability-content {
-   background-color: #045129;
-   color: white;
-   padding: 40px 35px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
+    background-color: #045129;
+    color: white;
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .sustainability-title {
-   font-size: 1.8rem;
-   font-weight: 600;
-   line-height: 1.3;
-   margin-bottom: 20px;
-   letter-spacing: 0.5px;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
 }
 
 .sustainability-description {
-   font-size: 1rem;
-   line-height: 1.6;
-   color: rgba(255, 255, 255, 0.95);
-   font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
 }
 
-/* Responsive Design - Overlay Mobil */
+/* Mobil görünümde sustainability-grid'ler arasında ayırıcı */
 @media (max-width: 992px) {
-   .sustainability-grid {
-       grid-template-columns: 1fr;
-       min-height: auto;
-       position: relative;
-   }
+    .sustainability-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        position: relative;
+        margin-bottom: 40px; /* Grid'ler arasında boşluk */
+    }
+    
+    /* Container'a relative position ver */
+    .sustainability-container {
+        position: relative;
+    }
+    
+    /* İlk grid'den sonra yeşil çizgi ekle - container içinde */
+    .sustainability-grid:first-child::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: -20px;
+        left: 10%;
+        width: 80%;
+        height: 7px;
+        background-color: #045129;
+        z-index: 999;
+    }
+    
+    /* Alternatif olarak container'da çizgi */
+    .sustainability-container::before {
+        content: '';
+        display: block;
+        width: 80%;
+        height: 7px;
+        background-color: #045129;
+        margin: 5px auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+    }
+    
+    /* Son grid'in margin'ını sıfırla */
+    .sustainability-grid:last-child {
+        margin-bottom: 0;
+    }
 
-   .sustainability-image {
-       min-height: 400px;
-       grid-row: 1;
-       grid-column: 1;
-   }
+    .sustainability-image {
+        min-height: 450px;
+        grid-row: 1;
+        grid-column: 1;
+    }
 
-   .sustainability-content {
-       grid-row: 1;
-       grid-column: 1;
-       background: linear-gradient(
-           to top,
-           rgba(4, 81, 41, 0.95) 0%,
-           rgba(4, 81, 41, 0.8) 50%,
-           rgba(4, 81, 41, 0.4) 100%
-       );
-       padding: 30px 25px;
-       align-self: end;
-       margin: 0;
-       border-radius: 0;
-   }
+    .sustainability-content {
+        grid-row: 1;
+        grid-column: 1;
+        background: linear-gradient(
+            to top,
+            rgba(4, 81, 41, 0.95) 0%,
+            rgba(4, 81, 41, 0.85) 40%,
+            rgba(4, 81, 41, 0.6) 70%,
+            rgba(4, 81, 41, 0.3) 100%
+        );
+        padding: 40px 30px;
+        align-self: end;
+        margin: 0;
+        border-radius: 0;
+    }
 
-   .sustainability-title {
-       font-size: 1.6rem;
-       margin-bottom: 15px;
-       color: white;
-       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-   }
+    .sustainability-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: white;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
 
-   .sustainability-description {
-       font-size: 0.95rem;
-       color: rgba(255, 255, 255, 0.95);
-       text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-   }
+    .sustainability-description {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.95);
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        line-height: 1.6;
+    }
 }
 
 @media (max-width: 768px) {
-   .sustainability-section {
-       padding: 40px 0;
-   }
+    .sustainability-section {
+        padding: 60px 0;
+    }
+    
+    .sustainability-grid {
+        margin-bottom: 35px;
+    }
+    
+    /* Çizgiyi küçük ekranlarda biraz daha ince yap */
+    .sustainability-grid:first-child::after {
+        width: 70%;
+        height: 1.5px;
+        bottom: -17.5px;
+    }
 
-   .sustainability-image {
-       min-height: 350px;
-   }
+    .sustainability-image {
+        min-height: 400px;
+    }
 
-   .sustainability-content {
-       padding: 25px 20px;
-       background: linear-gradient(
-           to top,
-           rgba(4, 81, 41, 0.95) 0%,
-           rgba(4, 81, 41, 0.85) 40%,
-           rgba(4, 81, 41, 0.5) 80%,
-           transparent 100%
-       );
-   }
+    .sustainability-content {
+        padding: 30px 25px;
+        background: linear-gradient(
+            to top,
+            rgba(4, 81, 41, 0.95) 0%,
+            rgba(4, 81, 41, 0.85) 35%,
+            rgba(4, 81, 41, 0.6) 65%,
+            rgba(4, 81, 41, 0.3) 85%,
+            transparent 100%
+        );
+    }
 
-   .sustainability-title {
-       font-size: 1.4rem;
-       margin-bottom: 12px;
-       line-height: 1.2;
-       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-   }
+    .sustainability-title {
+        font-size: 1.6rem;
+        margin-bottom: 18px;
+        line-height: 1.2;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
 
-   .sustainability-description {
-       font-size: 0.9rem;
-       line-height: 1.5;
-       text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-   }
+    .sustainability-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
 }
 
 @media (max-width: 480px) {
-   .sustainability-section {
-       padding: 30px 0;
-   }
+    .sustainability-section {
+        padding: 40px 0;
+    }
+    
+    .sustainability-grid {
+        margin-bottom: 30px;
+    }
+    
+    /* En küçük ekranlarda çizgiyi daha da ince yap */
+    .sustainability-grid:first-child::after {
+        width: 60%;
+        height: 6px;
+        bottom: -15px;
+    }
 
-   .sustainability-image {
-       min-height: 300px;
-   }
+    .sustainability-image {
+        min-height: 350px;
+    }
 
-   .sustainability-content {
-       padding: 20px 15px;
-   }
+    .sustainability-content {
+        padding: 25px 20px;
+        background: linear-gradient(
+            to top,
+            rgba(4, 81, 41, 0.35) 0%,
+            rgba(4, 81, 41, 0.25) 30%,
+            rgba(4, 81, 41, 0.15) 60%,
+            rgba(4, 81, 41, 0.05) 80%,
+            transparent 100%
+        );
+        z-index: 2;
+    }
 
-   .sustainability-title {
-       font-size: 1.2rem;
-       margin-bottom: 10px;
-   }
+    .sustainability-title {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
 
-   .sustainability-description {
-       font-size: 0.85rem;
-       line-height: 1.4;
-   }
+    .sustainability-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    }
 }
 
 
 
-/* Sürdürülebilirlik Bölümü */
-        .sustainability-section {
-            background-color: #E9E8E6;
-            padding: 100px 0;
-        }
 
-        .sustainability-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
 
-        .sustainability-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 500px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
 
-        .sustainability-image {
-            background-image: url('/media/wd1jukg1/cinikent-2-cropped-overlayed.png');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
 
-        .sustainability-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(4, 81, 41, 0.1) 0%,
-                rgba(46, 125, 50, 0.2) 100%
-            );
-        }
+/* ==========================================
+   UZMAN EKİBİMİZ BÖLÜMÜ
+   ========================================== */
 
-        .sustainability-content {
-            background-color: #045129;
-            color: white;
-            padding: 60px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+.expert-team-section {
+    background-color: #E9E8E6;
+    padding: 100px 0;
+}
 
-        .sustainability-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
+.expert-team-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-        .sustainability-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: 400;
-        }
+.expert-team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
 
-        /* Alt bölüm - İkinci kart */
-        .values-section {
-            background-color: #E9E8E6;
-            padding: 0 0 100px 0;
-        }
+.expert-team-content {
+    padding-right: 20px;
+}
 
-        .values-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            margin-top: 40px;
-        }
+.expert-team-title {
+    font-size: 3rem;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 40px;
+    position: relative;
+}
 
-        .values-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 500px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+/* Sol tarafta yeşil çizgi */
+.expert-team-title::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #045129;
+    border-radius: 2px;
+}
 
-        .values-content {
-            background-color: white;
-            padding: 60px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+.expert-team-list {
+    list-style: none;
+    padding: 0;
+}
 
-        .values-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 30px;
-            color: #333;
-            letter-spacing: 0.5px;
-        }
+.expert-team-item {
+    margin-bottom: 25px;
+    padding-left: 15px;
+    position: relative;
+}
 
-        .values-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #666;
-            font-weight: 400;
-        }
+/* Sol tarafta yeşil nokta */
+.expert-team-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    background-color: #045129;
+    border-radius: 50%;
+}
+@media(max-width: 768px){
+    /* Sol tarafta yeşil nokta */
+.expert-team-item::before {
+    display: none;
+}
+}
+.expert-team-role {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
 
-        .values-image {
-            background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=600&fit=crop');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
+.expert-team-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+}
 
-        .values-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(4, 81, 41, 0.1) 0%,
-                rgba(123, 160, 91, 0.2) 100%
-            );
-        }
+.expert-team-image {
+    position: relative;
+}
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .sustainability-grid,
-            .values-grid {
-                grid-template-columns: 1fr;
-                min-height: auto; /* Auto yükseklik */
-                position: relative; /* Overlay için pozisyon */
-            }
+.expert-team-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
 
-            .sustainability-image {
-                min-height: 400px; /* Mobilde daha yüksek - text için yer */
-                order: 1;
-                grid-row: 1;
-                grid-column: 1;
-            }
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
 
-            .sustainability-content {
-                order: 1; /* Aynı grid cell'de */
-                grid-row: 1;
-                grid-column: 1;
-                background: linear-gradient(
-                    to top,
-                    rgba(4, 81, 41, 0.95) 0%,
-                    rgba(4, 81, 41, 0.8) 50%,
-                    rgba(4, 81, 41, 0.4) 100%
-                );
-                padding: 30px 25px;
-                align-self: end; /* Alt kısımda konumlandır */
-                margin: 0;
-                border-radius: 0;
-            }
+@media (max-width: 992px) {
+    .expert-team-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        text-align: center;
+    }
+    
+    .expert-team-content {
+        padding-right: 0;
+        order: 2;
+    }
+    
+    .expert-team-image {
+        order: 1;
+    }
+    
+    .expert-team-title {
+        font-size: 2.5rem;
+    }
+    
+    .expert-team-title::before {
+        display: none;
+    }
+}
 
-            .values-content {
-                background: linear-gradient(
-                    to top,
-                    rgba(0, 0, 0, 0.85) 0%,
-                    rgba(0, 0, 0, 0.6) 50%,
-                    rgba(0, 0, 0, 0.3) 100%
-                );
-                color: white;
-                order: 1;
-                grid-row: 1;
-                grid-column: 1;
-                padding: 30px 25px;
-                align-self: end;
-                margin: 0;
-                border-radius: 0;
-            }
+@media (max-width: 768px) {
+    .expert-team-section {
+        padding: 60px 0;
+    }
+    
+    .expert-team-grid {
+        gap: 40px;
+    }
+    
+    .expert-team-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .expert-team-image img {
+        height: 300px;
+    }
+}
 
-            .sustainability-title,
-            .values-title {
-                font-size: 1.6rem;
-                margin-bottom: 15px;
-                color: white;
-            }
-
-            .sustainability-description,
-            .values-description {
-                font-size: 0.95rem;
-                color: rgba(255, 255, 255, 0.95);
-            }
-
-            .values-image {
-                min-height: 400px;
-                order: 1;
-                grid-row: 1;
-                grid-column: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sustainability-section,
-            .values-section {
-                padding: 40px 0;
-            }
-
-            .sustainability-image,
-            .values-image {
-                min-height: 350px;
-            }
-
-            .sustainability-content,
-            .values-content {
-                padding: 25px 20px;
-                background: linear-gradient(
-                    to top,
-                    rgba(4, 81, 41, 0.95) 0%,
-                    rgba(4, 81, 41, 0.85) 40%,
-                    rgba(4, 81, 41, 0.5) 80%,
-                    transparent 100%
-                );
-            }
-
-            .values-content {
-                background: linear-gradient(
-                    to top,
-                    rgba(0, 0, 0, 0.9) 0%,
-                    rgba(0, 0, 0, 0.7) 40%,
-                    rgba(0, 0, 0, 0.4) 80%,
-                    transparent 100%
-                );
-            }
-
-            .sustainability-title,
-            .values-title {
-                font-size: 1.4rem;
-                margin-bottom: 12px;
-                line-height: 1.2;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            }
-
-            .sustainability-description,
-            .values-description {
-                font-size: 0.9rem;
-                line-height: 1.5;
-                text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            }
-
-            .values-container {
-                margin-top: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sustainability-section,
-            .values-section {
-                padding: 30px 0;
-            }
-
-            .sustainability-image,
-            .values-image {
-                min-height: 300px;
-            }
-
-            .sustainability-content,
-            .values-content {
-                padding: 20px 15px;
-            }
-
-            .sustainability-title,
-            .values-title {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-
-            .sustainability-description,
-            .values-description {
-                font-size: 0.85rem;
-                line-height: 1.4;
-            }
-
-            .values-container {
-                margin-top: 15px;
-            }
-        }
+@media (max-width: 480px) {
+    .expert-team-title {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    
+    .expert-team-item {
+        margin-bottom: 20px;
+    }
+    
+    .expert-team-image img {
+        height: 250px;
+    }
+}
