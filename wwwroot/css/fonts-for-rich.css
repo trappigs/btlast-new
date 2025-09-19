@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Arial'; /* Fontunuza bir isim verin */
+  src: url('/fonts/arialregular.ttf') format('truetype'); /* Dosyanın yolunu belirtin */
+  font-weight: normal;
+  font-style: normal;
+}

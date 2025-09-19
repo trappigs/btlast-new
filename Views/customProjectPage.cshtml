@@ -1,0 +1,144 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Web
+@using Newtonsoft.Json
+@{
+    Layout = "masterLayout.cshtml";
+    
+    // Sayfa başlığı
+    var pageTitle = Model.Value<string>("pageTitle");
+    ViewBag.Title = pageTitle;
+    
+    var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    
+    // Seçilen projeleri doğrudan al - MultiNodeTreePicker IEnumerable<IPublishedContent> döndürür
+    // Sadece projectaa document type'ına sahip olanları filtrele
+    var selectedProjects = Model.Value<IEnumerable<IPublishedContent>>("selectedProjects") ?? Enumerable.Empty<IPublishedContent>();
+    var projectsList = selectedProjects.Where(p => p != null && p.IsVisible() && p.ContentType.Alias == "projectaa").ToList();
+
+    // SEO için yapılandırılmış veri
+    var itemListElements = new List<string>();
+    var position = 1;
+    var logoUrl = "https://bereketlitopraklar.com.tr/media/ihljr0ls/logo-light.svg";
+
+    foreach (var project in projectsList)
+    {
+        var projectUrl = project.Url(mode: UrlMode.Absolute);
+        var projectName = project.Name.Replace("\"", "\\\"");
+        var projectDescription = project.Value<string>("metaDescription")?.Replace("\"", "\\\"");
+        var projectImage = project.Value<IPublishedContent>("projectImage");
+        var projectImageUrl = projectImage?.Url(mode: UrlMode.Absolute) ?? "";
+        var datePublished = project.CreateDate.ToString("o");
+        var dateModified = project.UpdateDate.ToString("o");
+
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@context"": ""https://schema.org"",
+                ""@type"": ""Article"",
+                ""@id"": ""{projectUrl}"",
+                ""headline"": ""{projectName}"",
+                ""url"": ""{projectUrl}"",
+                ""description"": ""{projectDescription}"",
+                ""image"": {{
+                    ""@type"": ""ImageObject"",
+                    ""url"": ""{projectImageUrl}""
+                }},
+                ""author"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""url"": ""bereketlitopraklar.com.tr""
+                }},
+                ""publisher"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""logo"": {{
+                        ""@type"": ""ImageObject"",
+                        ""url"": ""{logoUrl}""
+                    }}
+                }},
+                ""datePublished"": ""{datePublished}"",
+                ""dateModified"": ""{dateModified}""
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
+
+    var featuredImage = Model.Value<IPublishedContent>("featuredImage");
+    var postDate = Model.Value<DateTime>("postDate");
+    if (postDate == default(DateTime)) {
+        postDate = Model.CreateDate;
+    }
+    var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+}
+
+@if (itemListElements.Any())
+{
+    @* SEO için yapılandırılmış veri *@
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "CollectionPage",
+        "name": "@pageTitle",
+        "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+        "url": "@currentUrl",
+        "mainEntity": {
+            "@@type": "ItemList",
+            "numberOfItems": @projectsList.Count(),
+            "itemListElement": [
+                @Html.Raw(string.Join(",", itemListElements))
+            ]
+        }
+    }
+    </script>
+}
+
+@* Custom Project Cards partial'ını çağır *@
+@await Html.PartialAsync("CustomProjectCards", Model, new ViewDataDictionary(ViewData) 
+{
+    { "SelectedProjects", projectsList },
+    { "PageTitle", pageTitle },
+    { "PageDescription", Model.Value<string>("pageDescription") }
+})
+
+
+<style>
+    .projects-section {
+        padding-top: 140px !important; 
+    }
+</style>
+
+
+
+<link href="/css/blog.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<div class="container blog-post-container" style="padding-top:0px !important">
+    <article>
+        <header class="blog-post-header">
+            <h1 class="blog-post-title">@Model.Value("articleTitle")</h1>
+            <div class="blog-post-meta">
+                <span>@formattedDate</span>
+                &bull;
+                <span>Yazar: @(Model.HasValue("articleAuthor") ? Model.Value("articleAuthor") : "Bereketli Topraklar")</span>
+            </div>
+        </header>
+
+        @if (featuredImage != null)
+        {
+            <div class="blog-post-featured-image">
+                <img src="@featuredImage.Url()" alt="@Model.Name" />
+            </div>
+        }
+
+        <div class="blog-post-content" style="max-width: 1050px !important">
+            @Model.Value("postContent")
+        </div>
+    </article>
+</div>

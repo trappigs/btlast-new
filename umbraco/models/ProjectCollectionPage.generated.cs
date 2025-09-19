@@ -18,14 +18,14 @@ using Umbraco.Extensions;
 
 namespace Umbraco.Cms.Web.Common.PublishedModels
 {
-	/// <summary>Hata Sayfasi</summary>
-	[PublishedModel("hataSayfasi")]
-	public partial class HataSayfasi : PublishedContentModel, IMeta
+	/// <summary>Proje Koleksiyon Sayfası</summary>
+	[PublishedModel("projectCollectionPage")]
+	public partial class ProjectCollectionPage : PublishedContentModel, IMeta
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
-		public new const string ModelTypeAlias = "hataSayfasi";
+		public new const string ModelTypeAlias = "projectCollectionPage";
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
@@ -34,14 +34,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 			=> PublishedModelUtility.GetModelContentType(contentTypeCache, ModelItemType, ModelTypeAlias);
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedContentTypeCache contentTypeCache, Expression<Func<HataSayfasi, TValue>> selector)
+		public static IPublishedPropertyType GetModelPropertyType<TValue>(IPublishedContentTypeCache contentTypeCache, Expression<Func<ProjectCollectionPage, TValue>> selector)
 			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(contentTypeCache), selector);
 #pragma warning restore 0109
 
 		private IPublishedValueFallback _publishedValueFallback;
 
 		// ctor
-		public HataSayfasi(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
+		public ProjectCollectionPage(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
 			: base(content, publishedValueFallback)
 		{
 			_publishedValueFallback = publishedValueFallback;
@@ -50,28 +50,83 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
+		/// articleAuthor
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("articleAuthor")]
+		public virtual string ArticleAuthor => this.Value<string>(_publishedValueFallback, "articleAuthor");
+
+		///<summary>
+		/// articleTitle
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("articleTitle")]
+		public virtual string ArticleTitle => this.Value<string>(_publishedValueFallback, "articleTitle");
+
+		///<summary>
+		/// featuredImage
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("featuredImage")]
+		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops FeaturedImage => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "featuredImage");
+
+		///<summary>
+		/// Alt Başlık
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("pageDescription")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString PageDescription => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "pageDescription");
+
+		///<summary>
 		/// Sayfa Başlığı
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("sayfaBasligi")]
-		public virtual string SayfaBasligi => this.Value<string>(_publishedValueFallback, "sayfaBasligi");
+		[ImplementPropertyType("pageTitle")]
+		public virtual string PageTitle => this.Value<string>(_publishedValueFallback, "pageTitle");
 
 		///<summary>
-		/// Sayfa İçeriği
+		/// postContent
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("sayfaIcerigi")]
-		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString SayfaIcerigi => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "sayfaIcerigi");
+		[ImplementPropertyType("postContent")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString PostContent => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "postContent");
 
 		///<summary>
-		/// sikcaSorulanSorular
+		/// postDate
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[ImplementPropertyType("postDate")]
+		public virtual global::System.DateTime PostDate => this.Value<global::System.DateTime>(_publishedValueFallback, "postDate");
+
+		///<summary>
+		/// Gösterilecek Projeler: Seçilme sırasına göre gösterilecektir. Sürükle-bırak yöntemiyle sıralamalar değiştirilebilir.
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("selectedProjects")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> SelectedProjects => this.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>(_publishedValueFallback, "selectedProjects");
+
+		///<summary>
+		/// Sık Sorulan Sorular
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("sikcaSorulanSorular")]
 		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel SikcaSorulanSorular => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "sikcaSorulanSorular");
+
+		///<summary>
+		/// URL Parçası (Slug): Sayfanın bağlantıları. "," ile boşluk bırakmadan kullanılır. Örn: "balikesir-imarli-arsa,balikesir-satilik-arsa"
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("umbracoUrlAlias")]
+		public virtual string UmbracoUrlAlias => this.Value<string>(_publishedValueFallback, "umbracoUrlAlias");
 
 		///<summary>
 		/// Author/Yazar: Varsayılan değer: 'Bereketli Topraklar'

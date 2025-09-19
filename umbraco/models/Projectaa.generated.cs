@@ -50,14 +50,21 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Proje 360 mı?
+		/// Proje 360 mı?: Projeye 360 görüntüye sahip mi?
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[ImplementPropertyType("is360")]
 		public virtual bool Is360 => this.Value<bool>(_publishedValueFallback, "is360");
 
 		///<summary>
-		/// Sayfa Başlığı
+		/// Konut Projesi mi?
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[ImplementPropertyType("isKonut")]
+		public virtual bool IsKonut => this.Value<bool>(_publishedValueFallback, "isKonut");
+
+		///<summary>
+		/// Sayfa Başlığı: {title}
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -121,7 +128,23 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string PmRole => this.Value<string>(_publishedValueFallback, "pmRole");
 
 		///<summary>
-		/// Proje Açıklaması
+		/// Proje Kart Açıklaması: Proje kartlarında hover efektiyle ortaya çıkacak özet projes yazısı.
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("projectCardDescription")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString ProjectCardDescription => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "projectCardDescription");
+
+		///<summary>
+		/// Proje Kartı Lokasyonu: Proje kartlarındaki lokasyon bilgisi, genelde "il, ilçe" olarak girilir.
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("projectCardLocation")]
+		public virtual string ProjectCardLocation => this.Value<string>(_publishedValueFallback, "projectCardLocation");
+
+		///<summary>
+		/// Proje Açıklaması: Projenin ana açıklaması.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -145,7 +168,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops ProjectImage => this.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(_publishedValueFallback, "projectImage");
 
 		///<summary>
-		/// Project Lokasyonu
+		/// Proje Lokasyonu: Proje detay sayfasında gösterilen konum bilgisi.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -153,7 +176,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string ProjectLocation => this.Value<string>(_publishedValueFallback, "projectLocation");
 
 		///<summary>
-		/// Proje Google Map URL
+		/// Proje Google Map URL: Embed Google Map URL.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -177,7 +200,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel SikcaSorulanSorular => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "sikcaSorulanSorular");
 
 		///<summary>
-		/// URL Parçası (Slug)
+		/// URL Parçası (Slug): Sayfanın bağlantıları. "," ile boşluk bırakmadan kullanılır. Örn: "balikesir-imarli-arsa,balikesir-satilik-arsa"
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -185,7 +208,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string UmbracoUrlAlias => this.Value<string>(_publishedValueFallback, "umbracoUrlAlias");
 
 		///<summary>
-		/// Virtual Tour Path
+		/// Virtual Tour Path: Sanal turun klasör yolu(geliştirici değilseniz, dokunmanıza gerek yok.)
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -193,7 +216,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string VirtualTourPath => this.Value<string>(_publishedValueFallback, "virtualTourPath");
 
 		///<summary>
-		/// Author/Yazar(Varsayılan değer: 'Bereketli Topraklar')
+		/// Author/Yazar: Varsayılan değer: 'Bereketli Topraklar'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -201,7 +224,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string Author => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetAuthor(this, _publishedValueFallback);
 
 		///<summary>
-		/// Canonical Url(OG Url, CN Url ile aynı bağlantıya sahip olacaktır.)
+		/// Canonical Url: OG Url, CN Url ile aynı bağlantıya sahip olacaktır.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -209,7 +232,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string CanonicalLink => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetCanonicalLink(this, _publishedValueFallback);
 
 		///<summary>
-		/// Meta Açıklaması(Boş geçilirse OG Desc.'i kopyalar)
+		/// Meta Açıklaması: Boş geçilirse OG Desc.'i kopyalar
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -225,7 +248,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string OgDescription => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetOgDescription(this, _publishedValueFallback);
 
 		///<summary>
-		/// OG Görsel(Varsayılan değer, logo)
+		/// OG Görsel: Varsayılan değer: logo
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -241,7 +264,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string OgTitle => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetOgTitle(this, _publishedValueFallback);
 
 		///<summary>
-		/// OG Type(varsayılan değer: 'website')
+		/// OG Type: Varsayılan değer: 'website'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -249,7 +272,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string OgType => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetOgType(this, _publishedValueFallback);
 
 		///<summary>
-		/// Robots(Varsayılan değer: 'index, follow')
+		/// Robots: Varsayılan değer: 'index, follow'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -257,7 +280,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string Robots => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetRobots(this, _publishedValueFallback);
 
 		///<summary>
-		/// TT Açıklaması(Varsayılan değer, OG Açıklaması)
+		/// TT Açıklaması: Varsayılan değer, OG Açıklaması
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -265,7 +288,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual string TtDescription => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetTtDescription(this, _publishedValueFallback);
 
 		///<summary>
-		/// TT Görsel(Varsayılan değer, OG Görsel)
+		/// TT Görsel: Varsayılan değer, OG Görsel
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -273,7 +296,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops TtImage => global::Umbraco.Cms.Web.Common.PublishedModels.Meta.GetTtImage(this, _publishedValueFallback);
 
 		///<summary>
-		/// TT Başlık(Varsayılan değer, OG Title)
+		/// TT Başlık: Varsayılan değer, OG Title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]

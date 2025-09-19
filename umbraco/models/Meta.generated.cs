@@ -22,17 +22,17 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 	/// <summary>META</summary>
 	public partial interface IMeta : IPublishedContent
 	{
-		/// <summary>Author/Yazar(Varsayılan değer: 'Bereketli Topraklar')</summary>
+		/// <summary>Author/Yazar</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string Author { get; }
 
-		/// <summary>Canonical Url(OG Url, CN Url ile aynı bağlantıya sahip olacaktır.)</summary>
+		/// <summary>Canonical Url</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string CanonicalLink { get; }
 
-		/// <summary>Meta Açıklaması(Boş geçilirse OG Desc.'i kopyalar)</summary>
+		/// <summary>Meta Açıklaması</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string MetaDescription { get; }
@@ -42,7 +42,7 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string OgDescription { get; }
 
-		/// <summary>OG Görsel(Varsayılan değer, logo)</summary>
+		/// <summary>OG Görsel</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		global::Umbraco.Cms.Core.Models.MediaWithCrops OgImage { get; }
@@ -52,27 +52,27 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string OgTitle { get; }
 
-		/// <summary>OG Type(varsayılan değer: 'website')</summary>
+		/// <summary>OG Type</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string OgType { get; }
 
-		/// <summary>Robots(Varsayılan değer: 'index, follow')</summary>
+		/// <summary>Robots</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string Robots { get; }
 
-		/// <summary>TT Açıklaması(Varsayılan değer, OG Açıklaması)</summary>
+		/// <summary>TT Açıklaması</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string TtDescription { get; }
 
-		/// <summary>TT Görsel(Varsayılan değer, OG Görsel)</summary>
+		/// <summary>TT Görsel</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		global::Umbraco.Cms.Core.Models.MediaWithCrops TtImage { get; }
 
-		/// <summary>TT Başlık(Varsayılan değer, OG Title)</summary>
+		/// <summary>TT Başlık</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		string TtTitle { get; }
@@ -110,40 +110,40 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		// properties
 
 		///<summary>
-		/// Author/Yazar(Varsayılan değer: 'Bereketli Topraklar')
+		/// Author/Yazar: Varsayılan değer: 'Bereketli Topraklar'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("author")]
 		public virtual string Author => GetAuthor(this, _publishedValueFallback);
 
-		/// <summary>Static getter for Author/Yazar(Varsayılan değer: 'Bereketli Topraklar')</summary>
+		/// <summary>Static getter for Author/Yazar</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetAuthor(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "author");
 
 		///<summary>
-		/// Canonical Url(OG Url, CN Url ile aynı bağlantıya sahip olacaktır.)
+		/// Canonical Url: OG Url, CN Url ile aynı bağlantıya sahip olacaktır.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("canonicalLink")]
 		public virtual string CanonicalLink => GetCanonicalLink(this, _publishedValueFallback);
 
-		/// <summary>Static getter for Canonical Url(OG Url, CN Url ile aynı bağlantıya sahip olacaktır.)</summary>
+		/// <summary>Static getter for Canonical Url</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetCanonicalLink(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "canonicalLink");
 
 		///<summary>
-		/// Meta Açıklaması(Boş geçilirse OG Desc.'i kopyalar)
+		/// Meta Açıklaması: Boş geçilirse OG Desc.'i kopyalar
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("metaDescription")]
 		public virtual string MetaDescription => GetMetaDescription(this, _publishedValueFallback);
 
-		/// <summary>Static getter for Meta Açıklaması(Boş geçilirse OG Desc.'i kopyalar)</summary>
+		/// <summary>Static getter for Meta Açıklaması</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetMetaDescription(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "metaDescription");
@@ -162,14 +162,14 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public static string GetOgDescription(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "ogDescription");
 
 		///<summary>
-		/// OG Görsel(Varsayılan değer, logo)
+		/// OG Görsel: Varsayılan değer: logo
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("ogImage")]
 		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops OgImage => GetOgImage(this, _publishedValueFallback);
 
-		/// <summary>Static getter for OG Görsel(Varsayılan değer, logo)</summary>
+		/// <summary>Static getter for OG Görsel</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static global::Umbraco.Cms.Core.Models.MediaWithCrops GetOgImage(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(publishedValueFallback, "ogImage");
@@ -188,66 +188,66 @@ namespace Umbraco.Cms.Web.Common.PublishedModels
 		public static string GetOgTitle(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "ogTitle");
 
 		///<summary>
-		/// OG Type(varsayılan değer: 'website')
+		/// OG Type: Varsayılan değer: 'website'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("ogType")]
 		public virtual string OgType => GetOgType(this, _publishedValueFallback);
 
-		/// <summary>Static getter for OG Type(varsayılan değer: 'website')</summary>
+		/// <summary>Static getter for OG Type</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetOgType(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "ogType");
 
 		///<summary>
-		/// Robots(Varsayılan değer: 'index, follow')
+		/// Robots: Varsayılan değer: 'index, follow'
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("robots")]
 		public virtual string Robots => GetRobots(this, _publishedValueFallback);
 
-		/// <summary>Static getter for Robots(Varsayılan değer: 'index, follow')</summary>
+		/// <summary>Static getter for Robots</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetRobots(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "robots");
 
 		///<summary>
-		/// TT Açıklaması(Varsayılan değer, OG Açıklaması)
+		/// TT Açıklaması: Varsayılan değer, OG Açıklaması
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("ttDescription")]
 		public virtual string TtDescription => GetTtDescription(this, _publishedValueFallback);
 
-		/// <summary>Static getter for TT Açıklaması(Varsayılan değer, OG Açıklaması)</summary>
+		/// <summary>Static getter for TT Açıklaması</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetTtDescription(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "ttDescription");
 
 		///<summary>
-		/// TT Görsel(Varsayılan değer, OG Görsel)
+		/// TT Görsel: Varsayılan değer, OG Görsel
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("ttImage")]
 		public virtual global::Umbraco.Cms.Core.Models.MediaWithCrops TtImage => GetTtImage(this, _publishedValueFallback);
 
-		/// <summary>Static getter for TT Görsel(Varsayılan değer, OG Görsel)</summary>
+		/// <summary>Static getter for TT Görsel</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static global::Umbraco.Cms.Core.Models.MediaWithCrops GetTtImage(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.MediaWithCrops>(publishedValueFallback, "ttImage");
 
 		///<summary>
-		/// TT Başlık(Varsayılan değer, OG Title)
+		/// TT Başlık: Varsayılan değer, OG Title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("ttTitle")]
 		public virtual string TtTitle => GetTtTitle(this, _publishedValueFallback);
 
-		/// <summary>Static getter for TT Başlık(Varsayılan değer, OG Title)</summary>
+		/// <summary>Static getter for TT Başlık</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "16.0.0+9812630")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static string GetTtTitle(IMeta that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "ttTitle");
