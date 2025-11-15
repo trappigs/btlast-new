@@ -8,7 +8,6 @@
 
 <link rel="stylesheet" href="/css/about.css">
 
-
 @await Html.PartialAsync("schemaScript")
 
 
@@ -95,12 +94,104 @@
     </div>
 </section>
 
+
+
 @await Html.PartialAsync("NelerYapiyoruzSection-Hakkimizda")
 
 
 @await Html.PartialAsync("_ValuesTimeline")
 
+
+<section class="sustainability-section">
+    <div class="sustainability-container">
+        <div class="sustainability-grid" style="border-radius: 12px 12px 0px 0px">
+            <div class="sustainability-image sustainability-image-1"></div>
+            <div class="sustainability-content">
+                <h2 class="sustainability-title">
+                    Sürdürülebilirlik ve Toplumsal Sorumlulukla Geleceğe Katkı
+                </h2>
+                <p class="sustainability-description">
+                    Bereketli Topraklar olarak, her projemizin merkezinde yalnızca ekonomik değer değil, toplumsal fayda da bulunuyor. Çevreye duyarlı yaklaşımımız, etik değerlerimiz ve toplumsal sorumluluk bilincimizle, müşterilerimizden çalışanlarımıza kadar tüm paydaşlarımız için kalıcı değer üretmeyi amaçlıyoruz. Doğaya ve topluma saygılı iş modelimizle, geleceğin güvenli ve sürdürülebilir yarınlarını inşa etmek için çalışıyoruz.
+                </p>
+            </div>
+        </div>
+        <div class="sustainability-grid" style="border-radius: 0px 0px 12px 12px">
+            <div class="sustainability-content">
+                <h2 class="sustainability-title">
+                    Paydaşlarımız İçin Kalıcı Değer Üretiyoruz
+                </h2>
+                <p class="sustainability-description">
+                    Sürdürülebilir büyümeyi yalnızca iş sonuçlarımızda değil, toplumla olan bağımızda da gözetiyoruz. Yenilikçi projelerimiz ve genişleyen hizmet portföyümüz sayesinde, sektördeki liderliğimizi sürdürürken, aynı zamanda sosyal sorumluluklarımızı yerine getiriyoruz. Bereketli Topraklar, yalnızca bir yatırım şirketi değil; aynı zamanda toplumun, çevrenin ve gelecek nesillerin yanında duran güvenilir bir iş ortağıdır.
+                </p>
+            </div>
+            <div class="sustainability-image sustainability-image-2"></div>
+        </div>
+    </div>
+</section>
+
+
 @await Html.PartialAsync("GenisPortfoyumuzSection-AboutUs")
+
+
+<!-- Uzman Ekibimiz Bölümü -->
+<section class="expert-team-section">
+    <div class="expert-team-container">
+        <div class="expert-team-grid">
+            <div class="expert-team-content">
+                <h2 class="expert-team-title">Uzman Ekibimiz</h2>
+                
+                <ul class="expert-team-list">
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Makina Mühendisi:</div>
+                        <div class="expert-team-description">
+                            Projelerimizin teknik altyapısını ve inşaat süreçlerini denetler, arsaların potansiyel kullanımları konusunda önemli görüşler sağlar.
+                        </div>
+                    </li>
+                    
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Muhasebe Uzmanı:</div>
+                        <div class="expert-team-description">
+                            Finansal işlemlerimizin doğruluğunu ve şeffaflığını sağlayarak, yatırımcılarımızın güvenini kazanmamızda kritik bir rol oynar.
+                        </div>
+                    </li>
+                    
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Değerleme Uzmanı:</div>
+                        <div class="expert-team-description">
+                            Arsa ve gayrimenkul değerlemelerindeki derin uzmanlığı ile yatırımcılarımıza piyasa koşullarında en doğru değerleme bilgilerini sunar, yatırım kararlarının sağlam temellere dayanmasını sağlar.
+                        </div>
+                    </li>
+                    
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Avukat:</div>
+                        <div class="expert-team-description">
+                            Yasal süreçlerin ve işlemlerin sorunsuz bir şekilde yürütülmesini sağlayarak, müşterilerimizin haklarını korur ve güvenli bir yatırım ortamı oluşturur.
+                        </div>
+                    </li>
+                    
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Sosyolog:</div>
+                        <div class="expert-team-description">
+                            Toplumsal trendler ve beklentiler konusunda derinlemesine analizler yaparak, projelerimizin toplumun ihtiyaç ve değerleriyle uyumlu olmasını sağlar.
+                        </div>
+                    </li>
+                    
+                    <li class="expert-team-item">
+                        <div class="expert-team-role">Satış ve Pazarlama Uzmanı:</div>
+                        <div class="expert-team-description">
+                            Pazar trendlerini ve müşteri davranışlarını analiz ederek, markamızın ve projelerimizin hedef kitlemize en etkili şekilde ulaşmasını sağlar.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- <div class="expert-team-image">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDYwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjZjhmOWZhIi8+CjxjaXJjbGUgY3g9IjE1MCIgY3k9IjE1MCIgcj0iMzAiIGZpbGw9IiNkMWQ1ZGIiLz4KPGNpcmNsZSBjeD0iMzAwIiBjeT0iMTUwIiByPSIzMCIgZmlsbD0iI2QxZDVkYiIvPgo8Y2lyY2xlIGN4PSI0NTAiIGN5PSIxNTAiIHI9IjMwIiBmaWxsPSIjZDFkNWRiIi8+CjxyZWN0IHg9IjEyMCIgeT0iMjAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZTVlN2ViIi8+CjxyZWN0IHg9IjI3MCIgeT0iMjAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZTVlN2ViIi8+CjxyZWN0IHg9IjQyMCIgeT0iMjAwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZTVlN2ViIi8+Cjx0ZXh0IHg9IjMwMCIgeT0iMzgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjg3MjhiIiBmb250LXNpemU9IjE4IiBmb250LWZhbWlseT0iQXJpYWwiPkVraXAgw4dhbMSxxZ9tYXPEsTwvdGV4dD4KPHRleHQgeD0iMzAwIiB5PSI0MTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5Y2EzYWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtZmFtaWx5PSJBcmlhbCI+VGFrxLFtIMOHYWzEscWfbWFzxLE8L3RleHQ+Cjwvc3ZnPg==" alt="Takım Çalışması" />
+            </div> -->
+        </div>
+    </div>
+</section>
+
 <!-- Testimonials Section -->
 <section class="testimonials-section">
     <div class="testimonials-container">

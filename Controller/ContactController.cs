@@ -1,4 +1,5 @@
 ﻿using btlast.Models;
+using btlast.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -22,12 +23,11 @@ namespace btlast.Controller
     public class SmtpSettings
     {
         public string To { get; set; } = "info@bereketlitopraklar.com.tr";
-
         public string From { get; set; } = "bereketliform@gmail.com";
         public string Host { get; set; } = "smtp.gmail.com";
         public int Port { get; set; } = 587;
         public string Username { get; set; } = "bereketliform@gmail.com";
-        public string Password { get; set; } = "mkml mxwo rshn xmpi";
+        public string Password { get; set; } = "wafq dtwp swxo vjpn";
         public string SecureSocketOptions { get; set; } = "StartTls";
     }
 
@@ -35,6 +35,7 @@ namespace btlast.Controller
     {
         private readonly SmtpSettings _smtpSettings;
         private readonly ILogger<ContactController> _logger;
+        private readonly IGoogleSheetsService _googleSheetsService;
 
         public ContactController(
             IUmbracoContextAccessor umbracoContextAccessor,
@@ -44,11 +45,13 @@ namespace btlast.Controller
             IProfilingLogger profilingLogger,
             IPublishedUrlProvider publishedUrlProvider,
             IOptions<SmtpSettings> smtpSettings,
-            ILogger<ContactController> logger)
+            ILogger<ContactController> logger,
+            IGoogleSheetsService googleSheetsService)
             : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _smtpSettings = smtpSettings.Value;
             _logger = logger;
+            _googleSheetsService = googleSheetsService;
         }
 
         [HttpPost]
@@ -88,6 +91,23 @@ namespace btlast.Controller
                 await smtp.SendAsync(email);
                 await smtp.DisconnectAsync(true);
 
+                // Google Sheets'e veri ekle
+                var sheetData = new Dictionary<string, object?>
+                {
+                    { "Tarih", DateTime.Now.ToString("dd.MM.yyyy HH:mm") },
+                    { "Name", model.Name },
+                    { "Email", model.Email },
+                    { "Phone", model.Phone },
+                    { "Subject", model.FormType == "contact" ? model.Subject : model.AppointmentType },
+                    { "Message", model.Message },
+                    { "AppointmentType", model.AppointmentType },
+                    { "KvkkConsent", model.KvkkConsent },
+                    { "AllowCampaigns", model.AllowCampaigns }
+                };
+
+                string sheetName = model.FormType == "contact" ? "İletişim Formları" : "Randevu Talepleri";
+                await _googleSheetsService.AppendContactFormAsync(sheetData, sheetName);
+
                 string successMessage = model.FormType == "contact"
                     ? "Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız."
                     : "Randevu talebiniz başarıyla alındı. Onay için sizinle iletişime geçeceğiz.";
@@ -110,6 +130,8 @@ namespace btlast.Controller
             body += $"<p><strong>Ad Soyad:</strong> {model.Name}</p>";
             body += $"<p><strong>E-posta:</strong> {model.Email}</p>";
             body += $"<p><strong>Telefon:</strong> {model.Phone}</p>";
+            body += $"<p><strong>KVKK Onayı:</strong> {(model.KvkkConsent ? "Evet" : "Hayır")}</p>";
+            body += $"<p><strong>Kampanya İzni:</strong> {(model.AllowCampaigns ? "Evet" : "Hayır")}</p>";
 
             if (model.FormType == "contact")
             {
@@ -167,6 +189,21 @@ namespace btlast.Controller
                 await smtp.AuthenticateAsync(_smtpSettings.Username, _smtpSettings.Password);
                 await smtp.SendAsync(email);
                 await smtp.DisconnectAsync(true);
+
+                // Google Sheets'e veri ekle (İletişim Formları sayfası)
+                var sheetData = new Dictionary<string, object?>
+                {
+                    { "Tarih", DateTime.Now.ToString("dd.MM.yyyy HH:mm") },
+                    { "Name", model.Name },
+                    { "Email", model.Email },
+                    { "Phone", model.Phone },
+                    { "Subject", "" },
+                    { "Message", "" },
+                    { "KvkkConsent", model.KvkkConsent },
+                    { "AllowCampaigns", model.AllowCampaigns }
+                };
+
+                await _googleSheetsService.AppendContactFormAsync(sheetData, "İletişim Formları");
 
                 return new JsonResult(new { success = true, message = "Teşekkürler! En kısa sürede sizi arayacağız." });
             }

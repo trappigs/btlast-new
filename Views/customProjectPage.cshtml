@@ -1,0 +1,208 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Web
+@using Newtonsoft.Json
+@using System.Text.RegularExpressions
+@{
+    Layout = "masterLayout.cshtml";
+    
+    var pageTitle = Model.Value<string>("pageTitle");
+    ViewBag.Title = pageTitle;
+    
+    var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    
+    var selectedProjects = Model.Value<IEnumerable<IPublishedContent>>("selectedProjects") ?? Enumerable.Empty<IPublishedContent>();
+    var projectsList = selectedProjects.Where(p => p != null && p.IsVisible() && p.ContentType.Alias == "projectaa").ToList();
+
+    var itemListElements = new List<string>();
+    var position = 1;
+    var logoUrl = "https://bereketlitopraklar.com.tr/media/ihljr0ls/logo-light.svg";
+
+    foreach (var project in projectsList)
+    {
+        var projectUrl = project.Url(mode: UrlMode.Absolute);
+        var projectName = project.Name.Replace("\"", "\\\"");
+        var projectDescription = project.Value<string>("metaDescription")?.Replace("\"", "\\\"");
+        var projectImage = project.Value<IPublishedContent>("projectImage");
+        var projectImageUrl = projectImage?.Url(mode: UrlMode.Absolute) ?? "";
+        var datePublished = project.CreateDate.ToString("o");
+        var dateModified = project.UpdateDate.ToString("o");
+
+        var listItemJson = $@"{{
+            ""@type"": ""ListItem"",
+            ""position"": {position},
+            ""item"": {{
+                ""@context"": ""https://schema.org"",
+                ""@type"": ""Article"",
+                ""@id"": ""{projectUrl}"",
+                ""headline"": ""{projectName}"",
+                ""url"": ""{projectUrl}"",
+                ""description"": ""{projectDescription}"",
+                ""image"": {{
+                    ""@type"": ""ImageObject"",
+                    ""url"": ""{projectImageUrl}""
+                }},
+                ""author"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""url"": ""bereketlitopraklar.com.tr""
+                }},
+                ""publisher"": {{
+                    ""@type"": ""Organization"",
+                    ""name"": ""Bereketli Topraklar"",
+                    ""logo"": {{
+                        ""@type"": ""ImageObject"",
+                        ""url"": ""{logoUrl}""
+                    }}
+                }},
+                ""datePublished"": ""{datePublished}"",
+                ""dateModified"": ""{dateModified}""
+            }}
+        }}";
+
+        itemListElements.Add(listItemJson);
+        position++;
+    }
+
+    var featuredImage = Model.Value<IPublishedContent>("featuredImage");
+    var postDate = Model.Value<DateTime>("postDate");
+    if (postDate == default(DateTime)) {
+        postDate = Model.CreateDate;
+    }
+    var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+    
+    // İçeriği al ve ikinci H2'den önce "Read More" ekle
+    var postContent = Model.Value<string>("postContent");
+    var processedContent = postContent;
+    
+    if (!string.IsNullOrEmpty(postContent))
+    {
+        // H2 etiketlerini bul
+        var h2Pattern = @"<h2[^>]*>";
+        var h2Matches = Regex.Matches(postContent, h2Pattern, RegexOptions.IgnoreCase);
+        
+        // İkinci H2 varsa
+        if (h2Matches.Count >= 2)
+        {
+            var secondH2Index = h2Matches[1].Index;
+            var beforeSecondH2 = postContent.Substring(0, secondH2Index);
+            var afterSecondH2 = postContent.Substring(secondH2Index);
+            
+            var readMoreHtml = @"
+                <div class='read-more-wrapper' style='margin: 30px 0;'>
+                    <div class='read-more-content' style='max-height: 0; overflow: hidden; transition: max-height 0.3s ease;'>
+            ";
+            
+            var readMoreButton = @"
+                    </div>
+                    <button class='read-more-btn' onclick='toggleReadMore(this)' style='background: #2c5f2d; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 20px;'>
+                        Devamını Oku
+                    </button>
+                </div>
+            ";
+            
+            processedContent = beforeSecondH2 + readMoreHtml + afterSecondH2 + readMoreButton;
+        }
+    }
+}
+
+@if (itemListElements.Any())
+{
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "CollectionPage",
+        "name": "@pageTitle",
+        "description": "@Html.Raw(Model.Value<string>("metaDescription")?.Replace("\"", "\\\""))",
+        "url": "@currentUrl",
+        "mainEntity": {
+            "@@type": "ItemList",
+            "numberOfItems": @projectsList.Count(),
+            "itemListElement": [
+                @Html.Raw(string.Join(",", itemListElements))
+            ]
+        }
+    }
+    </script>
+}
+
+@await Html.PartialAsync("CustomProjectCards", Model, new ViewDataDictionary(ViewData) 
+{
+    { "SelectedProjects", projectsList },
+    { "PageTitle", pageTitle },
+    { "PageDescription", Model.Value<string>("pageDescription") }
+})
+
+<style>
+    .projects-section {
+        padding-top: 140px !important; 
+    }
+    
+    .read-more-wrapper {
+        margin: 30px 0;
+    }
+    
+    .read-more-content {
+        transition: max-height 0.3s ease;
+    }
+    
+    .read-more-btn {
+        background: #045129 !important;
+        transition: background 0.3s ease;
+    }
+    
+    .read-more-btn:hover {
+        background: #1e4620;
+    }
+</style>
+
+<link href="/css/blog.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<div class="container blog-post-container" style="padding-top:0px !important">
+    <article>
+        
+        @if (featuredImage != null)
+        {
+            <div class="blog-post-featured-image">
+                <img src="@featuredImage.Url()" alt="@Model.Name" />
+            </div>
+        }
+
+        <div class="blog-post-content" style="max-width: 1050px !important">
+            @Html.Raw(processedContent)
+        </div>
+    </article>
+</div>
+
+<script>
+function toggleReadMore(button) {
+    var wrapper = button.parentElement;
+    var content = wrapper.querySelector('.read-more-content');
+    
+    if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        button.textContent = 'Daha Az Göster';
+    } else {
+        content.style.maxHeight = '0px';
+        button.textContent = 'Devamını Oku';
+        
+        // Scroll animasyonu ile wrapper'ın 100px üstüne git
+        setTimeout(function() {
+            var wrapperPosition = wrapper.getBoundingClientRect().top + window.pageYOffset;
+            var offsetPosition = wrapperPosition - 400;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }, 100);
+    }
+}
+</script>
+
+@await Html.PartialAsync("FAQ")
+@await Html.PartialAsync("deneme")

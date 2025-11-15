@@ -8,7 +8,87 @@
     padding: 80px 0;
     background-color: #E9E8E6;
 }
+.projects-section .paper-corner-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 55px 55px 0 0;
+    border-color: #ff4757 transparent transparent transparent;
+    z-index: 15;
+    transition: transform 0.3s ease;
+}
 
+
+.projects-section .paper-corner-badge::before {
+    content: "YENİ";
+    position: absolute;
+    top: -42px;
+    left: 4px;
+    color: white;
+    font-size: 0.60rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transform: rotate(-45deg);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Gölge efekti için */
+.projects-section .paper-corner-badge::after {
+    content: "";
+    position: absolute;
+    top: -55px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 4px 0 0;
+    border-color: rgba(0,0,0,0.15) transparent transparent transparent;
+    transform: translate(-4px, 55px);
+}
+
+/* Renk Varyasyonları */
+.projects-section .paper-corner-badge.green {
+    border-color: #045129 transparent transparent transparent;
+}
+
+.projects-section .paper-corner-badge.blue {
+    border-color: #3742fa transparent transparent transparent;
+}
+
+.projects-section .paper-corner-badge.orange {
+    border-color: #ff6348 transparent transparent transparent;
+}
+
+.projects-section .paper-corner-badge.purple {
+    border-color: #8e44ad transparent transparent transparent;
+}
+
+/* Hover Efekti */
+.projects-section .project-card:hover .paper-corner-badge {
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .projects-section .paper-corner-badge {
+        border-width: 45px 45px 0 0;
+    }
+    
+    .projects-section .paper-corner-badge::before {
+        top: -35px;
+        left: 3px;
+        font-size: 0.55rem;
+    }
+    
+    .projects-section .paper-corner-badge::after {
+        top: -45px;
+        border-width: 3px 3px 0 0;
+        transform: translate(-3px, 45px);
+    }
+}
 .projects-section .container {
     max-width: 1200px;
     margin: 0 auto;

@@ -1,9 +1,14 @@
 using btlast.Controller;
+using btlast.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// YENÝ EKLENEN SATIR: SmtpSettings'i appsettings'deki "Smtp" bölümüne baðla
+// SMTP AyarlarÄ±
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+
+// Google Sheets AyarlarÄ±
+builder.Services.Configure<GoogleSheetsSettings>(builder.Configuration.GetSection("GoogleSheets"));
+builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()

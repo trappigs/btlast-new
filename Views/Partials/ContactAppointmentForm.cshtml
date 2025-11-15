@@ -1,10 +1,11 @@
 ﻿@* ContactAppointmentForm.cshtml - Updated Design *@
 @model btlast.Models.ContactFormViewModel
-
+@{
+    var data = ViewData["CustomData"] as string;    
+    var projects = new List<string> { "ÇİNİKENT", "Yenişehir", "Reşadiye", "Armutlu", "Seyitler", "İbiller", "Ilıcaboğazı" };
+}
 <link rel="stylesheet" href="/css/contact-appointment-form.css">
-
 <div id="contactFormContainer" class="contact-form-container">
-    
     @* Header Section - Green Background *@
     <div class="form-header">
         <div class="header-content" id="contact-section-desktop">
@@ -85,6 +86,18 @@
                                     <span>Yüz Yüze Görüşme Talebi</span>
                                 </span>
                             </label>
+                            @foreach(var project in projects){
+                                if(data == project)
+                                {
+                                    <label class="appointment-option">
+                                        <input type="radio" name="AppointmentType" value="Sanal Yer Gösterimi" required />
+                                        <span class="option-content">
+                                            <i>💻</i>
+                                            <span>Uzmanlarımızla Sanal Yer Gösterimi</span>
+                                        </span>
+                                    </label>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -104,10 +117,15 @@
                             <option value="09:00">09:00</option>
                             <option value="10:00">10:00</option>
                             <option value="11:00">11:00</option>
-                            <option value="14:00">14:00</option>
-                            <option value="15:00">15:00</option>
-                            <option value="16:00">16:00</option>
+                            <option value="14:00">12:00</option>
+                            <option value="15:00">13:00</option>
+                            <option value="16:00">14:00</option>
+                            <option value="17:00">15:00</option>
+                            <option value="17:00">16:00</option>
                             <option value="17:00">17:00</option>
+                            <option value="17:00">18:00</option>
+                            <option value="17:00">19:00</option>
+                            <option value="17:00">20:00</option>
                         </select>
                     </div>
                 </div>
@@ -129,7 +147,7 @@
                     </span>
                 </label>
                 <label class="checkbox-label">
-                    <input type="checkbox" id="marketing" name="marketing" class="form-checkbox" />
+                    <input type="checkbox" id="allowCampaigns" name="AllowCampaigns" value="true" class="form-checkbox" />
                     <span class="checkmark"></span>
                     <span class="checkbox-text">
                         Kampanyalardan haberdar olmak için elektronik ileti almak istiyorum.

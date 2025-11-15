@@ -179,6 +179,12 @@
         submitButton.classList.add('loading');
 
         const formData = new FormData(form);
+        // Checkbox değerlerini açıkça ayarla (FormData checkbox değerlerini doğru şekilde işlemesi için)
+        const kvkkConsent = form.querySelector('[name="KvkkConsent"]').checked;
+        const allowCampaigns = form.querySelector('[name="AllowCampaigns"]').checked;
+        formData.set('KvkkConsent', kvkkConsent ? 'true' : 'false');
+        formData.set('AllowCampaigns', allowCampaigns ? 'true' : 'false');
+
         const actionUrl = form.getAttribute('action');
         const token = form.querySelector('input[name="__RequestVerificationToken"]').value;
 

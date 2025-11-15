@@ -23,6 +23,47 @@
     }
     var formattedDate = postDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
     
+    // İçindekiler için H2 ve H3 başlıkları çıkarma
+    var postContent = Model.Value<string>("postContent");
+    var tocItems = new List<dynamic>();
+    
+    if (!string.IsNullOrEmpty(postContent))
+    {
+        // H2 ve H3 başlıklarını bulma regex'i
+        var headingRegex = new Regex(@"<(h[23])[^>]*>(.*?)</\1>", RegexOptions.IgnoreCase);
+        var matches = headingRegex.Matches(postContent);
+        
+        int counter = 1;
+        foreach (Match match in matches)
+        {
+            var level = match.Groups[1].Value.ToLower(); // h2 veya h3
+            var content = Regex.Replace(match.Groups[2].Value, "<.*?>", string.Empty); // HTML etiketlerini temizle
+            
+            // HTML entity'lerini decode et
+            content = System.Net.WebUtility.HtmlDecode(content);
+            
+            var anchor = $"heading-{counter}";
+            
+            tocItems.Add(new { 
+                Level = level, 
+                Text = content.Trim(), 
+                Anchor = anchor,
+                Id = counter
+            });
+            counter++;
+        }
+        
+        // İçeriği anchor linklerle güncelleme
+        counter = 1;
+        postContent = headingRegex.Replace(postContent, match => {
+            var tag = match.Groups[1].Value;
+            var content = match.Groups[2].Value;
+            var result = $"<{tag} id=\"heading-{counter}\">{content}</{tag}>";
+            counter++;
+            return result;
+        });
+    }
+    
     // --- YENİ EKLENEN KOD BAŞLANGICI ---
     var blogPage = Model.Parent; 
     var otherPosts = Enumerable.Empty<IPublishedContent>();
@@ -51,19 +92,47 @@
                 <span>Yazar: @(Model.HasValue("articleAuthor") ? Model.Value("articleAuthor") : "Bereketli Topraklar")</span>
             </div>
         </header>
-
         @if (featuredImage != null)
         {
             <div class="blog-post-featured-image">
                 <img src="@featuredImage.Url()" alt="@Model.Name" />
             </div>
         }
+        @* İÇİNDEKİLER BÖLÜMÜ *@
+        @if (tocItems.Any())
+        {
+            <div class="table-of-contents">
+                <div class="toc-header" onclick="toggleTOC()">
+                    <h3 class="toc-title">
+                        <i class="toc-icon">📋</i>
+                        İçindekiler
+                        <i class="toc-arrow">▼</i>
+                    </h3>
+                </div>
+                <div class="toc-content" id="tocContent">
+                    <ul class="toc-list">
+                        @foreach (var item in tocItems)
+                        {
+                            <li class="toc-item toc-@item.Level">
+                                <a href="#@item.Anchor" class="toc-link" data-anchor="@item.Anchor">
+                                    @item.Text
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+
+        
 
         <div class="blog-post-content">
-            @Model.Value("postContent")
+            @Html.Raw(postContent)
         </div>
     </article>
 </div>
+
+@await Html.PartialAsync("FAQ")
 
 @* --- YENİ KAYDIRMALI BLOG BÖLÜMÜ --- *@
 @if (otherPosts.Any())
@@ -82,7 +151,7 @@
                             var otherPostDate = post.Value<DateTime>("postDate");
                             if (otherPostDate == default(DateTime)) {
                                 otherPostDate = post.CreateDate;
-                            }
+            }
                             var otherFormattedDate = otherPostDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
 
                             <div class="swiper-slide">
@@ -120,6 +189,72 @@
     </section>
 }
 
+@* --- İÇİNDEKİLER JAVASCRIPT --- *@
+<script>
+// İçindekiler dropdown açma/kapama
+function toggleTOC() {
+    const tocContent = document.getElementById('tocContent');
+    const arrow = document.querySelector('.toc-arrow');
+    
+    if (tocContent.classList.contains('toc-open')) {
+        tocContent.classList.remove('toc-open');
+        arrow.textContent = '▼';
+    } else {
+        tocContent.classList.add('toc-open');
+        arrow.textContent = '▲';
+    }
+}
+
+// İçindekiler linklerini dinle
+const tocLinks = document.querySelectorAll(".toc-link");
+
+tocLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const anchor = this.getAttribute('data-anchor');
+        const targetElement = document.getElementById(anchor);
+
+        if (targetElement) {
+            // İçindekiler listesini kapat
+            const tocContent = document.getElementById('tocContent');
+            const arrow = document.querySelector('.toc-arrow');
+            if (tocContent && tocContent.classList.contains('toc-open')) {
+                tocContent.classList.remove('toc-open');
+                arrow.textContent = '▼';
+            }
+            
+            // 50px yukarıya kaydır
+            window.scrollTo({
+                top: targetElement.offsetTop - 140,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Sayfa yüklendiğinde aktif başlığı highlight etme
+window.addEventListener('scroll', function() {
+    const headings = document.querySelectorAll('h2[id^="heading-"], h3[id^="heading-"]');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    
+    let activeHeading = null;
+    
+    headings.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 0) {
+            activeHeading = heading.id;
+        }
+    });
+    
+    tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (activeHeading && link.getAttribute('data-anchor') === activeHeading) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
 
 @* --- SLIDER'I BAŞLATMAK İÇİN GEREKLİ JAVASCRIPT --- *@
 <script>
@@ -155,8 +290,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
-
-
 
 @* --- START: CORRECTED JSON-LD SCRIPT --- *@
 <script type="application/ld+json">
@@ -207,4 +340,3 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 </script>
 @* --- END: CORRECTED JSON-LD SCRIPT --- *@
-

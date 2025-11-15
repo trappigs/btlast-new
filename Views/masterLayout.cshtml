@@ -11,7 +11,7 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXVCMJ7EH2" type="0e66c71b493a1451f08528b9-text/javascript"></script>
@@ -322,13 +322,18 @@
     </main>
     @await Html.PartialAsync("Navigation")
     @await Html.PartialAsync("ContactAppointmentForm", new btlast.Models.ContactFormViewModel())
-    @await Html.PartialAsync("FAQ")
+
+    @if (!Model.ContentType.Alias.Equals("blogPost", StringComparison.InvariantCultureIgnoreCase) && !Model.ContentType.Alias.Equals("projectCollectionPage", StringComparison.InvariantCultureIgnoreCase))
+    {
+        @await Html.PartialAsync("FAQ")
+    }
+
     @await Html.PartialAsync("ModernFooter")
 
-        <a href="#" class="call-me-detail fixed-call-btn">
-            <i class="fa-solid fa-phone-volume"></i>
-            <span>Sizi Arayalım</span>
-        </a>
+    <a href="#" class="call-me-detail fixed-call-btn">
+        <i class="fa-solid fa-phone-volume"></i>
+        <span>Sizi Arayalım</span>
+    </a>
  
     <a href="https://wa.me/902244324959" class="fixed-whatsapp-btn" target="_blank" aria-label="WhatsApp üzerinden iletişime geçin">
         <i class="fa-brands fa-whatsapp"></i>

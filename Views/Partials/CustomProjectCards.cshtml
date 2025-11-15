@@ -1,0 +1,210 @@
+﻿@using System.Text
+@using System.Globalization
+@using System.Text.RegularExpressions
+@using Umbraco.Cms.Core.Models.PublishedContent
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    // Slug fonksiyonu
+    Func<string, string> GenerateSlug = (phrase) => 
+    {
+        if (string.IsNullOrEmpty(phrase)) return "";
+        string str = phrase.ToLower(new CultureInfo("tr-TR"));
+        str = str.Replace("ı", "i").Replace("ğ", "g").Replace("ü", "u").Replace("ş", "s").Replace("ö", "o").Replace("ç", "c");
+        str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+        str = Regex.Replace(str, @"\s+", "-").Trim();
+        str = Regex.Replace(str, @"-+", "-");
+        str = str.Trim('-'); 
+        return str;
+    };
+
+    // ViewData'dan verileri al
+    var selectedProjects = ViewData["SelectedProjects"] as List<IPublishedContent> ?? new List<IPublishedContent>();
+    var pageTitle = ViewData["PageTitle"] as string ?? "Projeler";
+    var pageDescriptionRaw = ViewData["PageDescription"] as string ?? "";
+    
+    // PageDescription'daki HTML etiketlerini temizle
+    var pageDescription = pageDescriptionRaw
+        .Replace("<p>", "")
+        .Replace("</p>", "")
+        .Replace("<br>", " ")
+        .Replace("<br/>", " ")
+        .Replace("<strong>", " ")
+        .Replace("<strong />", " ")
+        .Replace("</strong>", " ")
+        .Replace("<br />", " ")
+        .Trim();
+}
+
+<link rel="stylesheet" href="/css/project-cards.css">
+
+<div class="projects-section" id="projectsSection">
+    <div class="container">
+        <div class="section-header" style="margin-bottom:30px !important">
+            <h1 class="section-title" style="margin-bottom:0px;">
+                <span class="title-main" style="padding:20px 0px !important;">@pageTitle</span>
+            </h1>
+            @if (!string.IsNullOrEmpty(pageDescription))
+            {
+                <p class="section-subtitle">@pageDescription</p>
+            }
+        </div>
+
+        @if (selectedProjects.Any())
+        {
+            <div class="projects-grid">
+                @foreach (var project in selectedProjects)
+                {
+                    // Sadece projectaa document type'ına sahip sayfaları işle
+                    if (project.ContentType.Alias != "projectaa")
+                    {
+                        continue;
+                    }
+
+                    var projectName = project.Name;
+                    var projectSlug = project.Url()?.TrimStart('/') ?? GenerateSlug(projectName);
+                    var projectImage = project.Value<IPublishedContent>("projectImage");
+                    var projectImageUrl = projectImage?.Url() ?? "";
+                    // HTML etiketlerini manuel olarak temizle ve kısalt
+                    var projectDescriptionRaw = project.Value<string>("projectCardDescription") ?? "";
+                    var projectDescription = projectDescriptionRaw
+                        .Replace("<p>", "")
+                        .Replace("</p>", "")
+                        .Replace("<br>", " ")
+                        .Replace("<br/>", " ")
+                        .Replace("<br />", " ")
+                        .Trim();
+                    
+                    // Çok uzun açıklamaları kısalt
+                    if (projectDescription.Length > 150)
+                    {
+                        projectDescription = projectDescription.Substring(0, 147) + "...";
+                    }
+                    var projectLocation = project.Value<string>("projectCardLocation") ?? "";
+                    
+                    // Eğer proje içinde bu alanlar varsa kullan, yoksa false varsayılan değerleri
+                    var isKonut = project.HasProperty("isKonut") ? project.Value<bool>("isKonut") : false;
+                    var isNew = project.HasProperty("isNew") ? project.Value<bool>("isNew") : false;
+                    
+                    // Çinikent özel kontrolü (eski sistemden uyumluluk için)
+                    if (projectName.ToUpper() == "ÇİNİKENT")
+                    {
+                        isKonut = true;
+                    }
+
+                    <div class="project-card" data-location="@projectName">
+                        @* YENİ BADGE - Kağıt köşesi stili *@
+                        @if (isNew)
+                        {
+                            <div class="paper-corner-badge green"></div>
+                        }
+
+                        @if (isKonut)
+                        {
+                            <div class="konut-badge" style="height: 34px; width: 70px;">
+                                <i class="fas fa-star"></i>
+                                <span style="font-size: 0.50rem">KONUT</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="konut-badge arsa-beyaz">
+                                <i class="fas fa-star" style="color:#045129"></i>
+                                <span style="color: #045129">ARSA</span>
+                            </div>
+                        }
+
+                        <div class="card-header">
+                            <h3 class="card-title">@projectName</h3>
+                        </div>
+
+                        <a href="/@projectSlug" title="@projectName İmarlı Arsa" class="card-image-container card-image-link">
+                            <img src="@projectImageUrl" alt="@projectName">
+                            <div class="card-description-overlay">
+                                <p>@projectDescription</p>
+                            </div>
+                        </a>
+
+                        <div class="card-footer">
+                            <div class="location-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>@projectLocation</span>
+                            </div>
+                            <div class="card-actions">
+                                <a href="/@projectSlug" title="@projectName İmarlı Arsa" class="btn btn-primary">PROJEYİ İNCELE</a>
+                                <a href="#" class="call-me-detail btn btn-secondary">FORM DOLDURUN</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="no-projects-message" style="text-align: center; padding: 60px 20px;">
+                <h3 style="color: #666; margin-bottom: 20px;">Henüz proje seçilmemiş</h3>
+                <p style="color: #999;">Bu sayfada gösterilecek projeleri admin panelinden seçebilirsiniz.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="/Scripts/project-cards.js"></script>
+
+<style>
+@@media(min-width: 769px){
+    .location-info{
+        left:28px;
+    }
+}
+
+/* Card description overlay için ek düzeltmeler */
+.projects-section .card-description-overlay {
+    padding: 20px !important;
+    padding-top: 60px !important;
+    padding-bottom: 70px !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.projects-section .card-description-overlay p {
+    margin: 0 !important;
+    font-weight: 300 !important;
+    text-align: center !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 6 !important;
+    -webkit-box-orient: vertical !important;
+}
+
+/* Mobile için daha kompakt */
+@@media (max-width: 768px) {
+    .projects-section .card-description-overlay {
+        padding: 15px !important;
+        padding-top: 55px !important;
+        padding-bottom: 65px !important;
+        font-size: 1rem !important;
+    }
+    
+    .projects-section .card-description-overlay p {
+        -webkit-line-clamp: 5 !important;
+    }
+}
+
+@@media (max-width: 425px) {
+    .projects-section .card-description-overlay {
+        padding: 12px !important;
+        padding-top: 50px !important;
+        padding-bottom: 60px !important;
+        font-size: 1rem !important;
+    }
+    
+    .projects-section .card-description-overlay p {
+        -webkit-line-clamp: 4 !important;
+    }
+}
+</style>
