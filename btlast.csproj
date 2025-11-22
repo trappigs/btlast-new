@@ -10,6 +10,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3819" />
     <PackageReference Include="MailKit" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0" />
     <PackageReference Include="SeoToolkit.Umbraco" Version="5.0.2" />
     <PackageReference Include="Skybrud.Umbraco.Redirects" Version="16.0.0" />
     <PackageReference Include="Umbraco.Cms" Version="16.0.0" />

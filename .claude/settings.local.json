@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(dir \"C:\\Users\\mami\\Desktop\\btlast\\umbraco\\Logs\")",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(dir \"C:\\Users\\mami\\Desktop\\btlast\\umbraco\\Logs\" /b /o-d)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

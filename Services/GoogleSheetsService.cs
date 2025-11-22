@@ -30,6 +30,27 @@ namespace btlast.Services
             _logger = logger;
         }
 
+        // Formula/CSV Injection koruması
+        private string SanitizeForSheet(object? value)
+        {
+            if (value == null) return "";
+
+            var stringValue = value.ToString() ?? "";
+
+            // Boş string ise doğrudan dön
+            if (string.IsNullOrWhiteSpace(stringValue)) return stringValue;
+
+            // Eğer =, +, -, @ ile başlıyorsa, önüne tek tırnak (') ekle
+            // Bu Excel/Sheets'in formül olarak yorumlamasını engeller
+            char firstChar = stringValue.TrimStart()[0];
+            if (firstChar == '=' || firstChar == '+' || firstChar == '-' || firstChar == '@')
+            {
+                return "'" + stringValue;
+            }
+
+            return stringValue;
+        }
+
         public async Task<bool> AppendContactFormAsync(Dictionary<string, object?> data, string sheetName)
         {
             try
@@ -67,31 +88,35 @@ namespace btlast.Services
                 // Veri satırını hazırla
                 var values = new List<object?>();
 
-                // Sütun sırasına göre veriyi düzenle
+                // Sütun sırasına göre veriyi düzenle (Formula Injection korumalı)
                 if (sheetName == _settings.ContactFormSheetName)
                 {
-                    // İletişim Formları: Tarih/Saat, Ad Soyad, E-posta, Telefon, Konu, Mesaj, KVKK Onayı, Kampanya İzni
-                    values.Add(data.ContainsKey("Tarih") ? data["Tarih"] : DateTime.Now.ToString("dd.MM.yyyy HH:mm"));
-                    values.Add(data.ContainsKey("Name") ? data["Name"] : "");
-                    values.Add(data.ContainsKey("Email") ? data["Email"] : "");
-                    values.Add(data.ContainsKey("Phone") ? data["Phone"] : "");
-                    values.Add(data.ContainsKey("Subject") ? data["Subject"] : "");
-                    values.Add(data.ContainsKey("Message") ? data["Message"] : "");
+                    // İletişim Formları: Tarih/Saat, Ad Soyad, E-posta, Telefon, Konu, Mesaj, KVKK Onayı, Kampanya İzni, Kaynak
+                    values.Add(SanitizeForSheet(data.ContainsKey("Tarih") ? data["Tarih"] : DateTime.Now.ToString("dd.MM.yyyy HH:mm")));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Name") ? data["Name"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Email") ? data["Email"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Phone") ? data["Phone"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Subject") ? data["Subject"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Message") ? data["Message"] : ""));
                     values.Add(data.ContainsKey("KvkkConsent") ? (bool)data["KvkkConsent"] ? "Evet" : "Hayır" : "Hayır");
                     values.Add(data.ContainsKey("AllowCampaigns") ? (bool)data["AllowCampaigns"] ? "Evet" : "Hayır" : "Hayır");
+                    values.Add(SanitizeForSheet(data.ContainsKey("Source") ? data["Source"] : ""));
                 }
                 else if (sheetName == _settings.AppointmentSheetName)
                 {
-                    // Randevu Talepleri: Tarih/Saat, Ad Soyad, E-posta, Telefon, Konu, Mesaj, Randevu Türü, KVKK Onayı, Kampanya İzni
-                    values.Add(data.ContainsKey("Tarih") ? data["Tarih"] : DateTime.Now.ToString("dd.MM.yyyy HH:mm"));
-                    values.Add(data.ContainsKey("Name") ? data["Name"] : "");
-                    values.Add(data.ContainsKey("Email") ? data["Email"] : "");
-                    values.Add(data.ContainsKey("Phone") ? data["Phone"] : "");
-                    values.Add(data.ContainsKey("Subject") ? data["Subject"] : "");
-                    values.Add(data.ContainsKey("Message") ? data["Message"] : "");
-                    values.Add(data.ContainsKey("AppointmentType") ? data["AppointmentType"] : "");
+                    // Randevu Talepleri: Tarih/Saat, Ad Soyad, E-posta, Telefon, Konu, Mesaj, Randevu Türü, Randevu Tarihi, Randevu Saati, KVKK Onayı, Kampanya İzni, Kaynak
+                    values.Add(SanitizeForSheet(data.ContainsKey("Tarih") ? data["Tarih"] : DateTime.Now.ToString("dd.MM.yyyy HH:mm")));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Name") ? data["Name"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Email") ? data["Email"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Phone") ? data["Phone"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Subject") ? data["Subject"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("Message") ? data["Message"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("AppointmentType") ? data["AppointmentType"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("AppointmentDate") ? data["AppointmentDate"] : ""));
+                    values.Add(SanitizeForSheet(data.ContainsKey("AppointmentTime") ? data["AppointmentTime"] : ""));
                     values.Add(data.ContainsKey("KvkkConsent") ? (bool)data["KvkkConsent"] ? "Evet" : "Hayır" : "Hayır");
                     values.Add(data.ContainsKey("AllowCampaigns") ? (bool)data["AllowCampaigns"] ? "Evet" : "Hayır" : "Hayır");
+                    values.Add(SanitizeForSheet(data.ContainsKey("Source") ? data["Source"] : ""));
                 }
                 else
                 {
@@ -100,7 +125,8 @@ namespace btlast.Services
                 }
 
                 // AppendValues isteğini hazırla
-                var range = $"'{sheetName}'!A:I";
+                // İletişim Formları: A:J (10 sütun), Randevu Talepleri: A:L (12 sütun)
+                var range = sheetName == _settings.AppointmentSheetName ? $"'{sheetName}'!A:L" : $"'{sheetName}'!A:J";
                 var valueRange = new ValueRange() { Values = new List<IList<object?>> { values } };
 
                 var appendRequest = service.Spreadsheets.Values.Append(valueRange, _settings.SpreadsheetId, range);

@@ -16,19 +16,20 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace btlast.Controller
 {
     // Smtp ayarlarını appsettings.json'dan okumak için sınıfımız
     public class SmtpSettings
     {
-        public string To { get; set; } = "info@bereketlitopraklar.com.tr";
-        public string From { get; set; } = "bereketliform@gmail.com";
-        public string Host { get; set; } = "smtp.gmail.com";
-        public int Port { get; set; } = 587;
-        public string Username { get; set; } = "bereketliform@gmail.com";
-        public string Password { get; set; } = "wafq dtwp swxo vjpn";
-        public string SecureSocketOptions { get; set; } = "StartTls";
+        public string To { get; set; } = string.Empty;
+        public string From { get; set; } = string.Empty;
+        public string Host { get; set; } = string.Empty;
+        public int Port { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string SecureSocketOptions { get; set; } = string.Empty;
     }
 
     public class ContactController : SurfaceController
@@ -36,6 +37,8 @@ namespace btlast.Controller
         private readonly SmtpSettings _smtpSettings;
         private readonly ILogger<ContactController> _logger;
         private readonly IGoogleSheetsService _googleSheetsService;
+        private readonly IMemoryCache _cache;
+        private const int MaxFormsPerDay = 5;
 
         public ContactController(
             IUmbracoContextAccessor umbracoContextAccessor,
@@ -46,18 +49,61 @@ namespace btlast.Controller
             IPublishedUrlProvider publishedUrlProvider,
             IOptions<SmtpSettings> smtpSettings,
             ILogger<ContactController> logger,
-            IGoogleSheetsService googleSheetsService)
+            IGoogleSheetsService googleSheetsService,
+            IMemoryCache cache)
             : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _smtpSettings = smtpSettings.Value;
             _logger = logger;
             _googleSheetsService = googleSheetsService;
+            _cache = cache;
+        }
+
+        // Rate Limiting Kontrolü
+        private bool CheckRateLimit(out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            // IP adresini al
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+            // Bugün için cache key oluştur
+            var today = DateTime.UtcNow.Date.ToString("yyyyMMdd");
+            var cacheKey = $"FormSubmission_{ipAddress}_{today}";
+
+            // Cache'den mevcut sayıyı al
+            if (!_cache.TryGetValue(cacheKey, out int submissionCount))
+            {
+                submissionCount = 0;
+            }
+
+            // Limit kontrolü
+            if (submissionCount >= MaxFormsPerDay)
+            {
+                _logger.LogWarning($"Rate limit aşıldı. IP: {ipAddress}, Günlük gönderim: {submissionCount}");
+                errorMessage = $"Günlük form gönderim limitinizi aştınız. Lütfen yarın tekrar deneyin. (Limit: {MaxFormsPerDay} form/gün)";
+                return false;
+            }
+
+            // Sayacı artır ve cache'e kaydet (gece yarısına kadar geçerli)
+            submissionCount++;
+            var expirationTime = DateTime.UtcNow.Date.AddDays(1).AddHours(3); // UTC+3 için Türkiye saatine göre gece yarısı
+            _cache.Set(cacheKey, submissionCount, expirationTime);
+
+            _logger.LogInformation($"Form gönderimi kabul edildi. IP: {ipAddress}, Günlük gönderim: {submissionCount}/{MaxFormsPerDay}");
+            return true;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitContactForm(ContactFormViewModel model)
         {
+            // Rate Limiting Kontrolü
+            if (!CheckRateLimit(out string rateLimitError))
+            {
+                return new JsonResult(new { success = false, error = rateLimitError });
+            }
+
             // Model geçerliliği kontrolü (değişiklik yok)
             if (!ModelState.IsValid)
             {
@@ -91,6 +137,9 @@ namespace btlast.Controller
                 await smtp.SendAsync(email);
                 await smtp.DisconnectAsync(true);
 
+                // UTM kaynak bilgisini oluştur
+                string sourceInfo = BuildSourceInfo(model);
+
                 // Google Sheets'e veri ekle
                 var sheetData = new Dictionary<string, object?>
                 {
@@ -101,8 +150,11 @@ namespace btlast.Controller
                     { "Subject", model.FormType == "contact" ? model.Subject : model.AppointmentType },
                     { "Message", model.Message },
                     { "AppointmentType", model.AppointmentType },
+                    { "AppointmentDate", model.AppointmentDate },
+                    { "AppointmentTime", model.AppointmentTime },
                     { "KvkkConsent", model.KvkkConsent },
-                    { "AllowCampaigns", model.AllowCampaigns }
+                    { "AllowCampaigns", model.AllowCampaigns },
+                    { "Source", sourceInfo }
                 };
 
                 string sheetName = model.FormType == "contact" ? "İletişim Formları" : "Randevu Talepleri";
@@ -121,34 +173,78 @@ namespace btlast.Controller
             }
         }
 
-        // BuildEmailBody metodu aynı kalabilir.
+        // UTM kaynak bilgisini oluştur (XSS korumalı)
+        private string BuildSourceInfo(ContactFormViewModel model)
+        {
+            var sourceParts = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(model.UtmSource))
+            {
+                sourceParts.Add($"Kaynak: {WebUtility.HtmlEncode(model.UtmSource)}");
+            }
+            if (!string.IsNullOrWhiteSpace(model.UtmMedium))
+            {
+                sourceParts.Add($"Medya: {WebUtility.HtmlEncode(model.UtmMedium)}");
+            }
+            if (!string.IsNullOrWhiteSpace(model.UtmCampaign))
+            {
+                sourceParts.Add($"Kampanya: {WebUtility.HtmlEncode(model.UtmCampaign)}");
+            }
+            if (!string.IsNullOrWhiteSpace(model.UtmTerm))
+            {
+                sourceParts.Add($"Anahtar Kelime: {WebUtility.HtmlEncode(model.UtmTerm)}");
+            }
+            if (!string.IsNullOrWhiteSpace(model.UtmContent))
+            {
+                sourceParts.Add($"İçerik: {WebUtility.HtmlEncode(model.UtmContent)}");
+            }
+
+            return sourceParts.Count > 0 ? string.Join(" | ", sourceParts) : "Doğrudan Trafik";
+        }
+
         private string BuildEmailBody(ContactFormViewModel model)
         {
             var body = "<html><body style='font-family: Arial, sans-serif; font-size: 14px; color: #333;'>";
-            body += $"<h2 style='color: #045129;'>Yeni bir form gönderimi aldınız: ({model.FormType})</h2>";
+            body += $"<h2 style='color: #045129;'>Yeni bir form gönderimi aldınız: ({WebUtility.HtmlEncode(model.FormType)})</h2>";
             body += "<hr>";
-            body += $"<p><strong>Ad Soyad:</strong> {model.Name}</p>";
-            body += $"<p><strong>E-posta:</strong> {model.Email}</p>";
-            body += $"<p><strong>Telefon:</strong> {model.Phone}</p>";
+            body += $"<p><strong>Ad Soyad:</strong> {WebUtility.HtmlEncode(model.Name)}</p>";
+            body += $"<p><strong>E-posta:</strong> {WebUtility.HtmlEncode(model.Email)}</p>";
+            body += $"<p><strong>Telefon:</strong> {WebUtility.HtmlEncode(model.Phone)}</p>";
             body += $"<p><strong>KVKK Onayı:</strong> {(model.KvkkConsent ? "Evet" : "Hayır")}</p>";
             body += $"<p><strong>Kampanya İzni:</strong> {(model.AllowCampaigns ? "Evet" : "Hayır")}</p>";
 
             if (model.FormType == "contact")
             {
-                body += $"<p><strong>Konu:</strong> {model.Subject}</p>";
-                body += $"<p><strong>Mesaj:</strong><br><div style='padding: 10px; border: 1px solid #eee; border-radius: 5px;'>{model.Message?.Replace("\n", "<br>")}</div></p>";
+                body += $"<p><strong>Konu:</strong> {WebUtility.HtmlEncode(model.Subject)}</p>";
+                body += $"<p><strong>Mesaj:</strong><br><div style='padding: 10px; border: 1px solid #eee; border-radius: 5px;'>{WebUtility.HtmlEncode(model.Message)?.Replace("\n", "<br>")}</div></p>";
             }
             else // appointment
             {
                 body += "<hr style='margin: 20px 0;'>";
                 body += "<h3>Randevu Detayları</h3>";
-                body += $"<p><strong>Randevu Türü:</strong> {model.AppointmentType}</p>";
-                body += $"<p><strong>Randevu Tarihi:</strong> {model.AppointmentDate}</p>";
-                body += $"<p><strong>Randevu Saati:</strong> {model.AppointmentTime}</p>";
+                body += $"<p><strong>Randevu Türü:</strong> {WebUtility.HtmlEncode(model.AppointmentType)}</p>";
+                body += $"<p><strong>Randevu Tarihi:</strong> {WebUtility.HtmlEncode(model.AppointmentDate)}</p>";
+                body += $"<p><strong>Randevu Saati:</strong> {WebUtility.HtmlEncode(model.AppointmentTime)}</p>";
                 if (!string.IsNullOrEmpty(model.Message))
                 {
-                    body += $"<p><strong>Ek Notlar:</strong><br><div style='padding: 10px; border: 1px solid #eee; border-radius: 5px;'>{model.Message.Replace("\n", "<br>")}</div></p>";
+                    body += $"<p><strong>Ek Notlar:</strong><br><div style='padding: 10px; border: 1px solid #eee; border-radius: 5px;'>{WebUtility.HtmlEncode(model.Message).Replace("\n", "<br>")}</div></p>";
                 }
+            }
+
+            body += "<hr style='margin-top: 20px;'>";
+
+            // Kaynak bilgisini ekle (zaten BuildSourceInfo içinde encode ediliyor)
+            string sourceInfo = BuildSourceInfo(model);
+            body += "<h3>Kaynak Bilgileri</h3>";
+            body += $"<p><strong>Trafik Kaynağı:</strong> {sourceInfo}</p>";
+
+            if (!string.IsNullOrWhiteSpace(model.Referrer))
+            {
+                body += $"<p><strong>Yönlendiren:</strong> {WebUtility.HtmlEncode(model.Referrer)}</p>";
+            }
+            if (!string.IsNullOrWhiteSpace(model.LandingPage))
+            {
+                body += $"<p><strong>İlk Giriş Sayfası:</strong> {WebUtility.HtmlEncode(model.LandingPage)}</p>";
             }
 
             body += "<hr style='margin-top: 20px;'>";
@@ -162,6 +258,12 @@ namespace btlast.Controller
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitQuickForm(ContactFormViewModel model)
         {
+            // Rate Limiting Kontrolü
+            if (!CheckRateLimit(out string rateLimitError))
+            {
+                return new JsonResult(new { success = false, error = rateLimitError });
+            }
+
             if (string.IsNullOrWhiteSpace(model.Name) || string.IsNullOrWhiteSpace(model.Phone) || !model.KvkkConsent)
             {
                 return new JsonResult(new { success = false, error = "Ad Soyad, Telefon ve KVKK onayı zorunludur." });
@@ -169,18 +271,37 @@ namespace btlast.Controller
 
             try
             {
+                // UTM kaynak bilgisini oluştur
+                string sourceInfo = BuildSourceInfo(model);
+
                 var email = new MimeMessage();
                 email.From.Add(new MailboxAddress(_smtpSettings.From, _smtpSettings.From));
                 email.To.Add(new MailboxAddress("Bereketli Topraklar", _smtpSettings.To));
 
-                email.Subject = $"Web Sitesi Hızlı İletişim Talebi: {model.Name}";
-                email.Body = new TextPart(TextFormat.Html)
-                {
-                    Text = $"<p><strong>Ad Soyad:</strong> {model.Name}</p>" +
-                           $"<p><strong>Telefon:</strong> {model.Phone}</p>" +
+                email.Subject = $"Web Sitesi Hızlı İletişim Talebi: {WebUtility.HtmlEncode(model.Name)}";
+
+                var emailBody = $"<p><strong>Ad Soyad:</strong> {WebUtility.HtmlEncode(model.Name)}</p>" +
+                           $"<p><strong>Telefon:</strong> {WebUtility.HtmlEncode(model.Phone)}</p>" +
                            $"<p><strong>KVKK Onayı:</strong> {(model.KvkkConsent ? "Evet" : "Hayır")}</p>" +
                            $"<p><strong>Kampanya İzni:</strong> {(model.AllowCampaigns ? "Evet" : "Hayır")}</p>" +
-                           $"<hr><p style='font-size:12px;color:#888'>Bu form {DateTime.Now:dd.MM.yyyy HH:mm} tarihinde dolduruldu.</p>"
+                           $"<hr>" +
+                           $"<h3>Kaynak Bilgileri</h3>" +
+                           $"<p><strong>Trafik Kaynağı:</strong> {sourceInfo}</p>";
+
+                if (!string.IsNullOrWhiteSpace(model.Referrer))
+                {
+                    emailBody += $"<p><strong>Yönlendiren:</strong> {WebUtility.HtmlEncode(model.Referrer)}</p>";
+                }
+                if (!string.IsNullOrWhiteSpace(model.LandingPage))
+                {
+                    emailBody += $"<p><strong>İlk Giriş Sayfası:</strong> {WebUtility.HtmlEncode(model.LandingPage)}</p>";
+                }
+
+                emailBody += $"<hr><p style='font-size:12px;color:#888'>Bu form {DateTime.Now:dd.MM.yyyy HH:mm} tarihinde dolduruldu.</p>";
+
+                email.Body = new TextPart(TextFormat.Html)
+                {
+                    Text = emailBody
                 };
 
                 using var smtp = new MailKit.Net.Smtp.SmtpClient();
@@ -200,7 +321,8 @@ namespace btlast.Controller
                     { "Subject", "" },
                     { "Message", "" },
                     { "KvkkConsent", model.KvkkConsent },
-                    { "AllowCampaigns", model.AllowCampaigns }
+                    { "AllowCampaigns", model.AllowCampaigns },
+                    { "Source", sourceInfo }
                 };
 
                 await _googleSheetsService.AppendContactFormAsync(sheetData, "İletişim Formları");

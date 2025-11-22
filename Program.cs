@@ -4,7 +4,7 @@ using btlast.Services;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // SMTP Ayarları
-builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 // Google Sheets Ayarları
 builder.Services.Configure<GoogleSheetsSettings>(builder.Configuration.GetSection("GoogleSheets"));

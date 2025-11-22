@@ -447,3 +447,172 @@
 .other-posts-slider .swiper-container {
     padding-bottom: 50px; 
 }
+
+
+
+
+/* =================================================================== */
+/* İÇİNDEKİLER BÖLÜMÜ STİLLERİ                                      */
+/* =================================================================== */
+
+.table-of-contents {
+    background: #f8f9fa;
+    border: 2px solid #045129;
+    border-radius: 12px;
+    margin: 30px 0 40px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Masaüstünde genişliği sınırla ve ortala */
+@media (min-width: 769px) {
+    .table-of-contents {
+        max-width: 700px; /* Bu değeri ihtiyacınıza göre ayarlayabilirsiniz: 600px, 650px, 750px vb. */
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.toc-header {
+    background: linear-gradient(135deg, #045129, #067833);
+    padding: 18px 25px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+}
+
+.toc-header:hover {
+    background: linear-gradient(135deg, #067833, #045129);
+}
+
+.toc-title {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toc-icon {
+    margin-right: 10px;
+    font-size: 1.4rem;
+}
+
+.toc-arrow {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+    font-style: normal;
+}
+
+.toc-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 25px;
+}
+
+.toc-content.toc-open {
+    max-height: 1500px;
+    padding: 20px 25px;
+}
+
+.toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toc-item {
+    margin: 0;
+    padding: 0;
+}
+
+.toc-link {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-left: 3px solid transparent;
+}
+
+.toc-link:hover {
+    background: #e9ecef;
+    color: #045129;
+    border-left-color: #045129;
+    transform: translateX(5px);
+}
+
+.toc-link.active {
+    background: #e8f5e9;
+    color: #045129;
+    font-weight: 600;
+    border-left-color: #045129;
+}
+
+/* H2 başlıkları için stil */
+.toc-item.toc-h2 .toc-link {
+    font-weight: 600;
+    padding-left: 15px;
+}
+
+/* H3 başlıkları için girintili stil */
+.toc-item.toc-h3 .toc-link {
+    font-weight: 400;
+    padding-left: 35px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.toc-item.toc-h3 .toc-link:hover {
+    color: #045129;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .table-of-contents {
+        margin: 20px 0 30px;
+    }
+    
+    .toc-header {
+        padding: 15px 20px;
+    }
+    
+    .toc-title {
+        font-size: 1.1rem;
+    }
+    
+    .toc-content.toc-open {
+        padding: 15px 20px;
+    }
+    
+    .toc-link {
+        font-size: 0.95rem;
+        padding: 8px 12px;
+    }
+    
+    .toc-item.toc-h3 .toc-link {
+        padding-left: 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ekstra küçük ekranlar */
+@media (max-width: 480px) {
+    .toc-title {
+        font-size: 1rem;
+    }
+    
+    .toc-icon {
+        font-size: 1.2rem;
+    }
+    
+    .toc-link {
+        font-size: 0.9rem;
+    }
+}

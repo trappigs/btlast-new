@@ -481,3 +481,13 @@ umbraco-package-schema.json
 # Media files
 /wwwroot/media/
 /wwwroot/media3.zip
+
+# Sensitive configuration files (passwords, credentials, etc.)
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Google Sheets credentials (contains service account keys)
+ace-tranquility-*.json
+ace-tranquility-478212-f6-65889c949add.json

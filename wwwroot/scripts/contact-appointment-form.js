@@ -185,6 +185,18 @@
         formData.set('KvkkConsent', kvkkConsent ? 'true' : 'false');
         formData.set('AllowCampaigns', allowCampaigns ? 'true' : 'false');
 
+        // UTM parametrelerini ekle
+        if (typeof window.getUTMData === 'function') {
+            const utmData = window.getUTMData();
+            formData.set('UtmSource', utmData.utm_source || '');
+            formData.set('UtmMedium', utmData.utm_medium || '');
+            formData.set('UtmCampaign', utmData.utm_campaign || '');
+            formData.set('UtmTerm', utmData.utm_term || '');
+            formData.set('UtmContent', utmData.utm_content || '');
+            formData.set('Referrer', utmData.referrer || '');
+            formData.set('LandingPage', utmData.landing_page || '');
+        }
+
         const actionUrl = form.getAttribute('action');
         const token = form.querySelector('input[name="__RequestVerificationToken"]').value;
 
