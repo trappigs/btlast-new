@@ -107,7 +107,7 @@
 
                 string postUrl;
                 var customCanonical = post.Value<string>("canonicalLink");
-                postUrl = siteUrl + "/" + customCanonical;
+                postUrl = siteUrl + "/" + customCanonical +"/";
 
                 // *** YENİ VE DAHA SAĞLAM TARİH KODU ***
                 var postDate = post.Value<DateTime>("postDate");

@@ -366,7 +366,6 @@ function handleKeyboardNavigation(e) {
     }
 }
 
-z
 
 // ===== FORM HANDLERS =====
 function initializeFormHandlers() {

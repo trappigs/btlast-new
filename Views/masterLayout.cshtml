@@ -107,8 +107,8 @@
 
     @if (Model.HasValue("canonicalLink") && !string.IsNullOrWhiteSpace(Model.Value<string>("canonicalLink")))
     {
-        <link rel="canonical" href="@($"{siteUrl}{"/"}{Model.Value<string>("canonicalLink")}")">
-        <meta property="og:url" content="@($"{siteUrl}{Model.Value<string>("canonicalLink")}")">
+        <link rel="canonical" href="@($"{siteUrl}{"/"}{Model.Value<string>("canonicalLink")}{"/"}")">
+        <meta property="og:url" content="@($"{siteUrl}{"/"}{Model.Value<string>("canonicalLink")}{"/"}")">
     }
     else
     {
