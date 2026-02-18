@@ -37,6 +37,7 @@ namespace btlast.Controller
         private readonly SmtpSettings _smtpSettings;
         private readonly ILogger<ContactController> _logger;
         private readonly IGoogleSheetsService _googleSheetsService;
+        private readonly IMetaCapiService _metaCapiService;
         private readonly IMemoryCache _cache;
         private const int MaxFormsPerDay = 5;
 
@@ -50,12 +51,14 @@ namespace btlast.Controller
             IOptions<SmtpSettings> smtpSettings,
             ILogger<ContactController> logger,
             IGoogleSheetsService googleSheetsService,
+            IMetaCapiService metaCapiService,
             IMemoryCache cache)
             : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
         {
             _smtpSettings = smtpSettings.Value;
             _logger = logger;
             _googleSheetsService = googleSheetsService;
+            _metaCapiService = metaCapiService;
             _cache = cache;
         }
 
@@ -160,11 +163,24 @@ namespace btlast.Controller
                 string sheetName = model.FormType == "contact" ? "İletişim Formları" : "Randevu Talepleri";
                 await _googleSheetsService.AppendContactFormAsync(sheetData, sheetName);
 
+                // --- Meta CAPI Integration ---
+                string eventId = Guid.NewGuid().ToString();
+                string userAgent = Request.Headers["User-Agent"].ToString();
+                string userIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+                
+                // Extract Meta Cookies
+                string fbp = Request.Cookies["_fbp"];
+                string fbc = Request.Cookies["_fbc"];
+
+                // Fire and forget (or await if critical) - Awaiting to ensure it's sent
+                await _metaCapiService.SendLeadEventAsync(eventId, model.Email, model.Phone, "WebForm_" + model.FormType, userAgent, userIp, fbp, fbc);
+                // -----------------------------
+
                 string successMessage = model.FormType == "contact"
                     ? "Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız."
                     : "Randevu talebiniz başarıyla alındı. Onay için sizinle iletişime geçeceğiz.";
 
-                return new JsonResult(new { success = true, message = successMessage, formType = model.FormType });
+                return new JsonResult(new { success = true, message = successMessage, formType = model.FormType, eventId = eventId });
             }
             catch (Exception ex)
             {
@@ -327,7 +343,19 @@ namespace btlast.Controller
 
                 await _googleSheetsService.AppendContactFormAsync(sheetData, "İletişim Formları");
 
-                return new JsonResult(new { success = true, message = "Teşekkürler! En kısa sürede sizi arayacağız." });
+                // --- Meta CAPI Integration ---
+                string eventId = Guid.NewGuid().ToString();
+                string userAgent = Request.Headers["User-Agent"].ToString();
+                string userIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+                
+                // Extract Meta Cookies
+                string fbp = Request.Cookies["_fbp"];
+                string fbc = Request.Cookies["_fbc"];
+
+                await _metaCapiService.SendLeadEventAsync(eventId, model.Email, model.Phone, "WebForm_Quick", userAgent, userIp, fbp, fbc);
+                // -----------------------------
+
+                return new JsonResult(new { success = true, message = "Teşekkürler! En kısa sürede sizi arayacağız.", eventId = eventId });
             }
             catch (Exception ex)
             {

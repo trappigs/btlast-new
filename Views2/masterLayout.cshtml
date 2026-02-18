@@ -1,0 +1,419 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    
+    var image = Model.Value<IPublishedContent>("ogImage");
+    var ttImage = Model.Value<IPublishedContent>("ttImage");
+
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    var safariPinnedURL="/media/1epptvlp/safari-pinned-tab.svg";
+
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="fSQWXThP8IkC50MqyuZ3LQ" async></script>
+    
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5KNH9BDM');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+    <!-- Meta Pixel Code -->
+    <script data-cfasync="false" type="text/javascript">
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1164374851913494');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1164374851913494&ev=PageView&noscript=1"
+/></noscript>
+    <!-- End Meta Pixel Code -->
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @* Meta Description *@
+    @{
+    // Açıklama içeriğini tutacak bir değişken oluştur.
+        string descriptionContent = string.Empty;
+
+        // 1. Öncelik: metaDescription alanını kontrol et.
+        if (Model.HasValue("metaDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("metaDescription")))
+        {
+            descriptionContent = Model.Value<string>("metaDescription");
+        }
+        // 2. Öncelik: Eğer metaDescription boşsa, ogDescription alanını kontrol et.
+        else if (Model.HasValue("ogDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogDescription")))
+        {
+            descriptionContent = Model.Value<string>("ogDescription");
+        }
+    }
+
+    @* Sadece descriptionContent değişkeni doluysa meta etiketini yazdır. *@
+    @if (!string.IsNullOrWhiteSpace(descriptionContent))
+    {
+        <meta name="description" content="@descriptionContent">
+    }
+
+    @if(Model.HasValue("author") && !string.IsNullOrWhiteSpace(Model.Value<string>("author")))
+    {
+        <meta name="author" content="@Model.Value("author")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.author))
+    {
+        <meta name="author" content="@ViewBag.author">
+    }
+    else
+    {
+        <meta name="author" content="Bereketli Topraklar">
+    }
+
+    @{
+        // 1. Varsayılan değeri ata.
+        string robotsContent = "index, follow";
+
+        // 2. Umbraco'daki "robots" alanını kontrol et.
+        //    Eğer doluysa, varsayılan değeri onunla değiştir.
+        if (Model.HasValue("robots") && !string.IsNullOrWhiteSpace(Model.Value<string>("robots")))
+        {
+            robotsContent = Model.Value<string>("robots");
+        }
+        // 3. Alan boşsa, değişken "index, follow" olarak kalır.
+        
+    }
+    
+    <meta name="robots" content="@robotsContent">
+
+    @if (Model.HasValue("canonicalLink") && !string.IsNullOrWhiteSpace(Model.Value<string>("canonicalLink")))
+    {
+        <link rel="canonical" href="@($"{siteUrl}{"/"}{Model.Value<string>("canonicalLink")}{"/"}")">
+        <meta property="og:url" content="@($"{siteUrl}{"/"}{Model.Value<string>("canonicalLink")}{"/"}")">
+    }
+    else
+    {
+        <link rel="canonical" href="@Model.Url(mode: UrlMode.Absolute)">
+        <meta property="og:url" content="@Model.Url(mode: UrlMode.Absolute)">
+    }
+
+
+    @if(Model.HasValue("ogTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogTitle")))
+    {
+        <meta property="og:title" content="@Model.Value("ogTitle")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ogTitle))
+    {
+        <meta property="og:title" content="@ViewBag.ogTitle">
+    }
+    
+
+    @if(Model.HasValue("ogDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogDescription")))
+    {
+        <meta property="og:description" content="@Model.Value("ogDescription")">
+    }
+    else if(!string.IsNullOrWhiteSpace(ViewBag.ogDescription))
+    {
+        <meta property="og:description" content="@ViewBag.ogDescription">
+    }
+    
+    @if (image != null)
+    {
+        string imageUrl = image.Url(mode: UrlMode.Absolute);
+        <meta property="og:image" content="@imageUrl">
+    }
+    else
+    {
+        <meta property="og:image" content="@($"{siteUrl}{"/media/lq2jzklk/download-1.svg"}")">
+    }
+
+@{
+    string finalOgAltText = string.Empty;
+}
+    @if (image != null)
+    {
+        @if (!string.IsNullOrWhiteSpace(image.Value<string>("umbracoAltText")))
+        {
+            finalOgAltText = image.Value<string>("umbracoAltText");
+        }
+        else
+        {
+            finalOgAltText = Model.Name;
+        }
+        
+        @if (!string.IsNullOrWhiteSpace(finalOgAltText))
+        {
+            <meta property="og:image:alt" content="@finalOgAltText">
+        }
+    }
+    else
+    {
+        <meta property="og:image:alt" content="Bereketli Topraklar Logosu">
+    }
+
+    @{
+        // 1. Varsayılan değeri ata.
+        string ogTypeValue = "website";
+
+        // 2. Umbraco'daki "ogType" alanını kontrol et (en yüksek öncelik).
+        if (Model.HasValue("ogType") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogType")))
+        {
+            ogTypeValue = Model.Value<string>("ogType");
+        }
+        // 3. Model boşsa ViewBag'i kontrol et.
+        else if (!string.IsNullOrWhiteSpace(ViewBag.ogType))
+        {
+            ogTypeValue = ViewBag.ogType;
+        }
+        // 4. Her ikisi de boşsa, değişken "website" olarak kalır.
+    }
+
+    <meta property="og:type" content="@ogTypeValue">
+
+
+    <!-- TT AÇILIŞ  -->
+    <!-- ttTitle boş ise ogTitle, ogTitle boş ise varsayılan değer -->
+    @if (Model.HasValue("ttTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("ttTitle")))
+    {
+        <meta name="twitter:title" content="@Model.Value("ttTitle")">
+    }
+    else if (!string.IsNullOrWhiteSpace(ViewBag.ttTitle))
+    {
+        <meta name="twitter:title" content="@ViewBag.ttTitle">
+    }
+    else if (Model.HasValue("ogTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogTitle")))
+    {
+        <meta name="twitter:title" content="@Model.Value("ogTitle")">
+    }
+    else if (!string.IsNullOrWhiteSpace(ViewBag.ogTitle))
+    {
+        <meta name="twitter:title" content="@ViewBag.ogTitle">
+    }
+    else
+    {
+        <meta name="twitter:title" content="@($"{Model.Name} | Bereketli Topraklar")">
+    }
+
+
+    <!-- eğer ttDescription alliası boş ise ogDescription alliasından gelsin. ogDescription alliası boş ise varsayılan bir değer ver.  -->
+    @if (Model.HasValue("ttDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ttDescription")))
+    {
+        <meta name="twitter:description" content="@Model.Value("ttDescription")">
+    }
+    else if (!string.IsNullOrWhiteSpace(ViewBag.ttDescription))
+    {
+        <meta name="twitter:description" content="@ViewBag.ttDescription">
+    }
+    else if (Model.HasValue("ogDescription") && !string.IsNullOrWhiteSpace(Model.Value<string>("ogDescription")))
+    {
+        <meta name="twitter:description" content="@Model.Value("ogDescription")">
+    }
+    else if (!string.IsNullOrWhiteSpace(ViewBag.ogDescription))
+    {
+        <meta name="twitter:description" content="@ViewBag.ogDescription">
+    }
+    else
+    {
+        <meta name="twitter:description" content="Bereketli Topraklar, Türkiye'nin en değerli lokasyonlarında güvenli ve kârlı arsa yatırım fırsatları sunar.">
+    }
+    
+
+    <!-- eğer ttImage değişkeni boş ise image değişkenininden gelsin. image değişkeni boş ise varsayılan bir değer ver -->
+    @{
+        // 1. Nihai Twitter görselini belirle.
+        //    Önce ttImage'i kontrol et, eğer boşsa (null), image değişkenini kullan.
+        var finalTwitterImage = ttImage ?? image;
+    }
+    @if (finalTwitterImage != null)
+    {
+        <meta name="twitter:image" content="@finalTwitterImage.Url(mode: UrlMode.Absolute)">
+    }
+    else
+    {
+        <meta name="twitter:image" content="@($"{siteUrl}{"/media/lq2jzklk/download-1.svg"}")">
+    }
+
+
+
+    <!-- eğer ttImage değişkeninin umbracoAltText özelliği gelsin, eğer ttImage değişkeninin umbracoAltText özelliği boş ise image değişkeninin umbracoAltText özelliğinden gelsin, image değişkeninin umbracoAltText özelliği boş ise varsayılan bir değer verelim. -->
+    @{
+        // 1. Nihai alt metni tutacak bir değişken oluşturuyoruz.
+        string finalTwitterAltText = string.Empty;
+
+        // 2. İlk olarak Twitter'a özel görselin (ttImage) alt metnini almaya çalışıyoruz.
+        if (ttImage != null && !string.IsNullOrWhiteSpace(ttImage.Value<string>("umbracoAltText")))
+        {
+            finalTwitterAltText = ttImage.Value<string>("umbracoAltText");
+        }
+        // 3. Eğer bulamazsak, Open Graph görselinin (image) alt metnini deniyoruz.
+        else if (image != null && !string.IsNullOrWhiteSpace(image.Value<string>("umbracoAltText")))
+        {
+            finalTwitterAltText = image.Value<string>("umbracoAltText");
+        }
+        // 4. Eğer o da boşsa, son çare olarak sayfanın kendi adını varsayılan olarak atıyoruz.
+        else
+        {
+            finalTwitterAltText = Model.Name;
+        }
+    }
+
+    @* 5. Sadece dolu bir alt metin bulunduysa etiketi yazdırıyoruz. *@
+    @if (!string.IsNullOrWhiteSpace(finalTwitterAltText))
+    {
+        <meta name="twitter:image:alt" content="@finalTwitterAltText">
+    }
+    <!-- TT KAPANIŞ -->
+
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:site_name" content="Bereketli Topraklar">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#045129">
+    <meta name="twitter:site" content="@@bereketilarsa">
+
+    <link rel="mask-icon" href="@($"{siteUrl}{safariPinnedURL}")" color="#5bbad5">
+    <link rel="icon" href="@($"{siteUrl}{"/media/pyoloyhx/amblem-yeşil.png"}")" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <title>@(Model.HasValue("pageTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("pageTitle")) ? Model.Value<string>("pageTitle") : ViewBag.Title) | Bereketli Topraklar</title>
+    <!-- Bootstrap 5.3.7 CSS -->
+    <link defer href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="/css/site.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- UTM Tracker - Sayfa yüklendiğinde UTM parametrelerini yakala -->
+    <script src="/scripts/utm-tracker.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+</head>
+<body class="bg-beige">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KNH9BDM"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    @await Html.PartialAsync("social-items")
+    @await Html.PartialAsync("_CookieConsent")
+    <!-- Main Content -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
+    @await Html.PartialAsync("Navigation")
+    @await Html.PartialAsync("ContactAppointmentForm", new btlast.Models.ContactFormViewModel())
+
+    @if (!Model.ContentType.Alias.Equals("blogPost", StringComparison.InvariantCultureIgnoreCase) && !Model.ContentType.Alias.Equals("projectCollectionPage", StringComparison.InvariantCultureIgnoreCase))
+    {
+        @await Html.PartialAsync("FAQ")
+    }
+
+    @await Html.PartialAsync("ModernFooter")
+
+    <a href="#" class="call-me-detail fixed-call-btn">
+        <i class="fa-solid fa-phone-volume"></i>
+        <span>Sizi Arayalım</span>
+    </a>
+ 
+    <a href="https://wa.me/902244324959" class="fixed-whatsapp-btn" target="_blank" aria-label="WhatsApp üzerinden iletişime geçin">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>WhatsApp</span>
+    </a>
+    <a href="tel://+902244324959" class="fixed-phone-btn" aria-label="Bizi Arayın">
+        <i class="fa-solid fa-phone"></i>
+    </a>
+
+
+    <!-- Bootstrap 5.3.7 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. NAVBAR BOŞLUK DÜZELTMESİ ---
+        function adjustMainContentPadding() {
+            const navbar = document.querySelector('.modern-nav');
+            const mainContent = document.querySelector('.main-content');
+            if (navbar && mainContent) {
+                const navHeight = navbar.offsetHeight;
+            }
+        }
+
+        // --- 2. MOBİL MENÜ FONKSİYONLARI ---
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+        // Masaüstü menüsünü mobil menüye kopyala
+        function cloneMenuForMobile() {
+            const desktopMenu = document.querySelector('.nav-menu');
+            if (desktopMenu && mobileMenu) {
+                const clonedMenu = desktopMenu.cloneNode(true); // Menüyü klonla
+                
+                // Klonlanan menüdeki class'ları mobile uygun hale getir
+                clonedMenu.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.add('mobile-nav-item');
+                });
+                clonedMenu.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('mobile-dropdown');
+                    const toggle = dropdown.querySelector('.mobile-nav-item');
+                     if(toggle) {
+                        toggle.addEventListener('click', (e) => {
+                            if (toggle.getAttribute('href') === '#') {
+                                 e.preventDefault();
+                                dropdown.classList.toggle('open');
+                            }
+                         });
+                    }
+                });
+                mobileMenu.innerHTML = '';
+                mobileMenu.appendChild(clonedMenu); // Klonlanmış menüyü ekle
+            }
+        }
+
+        // Mobil menüyü aç/kapat
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Olay dinleyicilerini ata
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Kodları Başlat
+        adjustMainContentPadding();
+        cloneMenuForMobile();
+        window.addEventListener('resize', adjustMainContentPadding);
+    });
+    new PerformanceObserver((list) => {
+  const entries = list.getEntries();
+  const last = entries[entries.length - 1];
+  console.log('LCP candidate:', last.element, 'size:', last.size, 'at:', (last.renderTime || last.loadTime).toFixed(0),'ms');
+}).observe({type: 'largest-contentful-paint', buffered: true});
+    </script>
+</body>
+</html>
+
+<script src="/Scripts/callMeButton.js"></script>

@@ -1,0 +1,753 @@
+﻿<!-- Alternatif Logo Font Test Alanı -->
+
+<!-- Google Fonts - HTML head'e ekle -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Anton&family=Fjalla+One&family=Russo+One&family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Titillium+Web:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Saira+Condensed:wght@400;500;600;700;800;900&family=Kanit:wght@400;500;600;700;800;900&family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;600;700;900&family=Audiowide&family=Black+Ops+One&family=Michroma&family=Teko:wght@300;400;500;600;700&family=Squada+One&family=Bungee&family=Righteous&family=Aldrich&family=Electrolize&family=Jura:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Test Container */
+.font-showcase {
+    background: #045129;
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.font-option {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px 0;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.font-option:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.font-name {
+    color: #cccccc;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+.logo-sample {
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Font Seçenekleri */
+
+/* SEÇENEK A: Oswald - Clean & Professional */
+.font-oswald {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK B: Anton - Bold & Impactful */
+.font-anton {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK C: Fjalla One - Nordic & Modern */
+.font-fjalla {
+    font-family: 'Fjalla One', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK D: Russo One - Futuristic & Strong */
+.font-russo {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK E: Barlow Condensed - Modern & Sleek */
+.font-barlow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2.1rem;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK F: Titillium Web - Tech & Clean */
+.font-titillium {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK G: Rajdhani - Elegant & Modern */
+.font-rajdhani {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 2.1rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK H: Saira Condensed - Contemporary */
+.font-saira {
+    font-family: 'Saira Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK J: Orbitron - Sci-Fi & Futuristic */
+.font-orbitron {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK K: Exo 2 - Space Age */
+.font-exo {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK L: Audiowide - Retro Gaming */
+.font-audiowide {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK M: Black Ops One - Military Style */
+.font-blackops {
+    font-family: 'Black Ops One', cursive;
+    font-weight: 400;
+    font-size: 1.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK N: Michroma - Chrome & Metal */
+.font-michroma {
+    font-family: 'Michroma', sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK O: Teko - Ultra Condensed */
+.font-teko {
+    font-family: 'Teko', sans-serif;
+    font-weight: 600;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK P: Squada One - Bold Display */
+.font-squada {
+    font-family: 'Squada One', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK Q: Bungee - Funky & Bold */
+.font-bungee {
+    font-family: 'Bungee', cursive;
+    font-weight: 400;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK R: Righteous - Vintage & Strong */
+.font-righteous {
+    font-family: 'Righteous', cursive;
+    font-weight: 400;
+    font-size: 1.9rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK S: Aldrich - Art Deco */
+.font-aldrich {
+    font-family: 'Aldrich', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK T: Electrolize - Digital & Clean */
+.font-electrolize {
+    font-family: 'Electrolize', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* SEÇENEK U: Jura - Modern Sans */
+.font-jura {
+    font-family: 'Jura', sans-serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+.font-sora {
+    font-family: "Sora", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 278;
+  font-style: normal;
+}
+.font-manrope {
+    font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.font-ericaone {
+    font-family: "Erica One", sans-serif;
+    font-weight: 100;
+    font-size: 0.5rem;
+    font-style: normal;
+}
+
+.font-vagron {
+    font-family: 'Vagron', sans-serif; /* 1. Adımda verdiğiniz ismi ve bir yedek fontu yazın */
+    font-weight: normal;
+}
+
+.font-blippo {
+    font-family: 'Blippo', sans-serif; /* 1. Adımda verdiğiniz ismi ve bir yedek fontu yazın */
+    font-weight: normal;
+}
+
+
+/* Test Buttons */
+.test-buttons {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.test-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.test-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.test-btn.active {
+    background: #4CAF50;
+    border-color: #4CAF50;
+}
+</style>
+
+<div class="font-showcase">
+    <!-- Hızlı Test Butonları -->
+    <div class="test-buttons">
+        <!-- İLK GRUP - Klasik -->
+        <button class="test-btn" onclick="applyToLogo('oswald')" title="Professional & Clean">🅰️ Oswald</button>
+        <button class="test-btn" onclick="applyToLogo('anton')" title="Bold & Impactful">🅱️ Anton</button>
+        <button class="test-btn" onclick="applyToLogo('fjalla')" title="Nordic & Minimal">🅾️ Fjalla</button>
+        <button class="test-btn" onclick="applyToLogo('russo')" title="Strong & Future">🆁 Russo</button>
+        <button class="test-btn" onclick="applyToLogo('barlow')" title="Modern & Sleek">🅴 Barlow</button>
+        
+        <!-- İKİNCİ GRUP - Tech -->
+        <button class="test-btn" onclick="applyToLogo('titillium')" title="Tech & Clean">🅵 Titillium</button>
+        <button class="test-btn" onclick="applyToLogo('rajdhani')" title="Elegant & Modern">🅶 Rajdhani</button>
+        <button class="test-btn" onclick="applyToLogo('orbitron')" title="Sci-Fi Future">🚀 Orbitron</button>
+        <button class="test-btn" onclick="applyToLogo('exo')" title="Space Age">⚡ Exo 2</button>
+        <button class="test-btn" onclick="applyToLogo('electrolize')" title="Digital Tech">⚙️ Electrolize</button>
+        
+        <!-- ÜÇÜNCÜ GRUP - Creative -->
+        <button class="test-btn" onclick="applyToLogo('audiowide')" title="Retro 80s Gaming">🎮 Audiowide</button>
+        <button class="test-btn" onclick="applyToLogo('blackops')" title="Military Tactical">🪖 BlackOps</button>
+        <button class="test-btn" onclick="applyToLogo('michroma')" title="Chrome Metal">🤖 Michroma</button>
+        <button class="test-btn" onclick="applyToLogo('bungee')" title="Funky Creative">🎨 Bungee</button>
+        <button class="test-btn" onclick="applyToLogo('righteous')" title="Vintage Strong">🏛️ Righteous</button>
+        
+        <!-- DÖRDÜNCÜ GRUP - Display -->
+        <button class="test-btn" onclick="applyToLogo('teko')" title="Ultra Condensed">📏 Teko</button>
+        <button class="test-btn" onclick="applyToLogo('squada')" title="Bold Impact">💥 Squada</button>
+        <button class="test-btn" onclick="applyToLogo('aldrich')" title="Art Deco">💎 Aldrich</button>
+        <button class="test-btn" onclick="applyToLogo('jura')" title="Modern Clean">✨ Jura</button>
+        <button class="test-btn" onclick="applyToLogo('kanit')" title="International">🌍 Kanit</button>
+        <button class="test-btn" onclick="applyToLogo('sora')" title="birinci">SORA</button>
+        <button class="test-btn" onclick="applyToLogo('manrope')" title="ikinci">Manrope</button>
+        <button class="test-btn" onclick="applyToLogo('ericaone')" title="ucuncu">Erica One</button>
+        <button class="test-btn" onclick="applyToLogo('vagron')" title="dorduncu">Vagron</button>
+        <button class="test-btn" onclick="applyToLogo('blippo')" title="dorduncu">Blippo</button>
+        
+        <!-- RESET -->
+        <button class="test-btn" onclick="applyToLogo('reset')" style="background: #ff4444; margin-top: 10px;">🔄 Sıfırla</button>
+    </div>
+    
+    <div style="margin-top: 20px; color: #cccccc; font-size: 0.9rem; text-align: center;">
+        💡 <strong>Hover</strong> ile önizleme, <strong>Click</strong> ile kalıcı uygulama<br>
+        🎨 <strong>20 farklı font sistemi</strong> - Tüm sayfa typography'si değişecek<br>
+        🚀 <strong>Sci-Fi</strong> • 🎮 <strong>Gaming</strong> • 🪖 <strong>Military</strong> • 💎 <strong>Luxury</strong> • ⚙️ <strong>Tech</strong><br>
+        <button onclick="debugFonts()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 15px; margin-top: 10px; cursor: pointer;">🔍 Font Debug</button>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+// Logo'ya ve tüm typography'ye uygula
+function applyToLogo(fontName) {
+    // Buton active durumlarını temizle
+    document.querySelectorAll('.test-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    if (fontName === 'reset') {
+        resetAllFonts();
+        console.log('Tüm fontlar sıfırlandı');
+        return;
+    }
+    
+    // Typography sistemini uygula
+    applyTypographySystem(fontName);
+    
+    // Active button
+    event.target.classList.add('active');
+    
+    console.log(`${fontName} typography sistemi uygulandı!`);
+}
+
+// Typography sistemi uygulama - TEK VE EKSIKSIZ VERSIYON
+function applyTypographySystem(primaryFont) {
+    // Font durumunu göster
+    showFontStatus(primaryFont);
+    
+    const fontConfigs = {
+        oswald: {
+            primary: { family: "'Oswald', 'Arial Black', sans-serif", weight: "600", spacing: "1.5px" },
+            secondary: { family: "'Inter', 'Helvetica', sans-serif", weight: "500", spacing: "0.5px" },
+            body: { family: "'Inter', 'Helvetica', sans-serif", weight: "400", spacing: "0.3px" },
+            button: { family: "'Roboto', 'Arial', sans-serif", weight: "500", spacing: "1px" }
+        },
+        anton: {
+            primary: { family: "'Anton', 'Impact', sans-serif", weight: "400", spacing: "1px" },
+            secondary: { family: "'Roboto Condensed', 'Arial Narrow', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Roboto', 'Arial', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Roboto', 'Arial', sans-serif", weight: "600", spacing: "1.2px" }
+        },
+        fjalla: {
+            primary: { family: "'Fjalla One', 'Arial Narrow', sans-serif", weight: "400", spacing: "1.2px" },
+            secondary: { family: "'Inter', 'Helvetica', sans-serif", weight: "500", spacing: "0.4px" },
+            body: { family: "'Inter', 'Helvetica', sans-serif", weight: "300", spacing: "0.3px" },
+            button: { family: "'Inter', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        russo: {
+            primary: { family: "'Russo One', 'Arial Black', sans-serif", weight: "400", spacing: "1px" },
+            secondary: { family: "'Titillium Web', 'Helvetica', sans-serif", weight: "600", spacing: "0.6px" },
+            body: { family: "'Titillium Web', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Titillium Web', 'Helvetica', sans-serif", weight: "700", spacing: "1px" }
+        },
+        barlow: {
+            primary: { family: "'Barlow Condensed', 'Arial Narrow', sans-serif", weight: "700", spacing: "1.8px" },
+            secondary: { family: "'Barlow', 'Helvetica', sans-serif", weight: "600", spacing: "0.5px" },
+            body: { family: "'Barlow', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Barlow', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        titillium: {
+            primary: { family: "'Titillium Web', 'Arial', sans-serif", weight: "700", spacing: "1.2px" },
+            secondary: { family: "'Titillium Web', 'Arial', sans-serif", weight: "600", spacing: "0.4px" },
+            body: { family: "'Titillium Web', 'Arial', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Titillium Web', 'Arial', sans-serif", weight: "600", spacing: "0.8px" }
+        },
+        rajdhani: {
+            primary: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "1.5px" },
+            secondary: { family: "'Inter', 'Helvetica', sans-serif", weight: "500", spacing: "0.4px" },
+            body: { family: "'Inter', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        saira: {
+            primary: { family: "'Saira Condensed', 'Arial Narrow', sans-serif", weight: "700", spacing: "1.3px" },
+            secondary: { family: "'Saira', 'Helvetica', sans-serif", weight: "500", spacing: "0.4px" },
+            body: { family: "'Saira', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Saira', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" }
+        },
+        kanit: {
+            primary: { family: "'Kanit', 'Helvetica', sans-serif", weight: "700", spacing: "1.2px" },
+            secondary: { family: "'Kanit', 'Helvetica', sans-serif", weight: "600", spacing: "0.6px" },
+            body: { family: "'Kanit', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Kanit', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        orbitron: {
+            primary: { family: "'Orbitron', 'Courier New', monospace", weight: "700", spacing: "2px" },
+            secondary: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "1px" },
+            body: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "400", spacing: "0.3px" },
+            button: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "1.2px" }
+        },
+        exo: {
+            primary: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "700", spacing: "1.5px" },
+            secondary: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        audiowide: {
+            primary: { family: "'Audiowide', 'Arial Black', cursive", weight: "400", spacing: "1.8px" },
+            secondary: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        blackops: {
+            primary: { family: "'Black Ops One', 'Arial Black', cursive", weight: "400", spacing: "1.5px" },
+            secondary: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "400", spacing: "0.3px" },
+            button: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        michroma: {
+            primary: { family: "'Michroma', 'Arial Black', sans-serif", weight: "400", spacing: "2px" },
+            secondary: { family: "'Electrolize', 'Helvetica', sans-serif", weight: "400", spacing: "0.8px" },
+            body: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Electrolize', 'Helvetica', sans-serif", weight: "400", spacing: "1px" }
+        },
+        teko: {
+            primary: { family: "'Teko', 'Arial Narrow', sans-serif", weight: "600", spacing: "1px" },
+            secondary: { family: "'Barlow Condensed', 'Arial Narrow', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Barlow', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Barlow', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        squada: {
+            primary: { family: "'Squada One', 'Arial Black', cursive", weight: "400", spacing: "1.2px" },
+            secondary: { family: "'Barlow Condensed', 'Arial Narrow', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Barlow', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Barlow', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        bungee: {
+            primary: { family: "'Bungee', 'Arial Black', cursive", weight: "400", spacing: "1px" },
+            secondary: { family: "'Kanit', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Kanit', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Kanit', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        righteous: {
+            primary: { family: "'Righteous', 'Arial Black', cursive", weight: "400", spacing: "1.2px" },
+            secondary: { family: "'Oswald', 'Arial', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Inter', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Oswald', 'Arial', sans-serif", weight: "600", spacing: "1px" }
+        },
+        aldrich: {
+            primary: { family: "'Aldrich', 'Arial Black', sans-serif", weight: "400", spacing: "1.8px" },
+            secondary: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "400", spacing: "0.3px" },
+            button: { family: "'Rajdhani', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        electrolize: {
+            primary: { family: "'Electrolize', 'Arial', sans-serif", weight: "400", spacing: "1.5px" },
+            secondary: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "0.8px" },
+            body: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Exo 2', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        jura: {
+            primary: { family: "'Jura', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Jura', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Jura', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Jura', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        sora: {
+            primary: { family: "'Sora', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Sora', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Sora', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Sora', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        manrope: {
+            primary: { family: "'Manrope', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Manrope', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Manrope', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Manrope', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        ericaone: {
+            primary: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "1px" },
+            secondary: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "0.8px" },
+            body: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "0.2px" },
+            button: { family: "'Erica One', 'Helvetica', sans-serif", weight: "100", spacing: "1px" }
+        },
+        vagron: {
+            primary: { family: "'Vagron', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Vagron', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Vagron', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Vagron', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        },
+        blippo: {
+            primary: { family: "'Blippo', 'Helvetica', sans-serif", weight: "600", spacing: "1.3px" },
+            secondary: { family: "'Blippo', 'Helvetica', sans-serif", weight: "500", spacing: "0.8px" },
+            body: { family: "'Blippo', 'Helvetica', sans-serif", weight: "400", spacing: "0.2px" },
+            button: { family: "'Blippo', 'Helvetica', sans-serif", weight: "600", spacing: "1px" }
+        }
+    };
+    
+    const config = fontConfigs[primaryFont];
+    if (!config) {
+        console.warn(`Font config bulunamadı: ${primaryFont}`);
+        return;
+    }
+    
+    // 1. LOGO & PRIMARY HEADINGS
+    applyToElements([
+        '.logo-text',
+        'h1', '.hero-title', '.main-title', '.project-title', '.portfolio-title',
+        '.section-title'
+    ], config.primary);
+    
+    // 2. SECONDARY HEADINGS  
+    applyToElements([
+        'h2', 'h3', 'h4', '.feature-title', '.stat-number',
+        '.nav-item', '.expandable-header', '.modal-header h3'
+    ], config.secondary);
+    
+    // 3. BODY TEXT
+    applyToElements([
+        'body', 'p', '.hero-subtitle', '.feature-subtitle', 
+        '.project-description', '.portfolio-description',
+        '.stat-label', '.breadcrumb', '.form-group label'
+    ], config.body);
+    
+    // 4. BUTTONS & INTERACTIVE
+    applyToElements([
+        '.btn', '.hero-btn-primary', '.hero-btn-secondary',
+        '.btn-project', '.btn-form', '.submit-btn', '.cta-button',
+        'button', 'input[type="submit"]'
+    ], config.button);
+    
+    console.log(`✅ ${primaryFont} typography sistemi başarıyla uygulandı!`);
+}
+
+// Element grubuna stil uygulama - YENİ GÜVENLI VERSIYON
+function applyToElements(selectors, styles) {
+    selectors.forEach(selector => {
+        try {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (element) {
+                    element.style.fontFamily = styles.family;
+                    element.style.fontWeight = styles.weight;
+                    element.style.letterSpacing = styles.spacing;
+                    element.style.textTransform = 'uppercase';
+                }
+            });
+        } catch (error) {
+            console.warn(`Selector hatası: ${selector}`, error);
+        }
+    });
+}
+
+// Tüm fontları sıfırla
+function resetAllFonts() {
+    const allSelectors = [
+        '.logo-text', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+        '.hero-title', '.main-title', '.project-title', '.portfolio-title',
+        '.feature-title', '.stat-number', '.nav-item', 'body', 'p',
+        '.hero-subtitle', '.feature-subtitle', '.project-description',
+        '.portfolio-description', '.stat-label', '.breadcrumb',
+        '.btn', '.hero-btn-primary', '.hero-btn-secondary', 
+        '.btn-project', '.btn-form', '.submit-btn', '.cta-button',
+        'button', 'input[type="submit"]'
+    ];
+    
+    allSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+            if (element) {
+                element.style.fontFamily = '';
+                element.style.fontWeight = '';
+                element.style.letterSpacing = '';
+                element.style.textTransform = '';
+            }
+        });
+    });
+}
+
+
+// Font yüklü mü kontrol et
+function isFontLoaded(fontName) {
+    const fontConfigs = {
+        oswald: "'Oswald', sans-serif",
+        anton: "'Anton', sans-serif", 
+        fjalla: "'Fjalla One', sans-serif",
+        russo: "'Russo One', sans-serif",
+        barlow: "'Barlow Condensed', sans-serif",
+        titillium: "'Titillium Web', sans-serif",
+        rajdhani: "'Rajdhani', sans-serif",
+        saira: "'Saira Condensed', sans-serif",
+        kanit: "'Kanit', sans-serif",
+        orbitron: "'Orbitron', monospace",
+        exo: "'Exo 2', sans-serif",
+        audiowide: "'Audiowide', sans-serif",
+        blackops: "'Black Ops One', sans-serif",
+        michroma: "'Michroma', sans-serif",
+        teko: "'Teko', sans-serif",
+        squada: "'Squada One', sans-serif",
+        bungee: "'Bungee', sans-serif",
+        righteous: "'Righteous', sans-serif",
+        aldrich: "'Aldrich', sans-serif",
+        electrolize: "'Electrolize', sans-serif",
+        jura: "'Jura', sans-serif",
+        sora: "'Sora', sans-serif",
+        manrope: "'Manrope', sans-serif",
+        ericaone: "'Erica One', sans-serif",
+        vagron: "'Vagron', sans-serif",
+        blippo: "'Blippo', sans-serif"
+    };
+    
+    const fontFamily = fontConfigs[fontName];
+    if (!fontFamily) return false;
+    
+    // Canvas ile font test et
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    
+    // Varsayılan font ile ölçüm
+    context.font = '20px monospace';
+    const defaultWidth = context.measureText('ABCDEFG').width;
+    
+    // Test font ile ölçüm
+    context.font = `20px ${fontFamily}`;
+    const testWidth = context.measureText('ABCDEFG').width;
+    
+    return defaultWidth !== testWidth;
+}
+
+// Font yükleme durumu göster
+function showFontStatus(fontName) {
+    const status = isFontLoaded(fontName);
+    const statusText = status ? '✅ Yüklü' : '⏳ Yükleniyor...';
+    
+    // Geçici status göster
+    const statusEl = document.createElement('div');
+    statusEl.innerHTML = `${fontName}: ${statusText}`;
+    statusEl.style.cssText = `
+        position: fixed; 
+        top: 20px; 
+        right: 20px; 
+        background: rgba(0,0,0,0.8); 
+        color: white; 
+        padding: 10px; 
+        border-radius: 5px; 
+        z-index: 10000;
+        font-family: monospace;
+    `;
+    
+    document.body.appendChild(statusEl);
+    setTimeout(() => statusEl.remove(), 2000);
+    
+    return status;
+}
+
+// Debug fonksiyonu - hangi fontlar çalışıyor
+function debugFonts() {
+    const fonts = ['oswald', 'anton', 'fjalla', 'russo', 'barlow', 'titillium', 
+                   'rajdhani', 'saira', 'kanit', 'orbitron', 'exo', 'audiowide', 
+                   'blackops', 'michroma', 'teko', 'squada', 'bungee', 'righteous', 
+                   'aldrich', 'electrolize', 'jura', 'sora', 'manrope', 'ericaone', "vagron", "blippo"];
+    
+    console.log('🔍 Font Debug Raporu:');
+    fonts.forEach(font => {
+        const status = isFontLoaded(font);
+        console.log(`${font}: ${status ? '✅' : '❌'}`);
+    });
+}
+
+// Güvenli font uygulama
+function safeApplyFont(element, fontFamily, fallback = 'sans-serif') {
+    if (element) {
+        element.style.fontFamily = `${fontFamily}, ${fallback}`;
+    }
+}
+
+// Güvenli font uygulama
+function safeApplyFont(element, fontFamily, fallback = 'sans-serif') {
+    if (element) {
+        element.style.fontFamily = `${fontFamily}, ${fallback}`;
+    }
+}
+
+// Debug fonksiyonu - hangi fontlar çalışıyor
+function debugFonts() {
+    const fonts = ['oswald', 'anton', 'fjalla', 'russo', 'barlow', 'titillium', 
+                   'rajdhani', 'saira', 'kanit', 'orbitron', 'exo', 'audiowide', 
+                   'blackops', 'michroma', 'teko', 'squada', 'bungee', 'righteous', 
+                   'aldrich', 'electrolize', 'jura', 'sora', 'manrope', 'ericaone', "vagron", "blippo"];
+    
+    console.log('🔍 Font Debug Raporu:');
+    fonts.forEach(font => {
+        const status = isFontLoaded(font);
+        console.log(`${font}: ${status ? '✅' : '❌'}`);
+    });
+    
+    console.log('📋 Toplam font sayısı:', fonts.length);
+    console.log('✅ Çalışan fontlar:', fonts.filter(f => isFontLoaded(f)).length);
+}// Hover önizleme ekle
+document.addEventListener('DOMContentLoaded', function() {
+    // Test butonlarına hover ekle
+    document.querySelectorAll('.test-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            const fontName = this.textContent.toLowerCase().split(' ')[0];
+            // Emoji'leri temizle
+            const cleanFontName = fontName.replace(/[🅰️🅱️🅾️🆁🅴🅵🅶🅷🅸🚀⚡⚙️🎮🪖🤖🎨🏛️📏💥💎✨🌍🔄]/g, '');
+            if (cleanFontName && cleanFontName !== 'sıfırla') {
+                
+            }
+        });
+    });
+    
+    // Font seçeneklerine hover ekle
+    document.querySelectorAll('.font-option').forEach(option => {
+        option.addEventListener('mouseenter', function() {
+            const fontClass = this.querySelector('.logo-sample').classList[1];
+            if (fontClass) {
+                const fontName = fontClass.replace('font-', '');
+                previewFont(fontName);
+            }
+        });
+    });
+});
+</script>

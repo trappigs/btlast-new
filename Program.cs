@@ -9,6 +9,7 @@ builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpS
 // Google Sheets Ayarları
 builder.Services.Configure<GoogleSheetsSettings>(builder.Configuration.GetSection("GoogleSheets"));
 builder.Services.AddScoped<IGoogleSheetsService, GoogleSheetsService>();
+builder.Services.AddHttpClient<IMetaCapiService, MetaCapiService>();
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()

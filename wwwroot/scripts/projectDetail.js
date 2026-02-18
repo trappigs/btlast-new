@@ -87,6 +87,16 @@ function changeMainMedia(src, alt, index, isVideo) {
     const mainMediaContainer = document.getElementById('mainProjectMedia');
     if (!mainMediaContainer) return;
     
+    // --- DÜZELTME BAŞLANGICI ---
+    // Eğer sahnede halihazırda bir video varsa, silmeden önce sustur ve durdur.
+    if (mainMediaContainer.tagName === 'VIDEO') {
+        mainMediaContainer.pause();       // Oynatmayı durdur
+        mainMediaContainer.currentTime = 0; // Başa sar
+        mainMediaContainer.src = "";      // Kaynağı boşalt (buffer'ı temizler)
+        mainMediaContainer.load();        // Boş kaynağı yükle (tamamen durdurur)
+    }
+    // --- DÜZELTME BİTİŞİ ---
+
     currentSlideIndex = index;
     
     // Update main media
@@ -285,7 +295,14 @@ function showLightboxSlide(index) {
     // Hide both elements first
     lightboxImage.style.display = 'none';
     lightboxVideo.style.display = 'none';
-    
+     // Video oynuyorsa durdur
+    if (lightboxVideo) {
+        lightboxVideo.pause();
+    }
+
+    // Hide both elements first
+           lightboxImage.style.display = 'none';
+       lightboxVideo.style.display = 'none';
     if (media.isVideo) {
         // Show video
         const videoSource = lightboxVideo.querySelector('source');
@@ -365,6 +382,7 @@ function handleKeyboardNavigation(e) {
             break;
     }
 }
+
 
 
 // ===== FORM HANDLERS =====

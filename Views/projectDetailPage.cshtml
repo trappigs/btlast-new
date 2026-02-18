@@ -7,7 +7,19 @@
 @{
     Layout = "masterLayout.cshtml";
     <title>@(Model.HasValue("pageTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("pageTitle")) ? Model.Value<string>("pageTitle") : ViewBag.Title)</title>
-    
+
+    @if (ViewBag.EventId != null)
+    {
+        <script>
+            if (typeof fbq === 'function') {
+                fbq('track', 'ViewContent', {
+                    content_name: '@Html.Raw(Model.Name)',
+                    content_category: 'Project'
+                }, { eventID: '@ViewBag.EventId' });
+            }
+        </script>
+    }
+   
     var currentUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}";
     var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}";
 
@@ -18,16 +30,16 @@
         var heroBgImage = Model.Value<IPublishedContent>("projectImage");
         heroBackground = heroBgImage.Url();
     }
-    
+   
     var projectLocationUrl = Model.Value<string>("projectLocationUrl");
-    
+   
     if (string.IsNullOrEmpty(heroBackground) && Model.HasValue("heroBackground"))
     {
         var heroBgImage = Model.Value<IPublishedContent>("heroBackground");
         heroBackground = heroBgImage.Url();
     }
 
-    // --- DİĞER PROJELER İÇİN GEREKLİ KOD ---
+    // --- SLUG VE PROJE LİSTELERİ KODU ---
     Func<string, string> GenerateSlug = (phrase) =>
     {
         if (string.IsNullOrEmpty(phrase)) return "";
@@ -39,57 +51,81 @@
         str = str.Trim('-');
         return str;
     };
-    // Proje listeleri (ProjectCards.cshtml'den kopyalandı)
-    var projects = new[]
-    {
-        new { Name = "BALIKLIDERE", Link = "baliklidere/", Image = "/media/uaweyjxt/balıklıdere-projesi-imarli-arsa-yatirimi-kapak-fotografi.webp", Description = "Balıklıdere'de, sessiz doğada huzurlu bir yatırım fırsatı sizi bekliyor.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true },
-        new { Name = "DİKİLİ", Link = "dikili/", Image = "/media/0ikp2ink/dikili-izmir-villa-deniz-manzara.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili", IsNew = false },
-        new { Name = "YENİŞEHİR", Link = "yenisehir/", Image = "/media/srbncqio/yenisehir-bursa-stratejik-yatirim.webp", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir", IsNew = false },
-        new { Name = "REŞADİYE", Link = "resadiye/", Image = "/media/vohjj0w2/resadiye-susurluk-koy-yasam.webp", Description = "Doğanın huzuru ve modern konforun mükemmel dengesi. Şehirlere yakın, olanakları tam ideal bir köy hayatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false },
-        new { Name = "KUVAYİ MİLLİYE", Link = "kuvayi-milliye/", Image = "/media/ozxbm3aa/kuvayi-milliye-proje-kapak-gorseli-imarlı-satilik-arsalar-balikesir-karesi.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false},
-        new { Name = "BİGA", Link = "biga/", Image = "/media/zzxprvsk/biga-canakkale-deniz-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Çanakkale, Biga", IsNew = false }
-    };
-    var newProjects = new[]
-    {
-        new { Name = "KUVAYİ MİLLİYE", Link = "kuvayi-milliye/", Image = "/media/ozxbm3aa/kuvayi-milliye-proje-kapak-gorseli-imarlı-satilik-arsalar-balikesir-karesi.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false},
-        new { Name = "KEPEKLER", Link = "kepekler/", Image = "/media/lhemsqj5/kepsut_gunbatimi_arsa.webp", Description = "Balıkesir Kepsut Kepekler’de imarlı arsa fırsatı! Doğaya yakın, altyapısı hazır, yüksek değer artışı potansiyeline sahip yatırım parselleri sizi bekliyor.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true},
-        new { Name = "OKÇUGÖL", Link = "okcugol/", Image = "/media/qxxbm1hq/susurluk-tarima-dayali-ihtisas-osb-yakin-arsa.webp", Description = "Sinpaş Kasaba Thermal Wellness Resort’un karşısında, imarlı ve müstakil tapulu arsalarla kazançlı bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true },
-        new { Name = "SEYİTLER", Link = "seyitler/", Image = "/media/5caopel2/seyitler-kutahya-stratejik-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Kütahya, Merkez", IsNew = true },
-        new { Name = "AYDIN", Link = "aydin/", Image = "/media/2eeji2vu/aydin-germencik-ege-yasam-arsa.webp", Description = "Şehir konforu ve Ege'nin tatil ruhu bir arada. Germencik merkezde, Kuşadası'na yarım saat mesafede dört mevsim yaşam.", IsKonut = false, Location = "Aydın, Germencik", IsNew = false },
-        new { Name = "DELİCE", Link = "delice/", Image = "/media/pkvmixmc/delice-dursunbey-uretim-koy-yatirimi.webp", Description = "Aradığınız her şeye sahip, kendi kendine yeten gelişmiş bir köy. Hem üretken bir yaşam hem de güvenli bir yatırım.", IsKonut = false, Location = "Balıkesir, Dursunbey", IsNew = false },
-        new { Name = "GÜNEYCE", Link = "guneyce/", Image = "/media/uxhne2pk/guneyce-ankara-termal-huzur.webp", Description = "Başkent'in stresine sağlıklı bir mola. Ankara'ya yakın, termal zenginlikleriyle ünlü, huzur dolu bir kaçış noktası.", IsKonut = false, Location = "Ankara, Güdül", IsNew = false },
-        new { Name = "KALAYCILAR", Link = "kalaycilar/", Image = "/media/bj2liz5u/kalaycilar-balikersir-luks-yasam.webp", Description = "Geleceğin lüks yaşam merkezi bugünden şekilleniyor. Değeri kanıtlanmış, seçkin bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false },
-        new { Name = "ARMUTLU", Link = "armutlu/", Image = "/media/hpkdt3qv/armutlu-sindirgı-doga-huzur.webp", Description = "Fıstık çamı ormanları arasında, şehrin gürültüsünden uzakta gerçek bir huzur sığınağı. Sakinlik ve doğa arayanlar için.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false },
-        new { Name = "İBİLLER", Link = "ibiller/", Image = "/media/dceh34j3/ibiller-sindirgı-termal-doga-yatirimi.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false }
-    };
+
+        var projects = new[]
+        {
+            new { Name = "DİKİLİ", Link = "dikili/", Image = "/media/0ikp2ink/dikili-izmir-villa-deniz-manzara.webp", Description = "Doğa ile uyum içinde, modern yaşamın konforunu sunan villa projesi. Deniz manzaralı parseller ile huzurun adresi.", IsKonut = false, Location = "İzmir, Dikili", IsNew = false, IsSoldOut = false },
+            new { Name = "YENİŞEHİR", Link = "yenisehir-2-etap/", Image = "/media/313dhc31/karakoy-cizili-2.jpg", Description = "Bursa'nın lojistik kalbinde, havalimanı ve YHT'ye komşu stratejik yatırım. Değeri her gün artan bir gelecek.", IsKonut = false, Location = "Bursa, Yenişehir", IsNew = false, IsSoldOut = false },
+            new { Name = "REŞADİYE", Link = "resadiye/", Image = "/media/vohjj0w2/resadiye-susurluk-koy-yasam.webp", Description = "Doğanın huzuru ve modern konforun mükemmel dengesi. Şehirlere yakın, olanakları tam ideal bir köy hayatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = false, IsSoldOut = false },
+            new { Name = "KUVAYİ MİLLİYE", Link = "kuvayi-milliye/", Image = "/media/ozxbm3aa/kuvayi-milliye-proje-kapak-gorseli-imarlı-satilik-arsalar-balikesir-karesi.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam ve akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false, IsSoldOut = false},
+            new { Name = "ILICABOĞAZI", Link = "ilicabogazi-2-etap/", Image = "/media/xndn1dob/ilicabogazi-cizili-gorsel-2.jpg", Description = "Gelişen kaplıca bölgesinde, sağlık ve yatırım potansiyeli bir arada. Yeni otel projeleriyle değeri artan lokasyon.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true, IsSoldOut = false },
+            new { Name = "ADAKÖY", Link = "adakoy/", Image = "/media/qxrixhj5/kapak-fotografi-mustafakemalpasa-ada-mahallesi-hemen-tapu-teslim.webp", Description = "Bursa Mustafakemalpaşa’nın stratejik gelişim aksı Ada Mahallesi’nde yer alan imarlı ve müstakil tapulu arsalarımız; hazır altyapısı ve merkezi konumuyla yatırımcısına kusursuz bir güven ve yüksek prim potansiyeli sunuyor.", IsKonut = false, Location = "Bursa, Mustafakemalpasa", IsNew = true, IsSoldOut = false },
+            new { Name = "KEPSUT", Link = "kepsut/", Image = "/media/ri1fuzlw/bereketli-topraklar-resmi-arsa-ilan-gorseli.webp", Description = "Altın Çember’in kalbindeki Kepsut’ta bulunan imarlı ve müstakil tapulu arsalarımız, yatırım için büyük bir güven ve yüksek kazanç potansiyeli sunuyor.", IsKonut = false, Location = "Balıkesir, Kepsut", IsNew = true, IsSoldOut = false },
+        };
+
+        var newProjects = new[]
+        {
+            new { Name = "KUVAYİ MİLLİYE", Link = "kuvayi-milliye/", Image = "/media/ozxbm3aa/kuvayi-milliye-proje-kapak-gorseli-imarlı-satilik-arsalar-balikesir-karesi.webp", Description = "Balıkesir'in yeni prestij bölgesi burada kuruluyor. Kolej ve hastane projelerinin kalbinde, lüks bir yaşam and akıllı yatırım.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false, IsSoldOut = false},
+            new { Name = "KEPSUT", Link = "kepsut/", Image = "/media/ri1fuzlw/bereketli-topraklar-resmi-arsa-ilan-gorseli.webp", Description = "Altın Çember’in kalbindeki Kepsut’ta bulunan imarlı ve müstakil tapulu arsalarımız, yatırım için büyük bir güven and yüksek kazanç potansiyeli sunuyor.", IsKonut = false, Location = "Balıkesir, Kepsut", IsNew = true, IsSoldOut = false },
+            new { Name = "KEPEKLER", Link = "kepekler/", Image = "/media/lhemsqj5/kepsut_gunbatimi_arsa.webp", Description = "Balıkesir Susurluk Kepekler’de imarlı arsa fırsatı! Doğaya yakın, altyapısı hazır, yüksek değer artışı potansiyeline sahip yatırım parselleri sizi bekliyor.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true, IsSoldOut = false},
+            new { Name = "OKÇUGÖL", Link = "okcugol/", Image = "/media/qxxbm1hq/susurluk-tarima-dayali-ihtisas-osb-yakin-arsa.webp", Description = "Sinpaş Kasaba Thermal Wellness Resort’un karşısında, imarlı ve müstakil tapulu arsalarla kazançlı bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Susurluk", IsNew = true, IsSoldOut = false },
+            new { Name = "SEYİTLER", Link = "seyitler/", Image = "/media/5caopel2/seyitler-kutahya-stratejik-yatirim.webp", Description = "Hem işinize ve limana hem de denize ve doğaya dakikalar içinde ulaşın. Huzur ve stratejinin mükemmel birleşimi.", IsKonut = false, Location = "Kütahya, Merkez", IsNew = true, IsSoldOut = false },
+            new { Name = "AYDIN", Link = "aydin/", Image = "/media/2eeji2vu/aydin-germencik-ege-yasam-arsa.webp", Description = "Şehir konforu ve Ege'nin tatil ruhu bir arada. Germencik merkezde, Kuşadası'na yarım saat mesafede dört mevsim yaşam.", IsKonut = false, Location = "Aydın, Germencik", IsNew = false, IsSoldOut = false },
+            new { Name = "DELİCE", Link = "delice/", Image = "/media/pkvmixmc/delice-dursunbey-uretim-koy-yatirimi.webp", Description = "Aradığınız her şeye sahip, kendi kendine yeten gelişmiş bir köy. Hem üretken bir yaşam hem de güvenli bir yatırım.", IsKonut = false, Location = "Balıkesir, Dursunbey", IsNew = false, IsSoldOut = false },
+            new { Name = "GÜNEYCE", Link = "guneyce/", Image = "/media/uxhne2pk/guneyce-ankara-termal-huzur.webp", Description = "Başkent'in stresine sağlıklı bir mola. Ankara'ya yakın, termal zenginlikleriyle ünlü, huzur dolu bir kaçış noktası.", IsKonut = false, Location = "Ankara, Güdül", IsNew = false, IsSoldOut = false },
+            new { Name = "KALAYCILAR", Link = "kalaycilar/", Image = "/media/bj2liz5u/kalaycilar-balikersir-luks-yasam.webp", Description = "Geleceğin lüks yaşam merkezi bugünden şekilleniyor. Değeri kanıtlanmış, seçkin bir yatırım fırsatı.", IsKonut = false, Location = "Balıkesir, Karesi", IsNew = false, IsSoldOut = false },
+            new { Name = "ARMUTLU", Link = "armutlu/", Image = "/media/hpkdt3qv/armutlu-sindirgı-doga-huzur.webp", Description = "Fıstık çamı ormanları arasında, şehrin gürültüsünden uzakta gerçek bir huzur sığınağı. Sakinlik ve doğa arayanlar için.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false, IsSoldOut = false },
+            new { Name = "İBİLLER", Link = "ibiller/", Image = "/media/dceh34j3/ibiller-sindirgı-termal-doga-yatirimi.webp", Description = "Sındırgı'nın şifalı termal sularına komşu, huzurlu bir doğa yatırımı. Sağlıklı bir geleceğin temellerini atın.", IsKonut = false, Location = "Balıkesir, Sındırgı", IsNew = false, IsSoldOut = false }
+        };
+
+        
+
     var allProjects = projects.Concat(newProjects);
     var currentProjectName = Model.Value<string>("projectName");
     var otherProjects = allProjects.Where(p => p.Name != currentProjectName).OrderBy(x => Guid.NewGuid()).Take(6);
-    
-    var Is360 = Model.Value<bool>("Is360");
+   
+    var Is360 = Model.Value<bool>("Is360") || 
+                (Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath"))) ||
+                (Model.HasValue("panellumKlasorYolu") && !string.IsNullOrEmpty(Model.Value<string>("panellumKlasorYolu")));
 
 
     ViewData["CustomData"] = currentProjectName;
 
-    // === YAPILANDIRILMIŞ VERİ İÇİN GÜNCELLENMİŞ DEĞİŞKENLER ===
+    // === YAPILANDIRILMIŞ VERİ (SCHEMA) DEĞİŞKENLERİ ===
     var headline = Model.Value<string>("projectName");
-    var descriptionAsText = Model.Value<string>("projectDescription")?.StripHtml().ToString(); // JSON için HTML'den arındırılmış metin
+    var descriptionAsText = Model.Value<string>("projectDescription")?.StripHtml().ToString();
+    var projectLocation = Model.Value<string>("projectLocation"); // Örn: Balıkesir, Susurluk
+   
+    // Konum ayrıştırma (Şehir ve İlçe tahmini)
+    var addressLocality = "Bursa"; // Varsayılan
+    var addressRegion = "Türkiye";
+    if (!string.IsNullOrEmpty(projectLocation) && projectLocation.Contains(","))
+    {
+        var parts = projectLocation.Split(',');
+        if (parts.Length > 1) {
+            addressRegion = parts[0].Trim(); // İl
+            addressLocality = parts[1].Trim(); // İlçe
+        } else {
+            addressLocality = projectLocation;
+        }
+    }
 
     var mainImage = Model.Value<IPublishedContent>("projectImage");
     var mainImageUrl = mainImage?.Url(mode: UrlMode.Absolute) ?? "";
 
-    var datePublished = Model.CreateDate.ToString("o"); // ISO 8601 formatı
-    var dateModified = Model.UpdateDate.ToString("o"); // ISO 8601 formatı
-    
-    // LÜTFEN BU SATIRI KENDİ LOGO URL'İNİZ İLE GÜNCELLEYİN
-    var logoUrl = "https://bereketlitopraklar.com.tr/media/ihljr0ls/logo-light.svg"; // Doğrulanmış URL
-    
+    var datePublished = Model.CreateDate.ToString("o");
+    var dateModified = Model.UpdateDate.ToString("o");
+    var logoUrl = "https://bereketlitopraklar.com.tr/media/ihljr0ls/logo-light.svg";
+
+    // Teknik Özellikleri Listesi (Ürün Özellikleri olarak kullanılacak)
     var featuresList = new List<string>();
     featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""İmar Durumu"", ""value"": ""İmarlı, Altyapısı Tamamlanmış"" }");
     featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Tapu Durumu"", ""value"": ""Müstakil Tapulu"" }");
     featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Teslimat"", ""value"": ""Hemen Teslim"" }");
     featuresList.Add(@"{ ""@type"": ""PropertyValue"", ""name"": ""Ödeme Planı"", ""value"": ""24 Aya Varan Taksit"" }");
+    featuresList.Add($@"{{ ""@type"": ""PropertyValue"", ""name"": ""Konum"", ""value"": ""{projectLocation}"" }}");
 
+    // Video URL Bulma
     var videoUrl = "";
     var galleryImages = Model.Value<IEnumerable<IPublishedContent>>("projectGallery");
     if (galleryImages != null)
@@ -100,55 +136,91 @@
             videoUrl = videoItem.Url(mode: UrlMode.Absolute);
         }
     }
+
+    // Personel (PM) Bilgileri
+    var pmName = Model.Value<string>("pmName");
+    var pmTitle = Model.Value<string>("pmRole");
+    var pmImage = Model.Value<IPublishedContent>("pmAvatar")?.Url(mode: UrlMode.Absolute) ?? "";
 }
 
-@* --- SEO İÇİN YAPILANDIRILMIŞ VERİ (JSON-LD) - GÜNCELLENMİŞ ARTICLE ŞEMASI --- *@
+@* --- SEO İÇİN GELİŞMİŞ YAPILANDIRILMIŞ VERİ (PRODUCT + PLACE + WEBPAGE + PERSON) --- *@
 <script type="application/ld+json">
 {
-    "@@context": "https://schema.org",
-    "@@type": "Article",
-    "mainEntityOfPage": {
-      "@@type": "WebPage",
-      "@@id": "@currentUrl"
-    },
-    "headline": "@headline",
-    "url": "@currentUrl",
-    "description": @Html.Raw(JsonConvert.SerializeObject(descriptionAsText)),
-    "image": {
-        "@@type": "ImageObject",
-        "url": "@mainImageUrl"
-    },
-    "author": {
-        "@@type": "Organization",
-        "name": "Bereketli Topraklar",
-        "url": "@siteUrl"
-    },
-    "publisher": {
-        "@@type": "Organization",
-        "name": "Bereketli Topraklar",
-        "logo": {
-            "@@type": "ImageObject",
-            "url": "@logoUrl"
-        }
-    },
-    "datePublished": "@datePublished",
-    "dateModified": "@dateModified",
-    @if (!string.IsNullOrEmpty(videoUrl))
+  "@@context": "https://schema.org",
+  "@@graph": [
     {
-        <text>
-        "video": {
+      "@@type": "WebPage",
+      "@@id": "@currentUrl#webpage",
+      "url": "@currentUrl",
+      "name": "@headline | Bereketli Topraklar",
+      "description": @Html.Raw(JsonConvert.SerializeObject(descriptionAsText)),
+      "isPartOf": { "@@id": "@siteUrl/#website" },
+      "primaryImageOfPage": { "@@id": "@currentUrl#primaryimage" },
+      "image": {
+        "@@type": "ImageObject",
+        "@@id": "@currentUrl#primaryimage",
+        "url": "@mainImageUrl",
+        "width": 1200,
+        "height": 675
+      },
+      "about": { "@@id": "@currentUrl#product" }
+    },
+    {
+      "@@type": "Product",
+      "@@id": "@currentUrl#product",
+      "name": "@headline",
+      "description": @Html.Raw(JsonConvert.SerializeObject(descriptionAsText)),
+      "image": "@mainImageUrl",
+      "brand": { "@@id": "@siteUrl/#organization" },
+      "category": "Konut İmarlı Arsa",
+      "offers": {
+        "@@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "priceCurrency": "TRY",
+        "price": "0",
+        "priceValidUntil": "2026-12-31",
+        "url": "@currentUrl",
+        "seller": { "@@id": "@siteUrl/#organization" }
+      },
+      "additionalProperty": [
+        @Html.Raw(string.Join(",", featuresList))
+      ]
+      @if (!string.IsNullOrEmpty(videoUrl))
+      {
+        <text>,
+        "subjectOf": {
             "@@type": "VideoObject",
-            "name": "@(headline) Tanıtım Videosu",
+            "name": "@headline Tanıtım Videosu",
             "description": @Html.Raw(JsonConvert.SerializeObject(descriptionAsText)),
             "thumbnailUrl": "@mainImageUrl",
             "contentUrl": "@videoUrl",
-            "uploadDate": "@Model.CreateDate.ToString("o")"
-        },
+            "uploadDate": "@datePublished"
+        }
         </text>
+      }
+    },
+    {
+      "@@type": "Place",
+      "@@id": "@currentUrl#place",
+      "name": "@projectLocation",
+      "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "@addressLocality",
+        "addressRegion": "@addressRegion",
+        "addressCountry": "TR"
+      }
+      @* Not: Koordinat (lat/long) verisi veritabanında olmadığı için buraya eklenmedi. *@
+    },
+    {
+      "@@type": "Person",
+      "@@id": "@currentUrl#person",
+      "name": "@pmName",
+      "jobTitle": "@pmTitle",
+      "image": "@pmImage",
+      "worksFor": { "@@id": "@siteUrl/#organization" },
+      "telephone": "@Model.Value("pmPhone")"
     }
-    "additionalProperty": [
-        @Html.Raw(string.Join(",", featuresList))
-    ]
+  ]
 }
 </script>
 
@@ -157,7 +229,29 @@
 
 </div>
 @section Scripts {
-    @if(Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath")))
+    @if(Model.HasValue("panellumKlasorYolu") && !string.IsNullOrEmpty(Model.Value<string>("panellumKlasorYolu")))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const panoPreview = document.getElementById('pano-preview');
+                const fullscreenBtn = document.getElementById('fullscreen-btn');
+                const closeBtn = document.getElementById('pano-close-btn');
+
+                if(fullscreenBtn) {
+                    fullscreenBtn.addEventListener('click', () => panoPreview.classList.add('fullscreen'));
+                }
+                if(closeBtn) {
+                    closeBtn.addEventListener('click', () => panoPreview.classList.remove('fullscreen'));
+                }
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && panoPreview.classList.contains('fullscreen')) {
+                        panoPreview.classList.remove('fullscreen');
+                    }
+                });
+            });
+        </script>
+    }
+    else if(Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath")))
     {
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -168,6 +262,7 @@
                     xml: "@Model.Value("virtualTourPath")",
                     target: "pano",
                     html5: "auto",
+
                     mobilescale: 1.0,
                     passQueryParameters: true,
                     onready: function(krpano_interface){
@@ -199,7 +294,7 @@
                         krpano.call('exitfullscreen();');
                     }
                 }
-                
+               
                 // Olay dinleyicilerini atıyoruz
                 if(fullscreenBtn) {
                     fullscreenBtn.addEventListener('click', enterPanoFullscreen);
@@ -268,7 +363,7 @@
                 </div>
             </div>
         </div>
-        
+       
         <div class="content-grid">
             <div class="image-section">
                 @{
@@ -282,10 +377,10 @@
                         if (galleryItems.Any())
                         {
                             // İlk video'yu bul
-                            var firstVideo = galleryItems.FirstOrDefault(item => 
-                                item.ContentType.Alias == "video" || 
-                                item.Url().EndsWith(".mp4") || 
-                                item.Url().EndsWith(".webm") || 
+                            var firstVideo = galleryItems.FirstOrDefault(item =>
+                                item.ContentType.Alias == "video" ||
+                                item.Url().EndsWith(".mp4") ||
+                                item.Url().EndsWith(".webm") ||
                                 item.Url().EndsWith(".ogg") ||
                                 item.Url().EndsWith(".mov") ||
                                 item.Url().EndsWith(".avi"));
@@ -302,7 +397,7 @@
                             }
                         }
                     }
-                    
+                   
                     // Eğer gallery'de hiçbir şey yoksa, projectImage'i kullan
                     if (mainMediaItem == null && Model.HasValue("projectImage"))
                     {
@@ -310,7 +405,7 @@
                         isMainVideo = false;
                     }
                 }
-                
+               
                 @if (mainMediaItem != null)
                 {
                     @if (isMainVideo)
@@ -325,7 +420,7 @@
                                    muted
                                    playsinline>
                             </video>
-                            
+                           
                             <div class="video-click-overlay" onclick="openLightbox(0)"></div>
                         </div>
                     }
@@ -334,14 +429,14 @@
                         // RESİM İÇİN YAPI (Resimler için overlay'e gerek yok)
                         <div class="main-media-container" onclick="openLightbox(0)">
                              <img src="@mainMediaItem.Url()"
-                                 alt="@Model.Value("projectName")"
-                                 class="main-project-media"
-                                 id="mainProjectMedia" />
+                                  alt="@Model.Value("projectName")"
+                                  class="main-project-media"
+                                  id="mainProjectMedia" />
                         </div>
                     }
                 }
 
-                
+               
                 @if (Model.HasValue("projectGallery"))
                 {
                     <div class="gallery-section">
@@ -349,19 +444,19 @@
                             @{
                                 var allGalleryItems = Model.Value<IEnumerable<IPublishedContent>>("projectGallery").Take(10).ToList();
                                 var currentIndex = 0;
-                                
+                               
                                 // Video'ları önce, resimleri sonra sırala
                                 var sortedItems = allGalleryItems
-                                    .OrderByDescending(item => 
-                                        item.ContentType.Alias == "video" || 
-                                        item.Url().EndsWith(".mp4") || 
-                                        item.Url().EndsWith(".webm") || 
+                                    .OrderByDescending(item =>
+                                        item.ContentType.Alias == "video" ||
+                                        item.Url().EndsWith(".mp4") ||
+                                        item.Url().EndsWith(".webm") ||
                                         item.Url().EndsWith(".ogg") ||
                                         item.Url().EndsWith(".mov") ||
                                         item.Url().EndsWith(".avi"))
                                     .ToList();
                             }
-                            
+                           
                             @foreach (var item in sortedItems)
                             {
                                 var isVideo = item.ContentType.Alias == "video" ||
@@ -370,8 +465,8 @@
                                               item.Url().EndsWith(".ogg") ||
                                               item.Url().EndsWith(".mov") ||
                                               item.Url().EndsWith(".avi");
-                                
-                                <div class="gallery-item @(isVideo ? "video-item" : "")" data-index="@currentIndex" onclick="changeMainMedia('@item.Url()', '@Model.Value("projectName")', @currentIndex, @isVideo.ToString().ToLower())">
+                               
+                                <div class="gallery-item @(isVideo ? "video-item" : "")" data-index="@currentIndex" onclick="handleGalleryClick('@item.Url()', '@Model.Value("projectName")', @currentIndex, @isVideo.ToString().ToLower())">
                                     @if (isVideo)
                                     {
                                         // Video içeriği olduğu gibi kalıyor...
@@ -385,15 +480,15 @@
                                     else
                                     {
                                             var altText = item.Value<string>("umbracoAltText");
-                                            
+                                           
                                             if (string.IsNullOrWhiteSpace(altText))
                                             {
                                                 altText = item.Name;
                                             }
-                                        
-                                        
-                                        // 3. Temiz ve basit değişkeni alt etiketine yazdır.
-                                        <img src="@item.Url()" alt="@altText" class="gallery-image">
+                                           
+                                           
+                                            // 3. Temiz ve basit değişkeni alt etiketine yazdır.
+                                            <img src="@item.Url()" alt="@altText" class="gallery-image">
                                     }
                                 </div>
                                 currentIndex++;
@@ -447,7 +542,7 @@
                                 </a>
                                 <span class="pm-role">@Model.Value("pmRole")</span>
                               </div>
-    
+   
                               <div class="pm-contact">
                                 <a href="tel:@Model.Value("pmPhone")" class="pm-chip" aria-label="Ara">
                                   <svg viewBox="0 0 24 24" width="16" height="16">
@@ -462,7 +557,7 @@
                                   WhatsApp
                                 </a>
                               </div>
-    
+   
                               <p class="pm-bio">@Model.Value("pmBio")</p>
                             </div>
                           </div>
@@ -476,13 +571,13 @@
                          </div>
                         <div class="expandable-content">
                             <div class="map-container">
-                                <iframe 
+                                <iframe
                                     src="@projectLocationUrl"
-                                    width="100%" 
-                                    height="350" 
-                                    style="border:0;" 
-                                    allowfullscreen="" 
-                                    loading="lazy" 
+                                    width="100%"
+                                    height="350"
+                                    style="border:0;"
+                                    allowfullscreen=""
+                                    loading="lazy"
                                     referrerpolicy="no-referrer-when-downgrade">
                                 </iframe>
                             </div>
@@ -496,14 +591,25 @@
 
 
 
-@* --- SANAL TUR BÖLÜMÜ (Sadece virtualTourPath doluysa göster) --- *@
-@if(Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath")))
+@* --- SANAL TUR BÖLÜMÜ (virtualTourPath veya panellumKlasorYolu doluysa göster) --- *@
+@if((Model.HasValue("virtualTourPath") && !string.IsNullOrEmpty(Model.Value<string>("virtualTourPath"))) || (Model.HasValue("panellumKlasorYolu") && !string.IsNullOrEmpty(Model.Value<string>("panellumKlasorYolu"))))
 {
     <section class="virtual-tour-section">
         <h2 class="section-title text-center mb-4" id="container-360">Projeyi 360° Gezin</h2>
 
         <div id="pano-preview" class="pano-preview-container">
-            <div id="pano" style="width:100%;height:100%;"></div>
+            @if (Model.HasValue("panellumKlasorYolu") && !string.IsNullOrEmpty(Model.Value<string>("panellumKlasorYolu")))
+            {
+                <iframe
+                    allowfullscreen
+                    style="border:none; width:100%; height:100%;"
+                    src="/pannellum/pannellum.htm?config=/pannellum-turlar/@Model.Value("panellumKlasorYolu")/config.json&autoLoad=true">
+                </iframe>
+            }
+            else
+            {
+                <div id="pano" style="width:100%;height:100%;"></div>
+            }
             <div class="pano-overlay">
                 <button id="fullscreen-btn" class="btn btn-primary">Tam Ekran</button>
             </div>
@@ -526,9 +632,14 @@
                 @foreach (var project in otherProjects)
                 {
                     var projectSlug = GenerateSlug(project.Name);
-                    <div class="project-card" data-location="@project.Name">
+                    <div class="project-card @(project.IsSoldOut ? "is-sold-out" : "")" data-location="@project.Name">
+                        @if (project.IsSoldOut)
+                        {
+                            <div class="sold-out-badge">Satış Tamamlandı</div>
+                        }
+                        
                         @* YENİ BADGE - Kağıt köşesi stili *@
-                        @if (project.IsNew)
+                        @if (project.IsNew && !project.IsSoldOut)
                         {
                             <div class="paper-corner-badge green"></div>
                         }
@@ -546,6 +657,10 @@
                                 <span style="color: #045129">ARSA</span>
                             </div>
                         }
+                        @if (project.Link == "yenisehir-2-etap/" || project.Link == "ilicabogazi-2-etap/")
+        {
+            <div class="sold-out-badge" style="background: rgba(4, 81, 41, 0.85);">2. ETAP</div>
+        }
                         <div class="card-header">
                             <h3 class="card-title">@project.Name</h3>
                         </div>
@@ -555,7 +670,6 @@
                                     <p>@project.Description</p>
                                 </div>
                             </a>
-                        <!-- Yeni yapı (doğru): -->
                         <div class="card-actions">
                             <div class="location-info">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -581,7 +695,7 @@
 <div id="lightboxModal" class="lightbox-modal">
     <div class="lightbox-content">
         <span class="lightbox-close" onclick="closeLightbox()">×</span>
-        
+       
         <div class="lightbox-container">
             <button class="lightbox-prev" onclick="changeSlide(-1)">❮</button>
             <button class="lightbox-next" onclick="changeSlide(1)">❯</button>
@@ -589,14 +703,14 @@
             <div class="lightbox-image-wrapper">
                 <img id="lightboxImage" src="" alt="" class="lightbox-image" style="display: none;">
                 <video id="lightboxVideo" class="lightbox-video" controls style="display: none;">
-                     <source src="" type="video/mp4">
+                      <source src="" type="video/mp4">
                 </video>
             </div>
-            
+           
             <div class="lightbox-counter">
                 <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
              </div>
-            
+           
             <div class="lightbox-thumbnails-container">
                 <button class="thumbnail-nav-btn thumbnail-prev" onclick="scrollThumbnails(-1)">‹</button>
                 <div class="lightbox-thumbnails" id="lightboxThumbnails">
@@ -630,7 +744,6 @@
     </div>
 </div>
 
-<!-- PAYLAŞ BUTONU SCRİPT -->
 <script>
 // ===== PAYLAŞIM BUTONU FONKSİYONELLİĞİ =====
 function initializeShareFunctionality() {
@@ -726,7 +839,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <style>
     /* Bu CSS kodları artık projectDetail.css dosyasında .related-projects-section scope'u altında */
     /* Burada sadece acil düzeltmeler için kullan */
-    
+   
     @@media(min-width: 769px){
         .location-info{
             left:28px;
@@ -754,7 +867,7 @@ document.addEventListener('DOMContentLoaded', function() {
 formButtons2.forEach(button => {
     button.addEventListener('click', function(e) {
         e.preventDefault();
-        
+       
         const isMobile = window.innerWidth <= 768;
         const targetElement = document.getElementById('container-360');
 
@@ -773,4 +886,22 @@ formButtons2.forEach(button => {
         }
     });
 });
+
+    function handleGalleryClick(url, projectName, index, isVideo) {
+        // 768px mobil breakpoint olarak kabul edilirse
+        if (window.innerWidth <= 768) {
+            // MOBİL DAVRANIŞI: Doğrudan Lightbox'ı aç
+            // openLightbox fonksiyonunun JS dosyasında tanımlı olduğunu varsayıyorum
+            if (typeof openLightbox === 'function') {
+                openLightbox(index);
+            } else {
+                console.error("openLightbox fonksiyonu bulunamadı!");
+            }
+        } else {
+            // MASAÜSTÜ DAVRANIŞI: Mevcut işleyiş (Hero görseli değiştir)
+            if (typeof changeMainMedia === 'function') {
+                changeMainMedia(url, projectName, index, isVideo);
+            }
+        }
+    }
 </script>

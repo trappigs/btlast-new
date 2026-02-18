@@ -1,0 +1,240 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    var rootNode = Model.Root();
+    var children = rootNode.Children().Where(x => x.IsVisible());
+}
+
+<link rel="stylesheet" href="/css/nova-navigation.css">
+
+<nav class="nova-nav">
+    <div class="nav-container">
+        <!-- Logo Section -->
+        <div class="nav-logo">
+            <a href="/" class="logo-link">
+                <div class="logo-circle">
+                    <span class="logo-va">VA</span>
+                </div>
+                <span class="logo-text">NOVA ARSA</span>
+            </a>
+        </div>
+
+        <!-- Main Navigation Menu -->
+        <div class="nav-menu">
+            <!-- Kurumsal Dropdown -->
+            <div class="nav-dropdown">
+                <a href="#" class="nav-item dropdown-toggle">
+                    Kurumsal
+                    <i class="dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/biz-kimiz" class="dropdown-item">Biz Kimiz ?</a>
+                    <a href="/neden-nova-arsa" class="dropdown-item">Neden Nova Arsa</a>
+                    <a href="/yeni-nesil-yatirim" class="dropdown-item">Yeni Nesil Yatırım</a>
+                    <a href="/insan-kaynaklari" class="dropdown-item">İnsan Kaynakları</a>
+                </div>
+            </div>
+
+            <!-- Projelerimiz Mega Menu -->
+            <div class="nav-dropdown mega-menu-container">
+                <a href="#" class="nav-item dropdown-toggle">
+                    Projelerimiz
+                    <i class="dropdown-arrow"></i>
+                </a>
+                <div class="mega-menu">
+                    <div class="mega-menu-content">
+                        <!-- İlk Satır Projeler -->
+                        <div class="projects-row">
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/canakkale-armoni.jpg" alt="Çanakkale - Armoni">
+                                </div>
+                                <h5 class="project-title">Çanakkale Armoni</h5>
+                                <a href="/proje/canakkale-armoni" class="project-btn">Projeyi İncele</a>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/ayvalik-camoba.jpg" alt="Ayvalık - Çamoba">
+                                </div>
+                                <h5 class="project-title">Ayvalık Çamoba</h5>
+                                <a href="/proje/ayvalik-camoba" class="project-btn">Projeyi İncele</a>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/iznik.jpg" alt="İznik">
+                                </div>
+                                <h5 class="project-title">İznik</h5>
+                                <a href="/proje/iznik" class="project-btn">Projeyi İncele</a>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/kocaeli.jpg" alt="Kocaeli">
+                                </div>
+                                <h5 class="project-title">Kocaeli</h5>
+                                <a href="/proje/kocaeli" class="project-btn">Projeyi İncele</a>
+                            </div>
+                        </div>
+
+                        <!-- İkinci Satır Projeler -->
+                        <div class="projects-row">
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/canakkale.jpg" alt="Çanakkale">
+                                </div>
+                                <h5 class="project-title">Çanakkale</h5>
+                                <a href="/proje/nova-arsa-canakkale" class="project-btn">Projeyi İncele</a>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/duzce-gumusova.jpg" alt="Düzce - Gümüşova">
+                                </div>
+                                <h5 class="project-title">Düzce Gümüşova</h5>
+                                <a href="/proje/duzce-gumusova" class="project-btn">Projeyi İncele</a>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="project-image">
+                                    <img src="/images/projects/sakarya-geyve.jpg" alt="Sakarya - Geyve">
+                                </div>
+                                <h5 class="project-title">Sakarya Geyve</h5>
+                                <a href="#" class="project-btn yakinda-btn">YAKINDA</a>
+                            </div>
+
+                            <!-- Sakarya Geyve Özel Alan -->
+                            <div class="project-item special-item">
+                                <div class="special-content">
+                                    <div class="special-badge">Yeni Proje</div>
+                                    <h5 class="special-title">Sakarya Geyve'de Gelecek Şimdi Başlıyor!</h5>
+                                    <p class="special-desc">Doğa ile iç içe, değer kazanan bir lokasyonda yerinizi alın. Ön talep süreci başladı! Kaçırmayın!</p>
+                                    <a href="#" class="special-btn" onclick="openPreApplicationForm()">ÖN BAŞVURU FORMU</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sizden Gelenler -->
+            <a href="/sizden-gelenler" class="nav-item">
+                Sizden Gelenler
+            </a>
+
+            <!-- Bilgi Bankası Dropdown -->
+            <div class="nav-dropdown">
+                <a href="#" class="nav-item dropdown-toggle">
+                    Bilgi Bankası
+                    <i class="dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/merak-edilenler" class="dropdown-item">Merak Edilenler</a>
+                    <a href="/medya-merkezi" class="dropdown-item">Medya Merkezi</a>
+                </div>
+            </div>
+
+            <!-- Bize Ulaşın -->
+            <a href="/bize-ulasin" class="nav-item">
+                Bize Ulaşın
+            </a>
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="nav-actions">
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <a href="#" class="lang-item active">
+                    <img src="/images/flags/tr.svg" alt="TR">
+                    <span>TR</span>
+                </a>
+                <a href="#" class="lang-item">
+                    <img src="/images/flags/en.svg" alt="EN">
+                    <span>ENG</span>
+                </a>
+            </div>
+
+            <!-- Phone Button -->
+            <a href="tel:4445675" class="phone-btn">
+                <i class="phone-icon"></i>
+                <span class="phone-text">444 5 675</span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle">
+                    Kurumsal
+                    <i class="mobile-dropdown-icon"></i>
+                </button>
+                <div class="mobile-dropdown-content">
+                    <a href="/biz-kimiz" class="mobile-nav-item sub">Biz Kimiz ?</a>
+                    <a href="/neden-nova-arsa" class="mobile-nav-item sub">Neden Nova Arsa</a>
+                    <a href="/yeni-nesil-yatirim" class="mobile-nav-item sub">Yeni Nesil Yatırım</a>
+                    <a href="/insan-kaynaklari" class="mobile-nav-item sub">İnsan Kaynakları</a>
+                </div>
+            </div>
+            
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle">
+                    Projelerimiz
+                    <i class="mobile-dropdown-icon"></i>
+                </button>
+                <div class="mobile-dropdown-content">
+                    <a href="/proje/canakkale-armoni" class="mobile-nav-item sub">Çanakkale Armoni</a>
+                    <a href="/proje/ayvalik-camoba" class="mobile-nav-item sub">Ayvalık Çamoba</a>
+                    <a href="/proje/iznik" class="mobile-nav-item sub">İznik</a>
+                    <a href="/proje/kocaeli" class="mobile-nav-item sub">Kocaeli</a>
+                    <a href="/proje/nova-arsa-canakkale" class="mobile-nav-item sub">Çanakkale</a>
+                    <a href="/proje/duzce-gumusova" class="mobile-nav-item sub">Düzce Gümüşova</a>
+                    <a href="#" class="mobile-nav-item sub disabled">Sakarya Geyve (Yakında)</a>
+                </div>
+            </div>
+            
+            <a href="/sizden-gelenler" class="mobile-nav-item">Sizden Gelenler</a>
+            
+            <div class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle">
+                    Bilgi Bankası
+                    <i class="mobile-dropdown-icon"></i>
+                </button>
+                <div class="mobile-dropdown-content">
+                    <a href="/merak-edilenler" class="mobile-nav-item sub">Merak Edilenler</a>
+                    <a href="/medya-merkezi" class="mobile-nav-item sub">Medya Merkezi</a>
+                </div>
+            </div>
+            
+            <a href="/bize-ulasin" class="mobile-nav-item">Bize Ulaşın</a>
+            
+            <!-- Mobile Actions -->
+            <div class="mobile-actions">
+                <a href="tel:4445675" class="mobile-phone-btn">
+                    <i class="phone-icon"></i>
+                    <span>444 5 675</span>
+                </a>
+                
+                <div class="mobile-lang-switcher">
+                    <a href="#" class="mobile-lang-item active">TR</a>
+                    <a href="#" class="mobile-lang-item">ENG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script src="/Scripts/nova-navigation.js"></script>

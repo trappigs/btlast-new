@@ -1,0 +1,302 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.Blocks
+@using Newtonsoft.Json
+@{
+    // 1. Veriyi artık doğrudan, bu partial'ın çağrıldığı sayfanın Model'inden alıyoruz.
+    var faqItems = Model.Value<BlockListModel>("sikcaSorulanSorular");
+
+    // 2. Verinin var olup olmadığını ve boş olmadığını kontrol ediyoruz.
+    if (faqItems != null && faqItems.Any())
+    {
+        // === YAPI_LANDIRILMIŞ VERİ (JSON-LD) OLUŞTURMA BAŞLANGICI ===
+        var faqQuestions = new List<object>();
+        foreach (var item in faqItems)
+        {
+            var content = item.Content;
+            var question = content.Value<string>("soru");
+            var answer = content.Value<string>("cevap")?.StripHtml().ToString(); // Cevabı HTML'den arındırıyoruz
+
+            if (!string.IsNullOrWhiteSpace(question) && !string.IsNullOrWhiteSpace(answer))
+            {
+                faqQuestions.Add(new
+                {
+                    type = "Question",
+                    name = question,
+                    acceptedAnswer = new
+                    {
+                        type = "Answer",
+                        text = answer
+                    }
+                });
+            }
+        }
+        // === YAPI_LANDIRILMIŞ VERİ (JSON-LD) OLUŞTURMA SONU ===
+        
+        <section class="faq-section bg-beige">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <h2 class="faq-title">Sık Sorulan Sorular</h2>
+                </div>
+
+                <div class="faq-list">
+                    @foreach (var (item, index) in faqItems.Select((value, i) => (value, i)))
+                    {
+                        var content = item.Content;
+                        var question = content.Value<string>("soru");
+                        var answerAsString = content.Value<string>("cevap");
+
+                        <div class="faq-item">
+                            <button class="faq-question" data-faq="@index">
+                                <span class="faq-icon">+</span>
+                                <span class="question-text">@question</span>
+                            </button>
+                            <div class="faq-answer" id="faq-@index">
+                                <div class="answer-content">
+                                    @Html.Raw(answerAsString)
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        @* --- BU BÖLÜM OTOMATİK OLARAK SAYFAYA ÖZEL FAQ ŞEMASI EKLER --- *@
+        if (faqQuestions.Any())
+        {
+            <script type="application/ld+json">
+            {
+                "@@context": "https://schema.org",
+                "@@type": "FAQPage",
+                "mainEntity": @Html.Raw(JsonConvert.SerializeObject(faqQuestions, Formatting.Indented))
+            }
+            </script>
+        }
+
+
+        @* CSS ve JavaScript kodlarını doğrudan partial view içinde tutmak, 
+            bu bileşeni kendi kendine yeten bir hale getirir.
+            Bu kodlar, sağladığınız tasarımla birebir aynıdır.
+        *@
+        <style>
+            /* FAQ Section Styles */
+            .faq-section {
+                background-color: #f8f9fa; /* Tasarımınıza uygun renk, bg-beige yerine */
+                padding: 80px 0;
+            }
+
+            .faq-container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+
+            /* Header */
+            .faq-header {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+
+            .faq-title {
+                font-size: 2.5rem;
+                color: #045129;
+                font-weight: 600;
+                margin: 0;
+            }
+
+            /* FAQ List */
+            .faq-list {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            /* FAQ Items */
+            .faq-item {
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+            }
+
+            .faq-item:hover {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .faq-item.active {
+                background: #045129;
+            }
+
+            /* FAQ Questions */
+            .faq-question {
+                width: 100%;
+                background: none;
+                border: none;
+                padding: 25px 30px;
+                text-align: left;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                font-size: 1.1rem;
+                font-weight: 500;
+                color: #333;
+                transition: all 0.3s ease;
+            }
+
+            .faq-item.active .faq-question {
+                color: white;
+            }
+
+            .faq-question:hover {
+                background: rgba(4, 81, 41, 0.05);
+            }
+
+            .faq-item.active .faq-question:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            /* FAQ Icons */
+            .faq-icon {
+                width: 30px;
+                height: 30px;
+                background: #045129;
+                color: white;
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                font-size: 1.2rem;
+                font-weight: 600;
+                flex-shrink: 0;
+                transition: all 0.3s ease;
+                font-family: monospace;
+            }
+
+            .faq-item.active .faq-icon {
+                background: white;
+                color: #045129;
+            }
+
+            /* Question Text */
+            .question-text {
+                flex: 1;
+                line-height: 1.4;
+            }
+
+            /* FAQ Answers */
+            .faq-answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-out; /* Animasyonu biraz yavaşlattım */
+            }
+
+            .faq-answer.show {
+                max-height: 300px; /* Cevapların uzun olabileceğini düşünerek artırdım */
+            }
+
+            .answer-content {
+                padding: 0 30px 25px 80px;
+                color: white;
+            }
+
+            .answer-content p {
+                margin: 0;
+                line-height: 1.6;
+                font-size: 1rem;
+            }
+            .answer-content p:not(:last-child) {
+                margin-bottom: 1rem; /* Cevap içindeki paragraflar arası boşluk */
+            }
+
+            /* Responsive Design */
+            @@media (max-width: 768px) {
+                .faq-section {
+                    padding: 60px 0;
+                }
+                
+                .faq-container {
+                    padding: 0 15px;
+                }
+                
+                .faq-title {
+                    font-size: 2rem;
+                }
+                
+                .faq-question {
+                    padding: 20px 20px;
+                    gap: 15px;
+                    font-size: 1rem;
+                }
+                
+                .faq-icon {
+                    width: 25px;
+                    height: 25px;
+                    font-size: 1rem;
+                }
+                
+                .answer-content {
+                    padding: 0 20px 20px 60px; /* İkon boşluğunu korumak için sol padding'i ayarladım */
+                }
+                .answer-content p {
+                    font-size: 0.95rem;
+                }
+            }
+
+            @@media (max-width: 480px) {
+                .faq-title {
+                    font-size: 1.8rem;
+                }
+                
+                .faq-question {
+                    padding: 18px 15px;
+                    gap: 12px;
+                    font-size: 0.95rem;
+                }
+            }
+        </style>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Toggle Functionality
+            // Scriptin sadece bu partial view'e ait olması için bir scope içine alabiliriz.
+            const faqContainer = document.querySelector('.faq-section');
+            if (!faqContainer) return;
+
+            const faqQuestions = faqContainer.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const faqId = this.getAttribute('data-faq');
+                    const faqItem = this.closest('.faq-item');
+                    const faqAnswer = document.getElementById(`faq-${faqId}`);
+                    const faqIcon = this.querySelector('.faq-icon');
+                    
+                    const isActive = faqItem.classList.contains('active');
+
+                    // Close all other FAQ items
+                    faqQuestions.forEach(otherQuestion => {
+                        const otherFaqItem = otherQuestion.closest('.faq-item');
+                        if (otherQuestion !== this) {
+                            otherFaqItem.classList.remove('active');
+                            otherFaqItem.querySelector('.faq-answer').classList.remove('show');
+                            otherFaqItem.querySelector('.faq-icon').textContent = '+';
+                        }
+                    });
+                    
+                    // Toggle current FAQ item
+                    if (isActive) {
+                        faqItem.classList.remove('active');
+                        faqAnswer.classList.remove('show');
+                        faqIcon.textContent = '+';
+                    } else {
+                        faqItem.classList.add('active');
+                        faqAnswer.classList.add('show');
+                        faqIcon.textContent = '−';
+                    }
+                });
+            });
+        });
+        </script>
+    }
+}

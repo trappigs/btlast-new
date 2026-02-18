@@ -1,0 +1,43 @@
+@model int
+@{
+    // Model is the delay in seconds. Default to 5 seconds if not provided or 0.
+    int delayInSeconds = Model > 0 ? Model : 5;
+    int delayInMilliseconds = delayInSeconds * 1000;
+}
+
+<div id="quickContactPopup" class="popup-overlay" style="display:none;">
+    <div class="popup-content">
+        @await Html.PartialAsync("ContactQuickForm", new btlast.Models.ContactFormViewModel())
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Show popup after specified delay
+        setTimeout(function () {
+            var popup = document.getElementById("quickContactPopup");
+            if (popup) {
+                popup.style.display = "flex";
+            }
+        }, @delayInMilliseconds);
+
+        // Close button logic
+        var closeBtn = document.getElementById("closeQuickPopup");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", function () {
+                var popup = document.getElementById("quickContactPopup");
+                if (popup) popup.style.display = "none";
+            });
+        }
+
+        // Close on overlay click
+        var popupOverlay = document.getElementById("quickContactPopup");
+        if (popupOverlay) {
+            popupOverlay.addEventListener("click", function (e) {
+                if (e.target.id === "quickContactPopup") {
+                    this.style.display = "none";
+                }
+            });
+        }
+    });
+</script>

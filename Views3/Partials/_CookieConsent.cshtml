@@ -1,0 +1,239 @@
+﻿<!-- Views/Partials/CookieConsent.cshtml -->
+<div id="cookieConsent" class="cookie-consent">
+    <div class="cookie-content">
+        <div class="cookie-text">
+            <span class="trxxx">🍪 Çerez Politikası</span>
+            <p>Web sitemizde deneyiminizi geliştirmek için çerezler kullanıyoruz. Sitemizi kullanmaya devam ederek çerez kullanımını kabul etmiş olursunuz.</p>
+        </div>
+        <div class="cookie-buttons">
+            <button id="acceptCookies" class="btn-accept">Kabul Et</button>
+            <button id="rejectCookies" class="btn-reject">Reddet</button>
+            <a href="/cerez-politikasi" class="btn-details">Detaylar</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .trxxx{
+        font-size: 1.5rem;
+    }
+.cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(10px);
+}
+
+.cookie-consent.show {
+    transform: translateY(0);
+}
+
+.cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.cookie-text h4 {
+    font-size: 1.2rem;
+    margin: 0 0 8px 0;
+    color: #ecf0f1;
+    font-weight: 600;
+}
+
+.cookie-text p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+}
+
+.cookie-buttons {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cookie-buttons button,
+.cookie-buttons a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-accept {
+    background: #045129;
+    color: white;
+}
+
+.btn-accept:hover {
+    background: #2ecc71;
+    transform: translateY(-2px);
+}
+
+.btn-reject {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-reject:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-details {
+    background: transparent;
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.btn-details:hover {
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+}
+
+/* Mobil Responsive */
+@@media (max-width: 768px) {
+    .cookie-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .cookie-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+    
+    .cookie-buttons button,
+    .cookie-buttons a {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .cookie-text h4 {
+        font-size: 1.1rem;
+    }
+    
+    .cookie-text p {
+        font-size: 0.9rem;
+    }
+}
+
+@@media (max-width: 480px) {
+    .cookie-consent {
+        padding: 15px;
+    }
+    
+    .cookie-text h4 {
+        font-size: 1rem;
+    }
+    
+    .cookie-text p {
+        font-size: 0.85rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cookieConsent = document.getElementById('cookieConsent');
+    const acceptBtn = document.getElementById('acceptCookies');
+    const rejectBtn = document.getElementById('rejectCookies');
+    
+    // Çerez durumunu kontrol et
+    function checkCookieConsent() {
+        const consent = localStorage.getItem('cookieConsent');
+        if (!consent) {
+            // 1 saniye gecikme ile göster (sayfa yüklendikten sonra)
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 1000);
+        }
+    }
+    
+    // Çerezi kabul et
+    function acceptCookies() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        localStorage.setItem('cookieConsentDate', new Date().toISOString());
+        hideCookieConsent();
+        
+        // Google Analytics veya diğer tracking kodlarını burada aktif edebilirsiniz
+        enableAnalytics();
+    }
+    
+    // Çerezi reddet
+    function rejectCookies() {
+        localStorage.setItem('cookieConsent', 'rejected');
+        localStorage.setItem('cookieConsentDate', new Date().toISOString());
+        hideCookieConsent();
+        
+        // Tracking kodlarını devre dışı bırak
+        disableAnalytics();
+    }
+    
+    // Cookie consent'i gizle
+    function hideCookieConsent() {
+        cookieConsent.classList.remove('show');
+        setTimeout(() => {
+            cookieConsent.style.display = 'none';
+        }, 400);
+    }
+    
+    // Analytics'i aktif et
+    function enableAnalytics() {
+        // Google Analytics kodunu buraya ekleyebilirsiniz
+        console.log('Analytics enabled');
+        
+        // Örnek: Google Analytics
+        // gtag('consent', 'update', {
+        //     'analytics_storage': 'granted'
+        // });
+    }
+    
+    // Analytics'i devre dışı bırak
+    function disableAnalytics() {
+        console.log('Analytics disabled');
+        
+        // Örnek: Google Analytics
+        // gtag('consent', 'update', {
+        //     'analytics_storage': 'denied'
+        // });
+    }
+    
+    // Event listeners
+    acceptBtn.addEventListener('click', acceptCookies);
+    rejectBtn.addEventListener('click', rejectCookies);
+    
+    // Çerez durumunu kontrol et
+    checkCookieConsent();
+    
+    // ESC tuşu ile kapat
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && cookieConsent.classList.contains('show')) {
+            rejectCookies();
+        }
+    });
+});
+</script>

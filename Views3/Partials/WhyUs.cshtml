@@ -1,0 +1,50 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<link rel="stylesheet" href="/css/why-us.css">
+@{
+    var cards = new[] {
+        new { Icon = "fa-solid fa-award",        Title = "12 Yıllık Tecrübe" },
+        new { Icon = "fa-solid fa-file-signature", Title = "Hemen Tapu" },
+        new { Icon = "fa-solid fa-file-invoice-dollar",       Title = "Esnek Ödeme Planı" },
+        new { Icon = "fa-solid fa-map-location-dot",          Title = "Altyapısı Hazır Arsalar" },
+        new { Icon = "fa-solid fa-arrow-trend-up",          Title = "İmarlı Arsalar" },
+        new { Icon = "fa-solid fa-handshake-simple",         Title = "Memnuniyet Odaklı" },
+        new { Icon = "fa-solid fa-sliders",       Title = "Müstakil Tapulu" },
+        new { Icon = "fa-solid fa-star",          Title = "Premium Deneyim" },
+        new { Icon = "fa-solid fa-lock",          Title = "Güvene Dayalı İletişim" },
+        new { Icon = "fa-solid fa-globe",         Title = "Şeffaflık" }
+    };
+}
+
+<section class="why-us-section" style="padding-bottom: 20px;">
+  <div class="why-us-layout">
+    <div class="why-us-text-content">
+      <h2 class="why-us-heading">
+        Birikiminizi koruyun, <span>kazancınızı güvenceye alın!</span>
+      </h2>
+      <p>Yatırımcıların ihtiyaçlarını ve hayallerini önemseyen Bereketli Topraklar, risksiz yatırım olanakları sunarak, doğayla iç içe, sosyal yaşamı destekleyen alanlar oluşturmayı ilke edinir.</p>
+    </div>
+    <div class="why-us-grid">
+      @foreach (var c in cards)
+      {
+        @if(@c.Icon == "fa-solid fa-globe"){
+            <div class="why-us-card mobile-only-card">
+              <div class="card-icon"><i class="@c.Icon" aria-hidden="true"></i></div>
+              <h3 class="card-title">@c.Title</h3>
+            </div>
+        }
+        else{
+            <div class="why-us-card">
+              <div class="card-icon"><i class="@c.Icon" aria-hidden="true"></i></div>
+              <h3 class="card-title">@c.Title</h3>
+            </div>
+        }
+      }
+    </div>
+
+    
+  </div>
+</section>
+
+
+

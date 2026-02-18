@@ -1,7 +1,7 @@
-﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
-    Layout = null;
+    
     var image = Model.Value<IPublishedContent>("ogImage");
     var ttImage = Model.Value<IPublishedContent>("ttImage");
 
@@ -13,14 +13,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXVCMJ7EH2" type="0e66c71b493a1451f08528b9-text/javascript"></script>
-    <script type="0e66c71b493a1451f08528b9-text/javascript">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-LXVCMJ7EH2');
-    </script>
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="fSQWXThP8IkC50MqyuZ3LQ" async></script>
+    
     
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -32,21 +26,21 @@
     
     
     <!-- Meta Pixel Code -->
-    <script type="0e66c71b493a1451f08528b9-text/javascript">
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1280921900121457');
-    fbq('track', 'PageView');
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1164374851913494');
+        fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1280921900121457&ev=PageView&noscript=1"
-    /></noscript>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1164374851913494&ev=PageView&noscript=1" />
+    </noscript>
     <!-- End Meta Pixel Code -->
 
 
@@ -343,7 +337,7 @@
         <i class="fa-brands fa-whatsapp"></i>
         <span>WhatsApp</span>
     </a>
-    <a href="tel:02244324959" class="fixed-phone-btn" aria-label="Bizi Arayın">
+    <a href="tel://+902244324959" class="fixed-phone-btn" aria-label="Bizi Arayın">
         <i class="fa-solid fa-phone"></i>
     </a>
 
@@ -419,7 +413,7 @@
   console.log('LCP candidate:', last.element, 'size:', last.size, 'at:', (last.renderTime || last.loadTime).toFixed(0),'ms');
 }).observe({type: 'largest-contentful-paint', buffered: true});
     </script>
+    <script src="/Scripts/callMeButton.js"></script>
+    <script src="/scripts/contact-events.js"></script>
 </body>
 </html>
-
-<script src="/Scripts/callMeButton.js"></script>

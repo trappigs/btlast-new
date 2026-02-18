@@ -1,0 +1,373 @@
+﻿<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .hero-content-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: stretch;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 80vh;
+            transform: scale(0.8);
+            transform-origin: center center;
+            margin: -10vh 0;
+        }
+
+        .left-section {
+            background-color: #e9e8e6;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .left-section h1 {
+            font-size: 4rem;
+            color: #2c3e50;
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        .green-line {
+            width: 80px;
+            height: 4px;
+            background-color: #27ae60;
+            margin-bottom: 50px;
+        }
+
+        .left-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            max-width: 90%;
+        }
+
+        .right-section {
+            background-image: url('/media/uovnokyo/orman.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        .right-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+        }
+
+        .services-list {
+            position: relative;
+            z-index: 2;
+            padding: 80px 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 0.8s ease forwards;
+        }
+
+        .service-item:nth-child(1) { animation-delay: 0.2s; }
+        .service-item:nth-child(2) { animation-delay: 0.4s; }
+        .service-item:nth-child(3) { animation-delay: 0.6s; }
+        .service-item:nth-child(4) { animation-delay: 0.8s; }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            flex-shrink: 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon i {
+            font-size: 1.8rem;
+            color: #27ae60;
+        }
+
+        .service-content h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-content p {
+            color: #f8f9fa;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            max-width: 95%;
+        }
+
+        @@keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Tablet için media query */
+        @@media (max-width: 1024px) {
+            .hero-content-2 {
+                gap: 0;
+                transform: scale(0.9);
+                margin: -5vh 0;
+                min-height: 85vh;
+            }
+
+            .left-section {
+                padding: 60px 40px;
+            }
+
+            .left-section h1 {
+                font-size: 3.2rem;
+            }
+
+            .services-list {
+                padding: 60px 40px;
+                gap: 35px;
+            }
+
+            .service-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .service-icon i {
+                font-size: 1.6rem;
+            }
+
+            .service-content h3 {
+                font-size: 1.3rem;
+            }
+
+            .service-content p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Mobil için media query */
+        @@media (max-width: 768px) {
+            .left-section p {
+            }
+            .mobil-alignment{
+                max-width: 100% !important;
+                text-align: justify;
+            }
+            .hero-content-2 {
+                grid-template-columns: 1fr;
+                gap: 0;
+                min-height: auto;
+                transform: scale(1);
+                margin: 0;
+            }
+
+            .left-section {
+                padding: 40px 20px;
+            }
+
+            .left-section h1 {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .green-line {
+                margin: 0 auto 30px auto;
+            }
+
+            .left-section p {
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .right-section {
+                min-height: 70vh;
+                border-radius: 15px;
+                margin: 15px;
+            }
+
+            .right-section::before {
+                border-radius: 15px;
+            }
+
+            .services-list {
+                padding: 40px 20px;
+            }
+
+            .service-item {
+                margin-bottom: 30px;
+            }
+
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+            }
+
+            .service-icon i {
+                font-size: 1.3rem;
+            }
+
+            .service-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .service-content p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Küçük mobil cihazlar için */
+        @@media (max-width: 480px) {
+            .left-section {
+                padding: 30px 15px;
+            }
+
+            .left-section h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .green-line {
+                width: 60px;
+                margin-bottom: 25px;
+            }
+
+            .left-section p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .right-section {
+                min-height: 60vh;
+                border-radius: 12px;
+                margin: 10px;
+            }
+
+            .right-section::before {
+                border-radius: 12px;
+            }
+
+            .services-list {
+                padding: 30px 15px;
+            }
+
+            .service-item {
+                margin-bottom: 25px;
+            }
+
+            .service-icon {
+                width: 45px;
+                height: 45px;
+                margin-right: 12px;
+            }
+
+            .service-icon i {
+                font-size: 1.2rem;
+            }
+
+            .service-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 6px;
+            }
+
+            .service-content p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+
+    
+    <div class="hero-content-2">
+        <div class="left-section mobil-alignment">
+            <h1>Neler<br>Yapıyoruz?</h1>
+            <div class="green-line"></div>
+            <p class="mobil-alignment" style="text-align: justify">
+                Biz, Bereketli Topraklar olarak, yatırımcılarımıza 
+                sadece arsa satışı sunmakla kalmayıp, onların 
+                güvenilir bir ortakla çalıştıklarını hissettirecek 
+                bir deneyim yaşatmayı amaçlıyoruz. 
+                Yatırımlarının her aşamasında yanlarında 
+                olarak, onlara değerli arsaların kapılarını açıyor 
+                ve geleceklerine yatırım yapma fırsatı 
+                sunuyoruz. Müşterilerimizin memnuniyeti ve 
+                güveni, faaliyetlerimizin merkezinde yer alıyor.
+            </p>
+        </div>
+
+        <div class="right-section">
+            <div class="services-list">
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Değerli Arsa Seçenekleri Sunma:</h3>
+                        <p>Türkiye'nin çeşitli bölgelerinden yatırım potansiyeli yüksek arsaları titizlikle seçiyoruz.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Uzman Danışmanlık Hizmeti:</h3>
+                        <p>Arsa yatırımı konusunda uzmanlık ve derin bilgi birikimimizle müşterilerimize rehberlik ediyoruz.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Kişiselleştirilmiş Çözümler:</h3>
+                        <p>Her müşterinin bireysel ihtiyaç ve hedeflerine uygun, özelleştirilmiş hizmetler sunuyoruz.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Güven ve Şeffaflık:</h3>
+                        <p>İşlem süreçlerimizde tam şeffaflık ve yüksek etik standartlarını benimsiyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

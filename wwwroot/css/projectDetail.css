@@ -1,5 +1,9 @@
 /* projectDetail.css - CSS Çakışmaları Çözülmüş Versiyon */
 
+* {
+    box-sizing: border-box;
+}
+
 /* ==========================================
    PROJE DETAY SAYFASI GENEL STYLES
    ========================================== */
@@ -1460,206 +1464,31 @@
     }
     
     .content-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 2rem;
+        width: 100%;
+        max-width: 100%;
     }
     
-    .project-stats {
-        flex-direction: column;
-        gap: 2rem;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .gallery-grid {
-        display: flex;
-        overflow-x: auto;
-        gap: 10px;
-        padding-bottom: 4px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .gallery-item {
-        flex: 0 0 45%;
-        max-width: 160px;
-        aspect-ratio: 3/2;
-        scroll-snap-align: start;
-        border: 0;
-    }
-    
-    .contact-section {
-        padding: 2rem 1.5rem;
-    }
-    
-    .main-title {
-        font-size: 2rem;
-    }
-
-    .feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-    .feature-card {
-        padding: 1rem 0.75rem;
-        border-radius: 12px;
-    }
-    .feature-card h4 {
-        font-size: 0.95rem;
-    }
-    
-    .feature-card p {
-        font-size: 0.8rem;
-    }
-    .virtual-tour-section {
-        padding: 0rem 10px;
-        background-color: #f8f9fa;
-    }
-    
-    .pano-overlay {
-        opacity: 1;
-    }
-
-    /* Related projects mobil görünüm */
-    .related-projects-section .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .related-projects-section .project-card {
-        height: 350px;
-    }
-    
-    .related-projects-section .card-title {
-        font-size: 1.3rem !important;
-    }
-    
-    .related-projects-section .card-description-overlay {
-        padding: 20px;
-        padding-top: 70px;
-        padding-bottom: 80px;
-        font-size: 0.9rem;
-    }
-    
-    .related-projects-section .card-actions {
-        bottom: 12px;
-        left: 12px;
-        right: 12px;
-        gap: 6px;
-    }
-    
-    .related-projects-section .btn {
-        padding: 0.6em 1.4em;
-        font-size: 0.7rem;
-    }
-    
-    .related-projects-section .button-group {
-        gap: 4px;
-    }
-    
-    .related-projects-section .location-info {
-        font-size: 0.7rem;
-        padding: 5px 10px;
-    }
-
-    /* Paylaşım modal mobil */
-    .share-modal {
-        padding: 20px;
-        width: 95%;
-    }
-
-    .share-modal-header h3 {
-        font-size: 1.3rem;
-    }
-
-    .social-links {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .social-links a {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
-
-    .copy-link-container input {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .copy-link-container button {
-        padding: 0 18px;
-        font-size: 0.85rem;
-    }
-
-    /* Lightbox mobil optimizasyonları */
-    .lightbox-prev, .lightbox-next {
-        padding: 15px 20px;
-        font-size: 20px;
-        width: 50px;
-        height: 50px;
-    }
-    
-    .lightbox-prev {
-        left: 20px;
-    }
-    
-    .lightbox-next {
-        right: 20px;
-    }
-    
-    .lightbox-container {
-        width: 95%;
-        height: 95vh;
-    }
-    
-    .lightbox-image-wrapper {
-        max-height: calc(95vh - 180px);
-    }
-    
-    .lightbox-counter {
-        bottom: 140px;
-        font-size: 14px;
-    }
-    
-    .lightbox-thumbnails-container {
-        bottom: 15px;
-        max-width: 95%;
-    }
-    
-    .lightbox-thumbnails {
-        gap: 10px;
-        padding: 3px 0;
-        max-width: calc(100% - 100px);
-    }
-    
-    .lightbox-thumbnail {
-        width: 160px;
-        height: 120px;
-    }
-    
-    .thumbnail-nav-btn {
-        padding: 10px 15px;
-        font-size: 20px;
-        height: 50px;
-        width: 40px;
-        margin: 0 5px;
-    }
-
-    /* Mobile gallery optimizations */
     .image-section {
         position: relative;
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
         padding: 0;
         margin-bottom: 2rem;
     }
 
+    .main-media-container {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
     .main-project-media {
         width: 100%;
+        max-width: 100%;
         aspect-ratio: 16/9;
         height: auto;
         max-height: 60vh;
@@ -1671,10 +1500,33 @@
     .gallery-section {
         margin: 0;
         width: 100%;
+        max-width: 100%;
+    }
+
+    .gallery-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding: 5px 0 15px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: #4CAF50 transparent;
+    }
+
+    .gallery-item {
+        flex: 0 0 220px;
+        aspect-ratio: 4/3;
+        scroll-snap-align: start;
+        border-radius: 12px;
+        overflow: hidden;
+        border: none;
     }
 
     .gallery-item::before {
         content: '';
+        pointer-events: none;
         position: absolute;
         top: 0;
         left: 0;
@@ -1738,6 +1590,47 @@
 
     .gallery-item:active .video-overlay {
         opacity: .8;
+    }
+
+    .project-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .feature-card {
+        padding: 1rem 0.75rem;
+        border-radius: 12px;
+        min-width: 0;
+    }
+
+    .related-projects-section .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    .contact-section {
+        padding: 2rem 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .virtual-tour-section {
+        padding: 0 10px;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
 }
 

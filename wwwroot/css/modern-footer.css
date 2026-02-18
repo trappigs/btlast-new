@@ -98,6 +98,28 @@
     color: white;
 }
 
+
+@media (max-width: 768px) {
+
+    .footer-legal {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .footer-legal a {
+        display: block;
+        width: 100%;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+
+}
+
+
+
 .footer-social {
     display: flex;
     gap: 15px;

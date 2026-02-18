@@ -1,0 +1,281 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<section class="brand-message-section">
+    <div class="brand-message-left">
+        <h2 class="brand-title">
+            @Model.Value("brandMessageTitle", fallback: Fallback.ToDefaultValue, defaultValue: "Marka")<br>
+            <strong>@Model.Value("brandMessageSubtitle", fallback: Fallback.ToDefaultValue, defaultValue: "Mesajımız")</strong>
+        </h2>
+        <div class="brand-underline"></div>
+        
+        <p class="brand-description">
+            @Model.Value("brandDescription", fallback: Fallback.ToDefaultValue, defaultValue: "\"Geleceğinize Değer Katın\" sloganımızla biz, arsa yatırımını yalnızca bir mülk edinme eylemi olarak görmüyor, aynı zamanda uzun vadeli bir değer yaratma süreci olarak ele alıyoruz.")
+        </p>
+        
+        <div class="brand-perspective">
+            @Model.Value("brandPerspective", fallback: Fallback.ToDefaultValue, defaultValue: "Bu perspektif ile müşterilerimize, yatırımlarının gelecekte yaşamlarına nasıl pozitif etkiler yapacağını göstermeyi amaçlıyoruz. Arsa yatırımı, finansal bağımsızlık ve güvenceye ulaşmanın stratejik bir yolu olarak vurguluyoruz.")
+        </div>
+    </div>
+    
+    <div class="brand-message-right">
+        @{
+            var features = Model.Value("brandFeatures") as IEnumerable<IPublishedElement>;
+        }
+        
+        @if (features != null && features.Any())
+        {
+            @foreach (var feature in features)
+            {
+                <div class="feature-item">
+                    <div class="feature-number">@feature.Value("featureNumber")</div>
+                    <h3 class="feature-title">@feature.Value("featureTitle")</h3>
+                    <p class="feature-description">@feature.Value("featureDescription")</p>
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Fallback static content -->
+            <div class="feature-item">
+                <div class="feature-number">01</div>
+                <h3 class="feature-title">Gelecek Vizyonu</h3>
+                <p class="feature-description">Yatırımların geleceğe pozitif katkısını öne çıkarıyoruz.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-number">02</div>
+                <h3 class="feature-title">Pozitif Etki</h3>
+                <p class="feature-description">Yatırımın yaşam kalitesini nasıl yükselteceğini gösteriyoruz.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-number">03</div>
+                <h3 class="feature-title">Stratejik Adım</h3>
+                <p class="feature-description">Arsa yatırımını finansal bağımsızlık yolunda kilit bir hamle olarak ele alıyoruz.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-number">04</div>
+                <h3 class="feature-title">Finansal Güvence</h3>
+                <p class="feature-description">Yatırımın, uzun vadeli güvenlik ve bağımsızlık sağlayacağını vurguluyoruz.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .brand-message-section {
+        display: flex;
+        min-height: 500px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .brand-message-left {
+        flex: 1;
+        background-color: #E9E8E6;
+        padding: 60px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .brand-message-right {
+        flex: 1;
+        background-color: #2d5a3d;
+        padding: 60px 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 40px;
+        align-items: center;
+    }
+
+    .brand-title {
+        font-size: 3.5rem;
+        font-weight: 300;
+        color: #333;
+        margin-bottom: 30px;
+        line-height: 1.2;
+    }
+
+    .brand-title strong {
+        font-weight: 700;
+    }
+
+    .brand-underline {
+        width: 80px;
+        height: 4px;
+        background-color: #2d5a3d;
+        margin-bottom: 30px;
+    }
+
+    .brand-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+        text-align: justify;
+        margin-bottom: 30px;
+    }
+
+    .brand-perspective {
+        background-color: #2d5a3d;
+        color: white;
+        padding: 30px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: justify;
+        margin-top: 20px;
+    }
+
+    .feature-item {
+        color: white;
+    }
+
+    .feature-number {
+        font-size: 4rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 15px;
+        line-height: 1;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 15px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .feature-title::after {
+        
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: white;
+    }
+
+    .feature-description {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #e8f5e8;
+    }
+    @@media(min-width: 1024px){
+        .brand-message-section {
+            margin-left: 90px;
+            margin-right: 90px;
+        }
+    }
+    @@media (max-width: 1024px) {
+        .brand-message-section {
+            flex-direction: column;
+        }
+        
+        .brand-message-right {
+            grid-template-columns: 1fr;
+            grid-gap: 30px;
+        }
+        
+        .brand-title {
+            font-size: 2.5rem;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .brand-message-section {
+            flex-direction: column;
+        }
+        
+        .brand-message-left,
+        .brand-message-right {
+            padding: 30px 20px;
+        }
+        
+        .brand-title {
+            font-size: 2rem;
+        }
+        
+        .brand-message-right {
+            background-color: #2d5a3d;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 15px;
+            padding: 30px 20px;
+            align-items: stretch; /* Tüm itemleri eşit yükseklik yapar */
+        }
+        
+        .feature-item {
+            background-color: #2d5a3d;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 20px 15px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 140px; /* Minimum yükseklik belirler */
+        }
+        
+        .feature-number {
+            font-size: 3.5rem;
+            font-weight: 100;
+            color: white;
+            margin-bottom: 10px;
+            line-height: 1;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+            text-stroke: 1px rgba(255,255,255,0.2);
+        }
+        
+        .feature-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            flex-shrink: 0; /* Başlık boyutunu sabit tutar */
+        }
+        
+        .feature-title::after {
+            
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            height: 1px;
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .feature-description {
+            font-size: 0.8rem;
+            line-height: 1.3;
+            color: #e8f5e8;
+            margin-top: 15px;
+            flex-grow: 1; /* Kalan alanı doldurur */
+        }
+        
+        /* Turuncu ok ikonu - 4. öğede */
+        .feature-item:nth-child(4)::before {
+            
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #ff8c00;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        .feature-item:nth-child(4)::after {
+            
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 25px;
+            height: 25px;
+            background-color: #ff8c00;
+            border-radius: 3px;
+        }
+    }
+</style>

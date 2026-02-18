@@ -1,0 +1,448 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "masterLayout.cshtml";
+    ViewBag.Title = Model.Value("profileName")?.ToString() ?? "Profil";
+    
+    var profileName = Model.Value("profileName")?.ToString();
+    var profileTitle = Model.Value("profileTitle")?.ToString();
+    var profileDescription = Model.Value("profileDescription")?.ToString()?.StripHtml();
+    var profilePictureUrl = "";
+    if (Model.HasValue("profilPicture"))
+    {
+        var profilePictureImage = Model.Value<IPublishedContent>("profilPicture");
+        profilePictureUrl = profilePictureImage?.Url() ?? "";
+    }
+    else
+    {
+        profilePictureUrl = "/media/tcvmglv5/1fotoğraf.jpg";
+    }
+
+    // canonical url kontrolü
+    var canonicalLink = Model.Value<string>("canonicalLink");
+    var absoluteUrl = Umbraco.AssignedContentItem.Url(mode: UrlMode.Absolute);
+    var finalUrl = !string.IsNullOrWhiteSpace(canonicalLink) ? canonicalLink : absoluteUrl;
+
+    var createdDate = Model.CreateDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
+    var modifiedDate = Model.UpdateDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
+}
+
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "ProfilePage",
+  "name": "@profileName'in Profili",
+  "dateCreated": "@createdDate",
+  "dateModified": "@modifiedDate",
+  "url": "@finalUrl",
+  "mainEntity": {
+    "@@type": "Person",
+    "name": "@profileName",
+    "jobTitle": "@profileTitle",
+    "description": "@profileDescription",
+    "image": "@profilePictureUrl",
+    "worksFor": {
+      "@@type": "Organization",
+      "name": "Bereketli Topraklar"
+    },
+    "url": "@finalUrl"
+  }
+}
+</script>
+
+
+
+
+
+
+<style>
+/* Profile Page Styles */
+.profile-section {
+    background: #fff;
+    padding: 120px 0 80px;
+    min-height: 100vh;
+}
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border: 1px solid #e9ecef;
+}
+
+.back-btn:hover {
+    background: #e9ecef;
+    text-decoration: none;
+    color: #333;
+    transform: translateX(-2px);
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.profile-photo-section {
+    text-align: center;
+    margin-top: 50px;
+}
+@@media (max-width: 768px){
+    .profile-photo-section{
+        margin-top: 50px;
+    }
+    .back-btn{
+        margin-bottom: 0px !important;
+        margin-top: 30px !important;
+    }
+}
+
+.profile-photo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    border: 4px solid #f8f9fa;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition: transform 0.3s ease;
+}
+
+.profile-photo:hover img {
+    transform: scale(1.05);
+}
+
+.profile-info {
+    padding-top: 20px;
+}
+
+.profile-name {
+    font-size: 2.8rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.profile-title {
+    font-size: 1.4rem;
+    color: #0077b5;
+    margin-bottom: 35px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.profile-bio {
+    font-size: 1.1rem;
+    text-align: justify;
+    color: #555;
+    line-height: 1.8;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-bottom: 40px;
+}
+
+/* Portföyler Stilleri */
+.profile-portfolios {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e9ecef;
+}
+
+.portfolios-title {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.portfolios-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.portfolio-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.portfolio-card:hover {
+    background: #e9ecef;
+    text-decoration: none;
+    color: inherit;
+    transform: translateX(5px);
+}
+
+.portfolio-info {
+    flex: 1;
+}
+
+.portfolio-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.portfolio-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.portfolio-arrow {
+    font-size: 1.2rem;
+    color: #0077b5;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@@media (max-width: 992px) {
+    .profile-content {
+        grid-template-columns: 150px 1fr;
+        gap: 30px;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .profile-photo-section {
+        text-align: left;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+        margin: 0 0 20px 0;
+    }
+
+    .profile-info {
+        padding-top: 0;
+    }
+
+    .profile-name {
+        font-size: 2.4rem;
+    }
+
+    .profile-title {
+        font-size: 1.2rem;
+    }
+
+    .profile-bio {
+        text-align: justify;
+    }
+}
+
+@@media (max-width: 768px) {
+    .profile-section {
+        padding: 100px 0 60px;
+    }
+
+    .profile-container {
+        padding: 0 15px;
+    }
+
+    .profile-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .profile-photo-section {
+        text-align: center;
+        order: 1;
+    }
+
+    .profile-photo {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 20px auto;
+    }
+
+    .profile-info {
+        order: 2;
+        text-align: center;
+    }
+
+    .profile-name {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .profile-title {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .profile-bio {
+        font-size: 1rem;
+        line-height: 1.7;
+        text-align: justify;
+        margin-bottom: 30px;
+    }
+
+    .profile-portfolios {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .portfolios-title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .back-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@@media (max-width: 480px) {
+    .profile-content {
+        gap: 25px;
+    }
+
+    .profile-photo {
+        width: 180px;
+        height: 180px;
+    }
+
+    .profile-name {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .profile-title {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .profile-bio {
+        margin-bottom: 25px;
+    }
+
+    .profile-portfolios {
+        margin-top: 25px;
+    }
+
+    .portfolios-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .portfolio-card {
+        padding: 12px 15px;
+    }
+
+    .portfolio-name {
+        font-size: 1rem;
+    }
+
+    .portfolio-description {
+        font-size: 0.85rem;
+    }
+}
+
+.profile-section{
+    padding-top: 170px !important;
+}
+
+@@media(max-width: 768px) {
+    .profile-section{
+        padding-top: 90px !important;
+    }
+}
+</style>
+
+<!-- Profile Section -->
+<section class="profile-section">
+    <div class="profile-container">
+        <a href="/ekibimiz/" class="back-btn">
+            ← Ekibe Geri Dön
+        </a>
+
+        <div class="profile-content">
+            <div class="profile-photo-section">
+                <div class="profile-photo">
+                    @{
+                        if (Model.HasValue("profilPicture"))
+                        {
+                            var profilePictureImage = Model.Value<IPublishedContent>("profilPicture");
+                            profilePictureUrl = profilePictureImage.Url();
+                        }
+                        else
+                        {
+                            profilePictureUrl = "/media/tcvmglv5/1fotoğraf.jpg";
+                        }
+                    }
+                    <img src="@profilePictureUrl" alt="@Model.Value("profileName")">
+                </div>
+            </div>
+
+            <div class="profile-info">
+                <h1 class="profile-name">@Model.Value("profileName")</h1>
+                <p class="profile-title">@Model.Value("profileTitle")</p>
+                <div class="profile-bio">
+                    @Html.Raw(Model.Value("profileDescription"))
+                </div>
+
+                @* Portföyler Bölümü *@
+                @if (Model.HasValue("portfolios") && Model.Value("portfolios") != null)
+                {
+                    var portfolios = Model.Value("portfolios") as IEnumerable<IPublishedContent>;
+                    if (portfolios != null && portfolios.Any())
+                    {
+                        <div class="profile-portfolios">
+                            <h3 class="portfolios-title">Yönettiği Portföyler</h3>
+                            <div class="portfolios-grid">
+                                @foreach (var portfolio in portfolios)
+                                {
+                                    <a href="@portfolio.Url()" class="portfolio-card">
+                                        <div class="portfolio-info">
+                                            <h4 class="portfolio-name">@portfolio.Name</h4>
+                                            @if (portfolio.HasValue("shortDescription"))
+                                            {
+                                                <p class="portfolio-description">@portfolio.Value("shortDescription")</p>
+                                            }
+                                        </div>
+                                        <div class="portfolio-arrow">→</div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

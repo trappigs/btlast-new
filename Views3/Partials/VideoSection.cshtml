@@ -1,0 +1,89 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<link rel="stylesheet" href="/css/videoSection.css">
+
+<!-- Video Container -->
+<div class="hero-video-container">
+    <!-- Background Video -->
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="/media/jntb22fb/large.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Dark Overlay for Better Text Readability -->
+    <div class="video-overlay"></div>
+    
+    <!-- Content Over Video -->
+    <div class="video-content-overlay">
+        <div class="container">
+            <!-- Ana Başlık -->
+            <div class="text-center mb-4">
+                <h1 class="display-4 fw-bold text-white mb-2 hero-title">
+                    Arsa yatırımlarıyla geleceğinize değer katın!
+                </h1>
+                <p class="lead text-white mb-2 fs-5 hero-subtitle">İster Al, İster Sat; Bereketli Topraklarla Her Zaman Kazan...</p>
+            </div>
+            
+            <!-- Özellikler -->
+            <div class="row text-center feature-cards">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div >
+                        <h4 class="feature-title" style="color: #ffffff">İmarlı</h4>
+                        <p class="feature-subtitle" style="color: #ffffff">Alt Yapısı Tamamlanmış</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div >
+                        <h4 class="feature-title" style="color: #ffffff">Müstakil Tapulu</h4>
+                        <p class="feature-subtitle" style="color: #ffffff">Bağımsız Mülkiyet</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div >
+                        <h4 class="feature-title" style="color: #ffffff">Hemen Teslim</h4>
+                        <p class="feature-subtitle" style="color: #ffffff">Anında Teslim</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div >
+                        <h4 class="feature-title" style="color: #ffffff">24 Aya Varan Taksit</h4>
+                        <p class="feature-subtitle" style="color: #ffffff">Esnek Ödeme Planı</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Butonlar -->
+            <div class="text-center">
+                <div class="d-inline-flex gap-3 hero-buttons">
+                    <a href="/projeler/" class="btn btn-primary-custom btn-lg px-5 py-3 hero-btn-primary">
+                        Projelerimizi Keşfet
+                    </a>
+                    <!-- <button class="btn btn-outline-light btn-lg px-5 py-3 hero-btn-secondary" data-project="Genel Bilgi" onclick="openContactModal(this)">
+                        Formu Doldurun
+                    </button> -->
+                    <button id="openModalBtn" class="action-button btn btn-outline-light btn-lg px-5 py-3 hero-btn-secondary">
+                        Formu Doldurun
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Scripts/contactModal.js"></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.querySelector('.main-video');
+    
+    // Video autoplay garantisi
+    if (video) {
+        video.muted = true;
+        video.play().catch(() => {
+            console.log('Video autoplay blocked');
+        });
+    }
+});
+</script>

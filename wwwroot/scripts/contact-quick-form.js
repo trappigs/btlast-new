@@ -70,6 +70,12 @@
 
     function handleServerResponse(data) {
         if (data.success) {
+            // --- Meta Pixel Event (Deduplication) ---
+            if (data.eventId && typeof fbq === 'function') {
+                fbq('track', 'Lead', {}, { eventID: data.eventId });
+            }
+            // ----------------------------------------
+
             formContainer.innerHTML = `
                 <div class="success-message">
                      <div class="success-icon">✓</div>
