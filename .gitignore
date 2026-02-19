@@ -483,6 +483,7 @@ umbraco-package-schema.json
 /wwwroot/media3.zip
 
 # Sensitive configuration files (passwords, credentials, etc.)
+.env
 appsettings.json
 appsettings.Development.json
 appsettings.Production.json
