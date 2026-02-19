@@ -1,0 +1,322 @@
+@* YatirimTesti.cshtml - Attention Grabbing Version *@
+<style>
+    .fixed-test-btn {
+        position: fixed;
+        bottom: 100px;
+        right: 25px;
+        z-index: 1001;
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, #0B4127, #045129);
+        color: white;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        animation: pulse-test-btn 2s infinite;
+    }
+
+    @@keyframes pulse-test-btn {
+        0% {
+            box-shadow: 0 0 0 0 rgba(11, 65, 39, 0.7);
+            transform: scale(1);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(11, 65, 39, 0);
+            transform: scale(1.05);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(11, 65, 39, 0);
+            transform: scale(1);
+        }
+    }
+
+    .fixed-test-btn:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        background: linear-gradient(135deg, #045129, #0B4127);
+        animation-play-state: paused;
+    }
+
+    .fixed-test-btn i {
+        font-size: 28px;
+    }
+
+    .test-btn-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #e74c3c;
+        color: white;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 4px 8px;
+        border-radius: 10px;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .test-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 20px;
+    }
+
+    .test-popup-content {
+        background: white;
+        width: 100%;
+        max-width: 1000px;
+        height: 90vh;
+        border-radius: 32px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .test-popup-header {
+        background: #0B4127;
+        color: white;
+        padding: 15px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .test-popup-close {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    .test-popup-close:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    #yatirimTestiIframe {
+        width: 100%;
+        height: calc(100% - 65px);
+        border: none;
+    }
+
+    /* Floating Tooltip */
+    .test-btn-tooltip {
+        position: absolute;
+        right: 80px;
+        background: white;
+        color: #0B4127;
+        padding: 8px 15px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 800;
+        white-space: nowrap;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        pointer-events: none;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: all 0.3s ease;
+    }
+
+    .fixed-test-btn:hover .test-btn-tooltip {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Test Message Bubble */
+    .test-message-bubble {
+        position: fixed;
+        bottom: 110px;
+        right: 100px;
+        background: white;
+        color: #0B4127;
+        padding: 12px 20px;
+        border-radius: 20px 20px 0 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        z-index: 1000;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1.4;
+        max-width: 220px;
+        display: none;
+        animation: bubble-in 0.5s ease-out;
+        border: 2px solid #0B4127;
+    }
+
+    .test-message-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        right: -12px;
+        border-width: 12px 0 0 12px;
+        border-style: solid;
+        border-color: #0B4127 transparent transparent transparent;
+    }
+
+    .bubble-close {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        background: #e74c3c;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        cursor: pointer;
+        border: 2px solid white;
+    }
+
+    @@keyframes bubble-in {
+        0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @@media (max-width: 768px) {
+        .fixed-test-btn {
+            bottom: 85px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+        }
+        .test-message-bubble {
+            bottom: 150px;
+            right: 20px;
+            max-width: 180px;
+            font-size: 12px;
+            border-radius: 20px;
+        }
+        .test-message-bubble::after {
+            display: none;
+        }
+        .test-popup-overlay {
+            padding: 10px;
+        }
+        .test-popup-content {
+            height: 95vh;
+            border-radius: 20px;
+        }
+        .test-btn-tooltip {
+            display: none;
+        }
+    }
+</style>
+
+<div id="testMessageBubble" class="test-message-bubble">
+    <div class="bubble-close" id="closeBubble">&times;</div>
+    Yatırımcı karakterini merak ediyor musun? 🧬 <br><strong>Hemen DNA'nı keşfet!</strong>
+</div>
+
+<button type="button" id="openTestBtn" class="fixed-test-btn" aria-label="Yatırım Karakter Testi">
+    <i class="fas fa-dna"></i>
+    <span class="test-btn-badge">YENİ</span>
+    <div class="test-btn-tooltip">Yatırım Karakterini Keşfet!</div>
+</button>
+
+<div id="testPopupOverlay" class="test-popup-overlay">
+    <div class="test-popup-content">
+        <div class="test-popup-header">
+            <h5 style="margin:0; font-weight: 900; letter-spacing: 1px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-chart-pie"></i> Yatırım Karakter Analizi
+            </h5>
+            <button id="closeTestBtn" class="test-popup-close">&times;</button>
+        </div>
+        <iframe src="/yatirim-testi/index.html" id="yatirimTestiIframe" title="Yatırım Karakter Testi"></iframe>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var openBtn = document.getElementById('openTestBtn');
+        var closeBtn = document.getElementById('closeTestBtn');
+        var overlay = document.getElementById('testPopupOverlay');
+        var bubble = document.getElementById('testMessageBubble');
+        var closeBubble = document.getElementById('closeBubble');
+
+        // Show bubble after 3 seconds
+        setTimeout(function() {
+            if (bubble) bubble.style.display = 'block';
+        }, 3000);
+
+        if(closeBubble && bubble) {
+            closeBubble.addEventListener('click', function(e) {
+                e.stopPropagation();
+                bubble.style.display = 'none';
+            });
+        }
+
+        if(openBtn && overlay) {
+            openBtn.addEventListener('click', function() {
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                if (bubble) bubble.style.display = 'none';
+                // Refresh iframe content to reset test
+                var iframe = document.getElementById('yatirimTestiIframe');
+                if(iframe) iframe.src = iframe.src;
+            });
+        }
+
+        if(closeBtn && overlay) {
+            closeBtn.addEventListener('click', function() {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+
+            overlay.addEventListener('click', function(e) {
+                if(e.target === overlay) {
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        window.addEventListener('message', function(event) {
+            if (event.data === 'openAppointmentForm') {
+                if (overlay) {
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+                
+                var targetElement = document.getElementById('contactFormContainer');
+                if (targetElement) {
+                    var isMobile = window.innerWidth <= 768;
+                    if (isMobile) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            }
+        });
+    });
+</script>

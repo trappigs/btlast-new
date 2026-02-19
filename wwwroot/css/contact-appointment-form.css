@@ -225,6 +225,7 @@ select.form-control {
     min-width: 150px;
     cursor: pointer;
     position: relative;
+    display: flex; /* İçindeki option-content'in tam yükseklik alması için */
 }
 
 .appointment-option input[type="radio"] {
@@ -237,6 +238,7 @@ select.form-control {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* İçeriği dikeyde ortala */
     padding: 1.5rem 1rem;
     border: 2px solid #e8f0e9;
     border-radius: 12px;
@@ -244,6 +246,8 @@ select.form-control {
     background: #fafcfb;
     text-align: center;
     gap: 0.5rem;
+    width: 100%;
+    min-height: 120px; /* Tüm kartları eşitleyecek minimum yükseklik */
 }
 
 .appointment-option:hover .option-content {
@@ -632,6 +636,23 @@ select.form-control {
     .appointment-option {
         flex-basis: calc(50% - 0.375rem); 
         min-width: 0;
+        display: flex;
+    }
+    .appointment-option .option-content {
+        padding: 1rem 0.4rem; /* Mobilde daha dar padding */
+        min-height: 135px;    /* Mobilde uzun metinler için daha yüksek min-height */
+        width: 100%;
+        flex: 1;              /* İçeriğin kutuyu tam doldurmasını sağlar */
+        font-size: 0.85rem;   /* Metinlerin sığması için fontu biraz küçült */
+    }
+    .option-content span {
+        line-height: 1.2;     /* Satır arası boşluğu daralt */
+    }
+    /* Sadece Telefon ve WhatsApp yazılarını mobilde %20 büyüt */
+    .appointment-option input[value="Telefon Görüşmesi"] + .option-content span,
+    .appointment-option input[value="Whatsapp"] + .option-content span {
+        font-size: 1.02rem; /* 0.85rem * 1.2 */
+        font-weight: 500;
     }
 }
 

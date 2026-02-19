@@ -284,10 +284,10 @@
     <meta name="twitter:site" content="@@bereketilarsa">
 
     <link rel="mask-icon" href="@($"{siteUrl}{safariPinnedURL}")" color="#5bbad5">
-    <link rel="icon" href="@($"{siteUrl}{"/media/pyoloyhx/amblem-yeşil.png"}")" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/hdojvevq/32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/media/5pnjb0z1/192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/media/5mrhl2gq/512x512.png">
+    <link rel="apple-touch-icon" href="/media/xnsbo5wk/180x180.svg">
 
     <title>@(Model.HasValue("pageTitle") && !string.IsNullOrWhiteSpace(Model.Value<string>("pageTitle")) ? Model.Value<string>("pageTitle") : ViewBag.Title) | Bereketli Topraklar</title>
     <!-- Bootstrap 5.3.7 CSS -->
@@ -327,6 +327,7 @@
     }
 
     @await Html.PartialAsync("ModernFooter")
+    @await Html.PartialAsync("YatirimTesti")
 
     <a href="#" class="call-me-detail fixed-call-btn">
         <i class="fa-solid fa-phone-volume"></i>

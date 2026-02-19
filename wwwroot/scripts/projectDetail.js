@@ -419,6 +419,8 @@ function handleResize() {
     }
 }
 
+
+
 // Add resize listener
 window.addEventListener('resize', handleResize);
 
